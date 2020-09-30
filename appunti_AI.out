@@ -1,5 +1,8 @@
 \BOOKMARK [1][-]{section.1}{Introduzione}{}% 1
 \BOOKMARK [1][-]{section.2}{Reti neurali}{}% 2
 \BOOKMARK [2][-]{subsection.2.1}{Background biologico}{section.2}% 3
-\BOOKMARK [1][-]{section.3}{Sistemi fuzzy}{}% 4
-\BOOKMARK [1][-]{section.4}{Algoritmi evolutivi}{}% 5
+\BOOKMARK [2][-]{subsection.2.2}{Threshold logic unit}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{Interpretazione geometrica}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.4}{Training delle TLU}{section.2}% 6
+\BOOKMARK [1][-]{section.3}{Sistemi fuzzy}{}% 7
+\BOOKMARK [1][-]{section.4}{Algoritmi evolutivi}{}% 8

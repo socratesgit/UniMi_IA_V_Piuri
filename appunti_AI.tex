@@ -16,6 +16,8 @@
 \newcommand{\ww}{\mathbf{w}}
 \newcommand{\vv}{\mathbf{v}}
 \newcommand{\ee}{\mathbf{e}}
+\newcommand{\ii}{\mathbf{i}}
+\newcommand{\oo}{\mathbf{o}}
 
 \begin{document}
 \title{Appunti di Artificial Intelligence}
@@ -176,7 +178,7 @@ Calcoliamo la funzione errore al variare di $w$ e $\theta$. Nel caso che $x = 0$
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.5]{error1.png}
+\includegraphics[scale=0.4]{error1.png}
 \caption{funzione di errore per la negazione booleana}
 \label{fig:5}
 \end{figure}
@@ -191,7 +193,7 @@ Ci sono due modi di immaginare il processo di allenamento del neurone:
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.5]{error2.png}
+\includegraphics[scale=0.4]{error2.png}
 \caption{funzione di errore differenziabile}
 \label{fig:6}
 \end{figure}
@@ -228,6 +230,95 @@ Negli esempi precedenti abbiamo codificato il valore booleano \emph{falso} come 
 \end{remark}
 
 Notiamo che questa procedura di allenamento vale solo per le singole TLU, ma abbiamo prima visto che le TLU possono computare solo funzioni linearmente separabili. Sebbene questo inconveniente si possa evitare prendendo in esame \emph{network} di TLU, questa procedura non si estende naturalmente a quel caso.
+
+\subsection{Artificial neural network}
+
+Un artificial neural network (in quello che segue ANN) può essere rappresentata come un grafo diretto $G = (U,C)$ dove i nodi sono TLU e gli archi sono le connessioni tra le varie unità. L'insieme dei nodi $U$ può essere partizionato in tre sottoinsiemi:
+
+\begin{itemize}
+\item{$U_{(in)}$: è l'insieme dei nodi di input, i quali ricevono in modo diretto l'informazione dall'ambiente.}
+\item{$U_{(out)}$: è l'insieme dei nodi di output, i quali sono i soli nodi a comunicare con l'esterno.}
+\item{$U_{(hidden)}$: è l'insieme dei nodi interni, i quali propagano la computazione.}
+\end{itemize}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.4]{ANN.png}
+\caption{rappresentazione di un singolo neurone}
+\label{fig:7}
+\end{figure}
+
+Ogni connessione $(u,v) \in C$ possiede un peso $w_{uv}$ che definisce l'importanza del dato originato da $v$ per il neurone $u$. Ad ogni neurone $u \in U$ vengono, invece, assegnate quattro variabili: il \emph{network input} $net_u$, la \emph{activation} $act_u$, l'\emph{output} $out_u$ e l'\emph{external input} $ext_u$ (vedi Figura \ref{fig:7}). Le prime tre variabili vengono calcolate in ogni momento dell'evoluzione dell'ANN grazie a tre funzioni associate:
+
+\begin{enumerate}
+\item{La \emph{network input function} $f^u_{net}$: calcola la somma pesata dell'input.}
+\item{La \emph{activation function} $f^u_{act}$: ne esistono vari modelli (gaussiana, sigmoide, etc.) a seconda dell'applicazione.}
+\item{La \emph{output function} $f^u_{out}$: definisce l'output a seconda che il neurone venga o meno attivato.}
+\end{enumerate}
+
+Se il grafo che rappresenta l'ANN è aciclico si parla di \emph{feed forward network} e la computazione procede in modo unidirezionale da $U_{(in)}$ a $U_{(out)}$ seguendo l'ordine topologico\footnote{L'ordine topologico è una numerazione dei vertici di un grafo diretto tale che tutti gli archi partano da un nodo associato ad un numero minore rispetto a quello associato al nodo di arrivo. Un ordine topologico esiste solo per grafi aciclici.} del network. Nel caso, invece, il grafo contenga un ciclo, allora si parla di \emph{recurrent network}.
+I processi all'interno di un ANN si dividono in due fasi:
+
+\begin{enumerate}
+\item{La \emph{input phase}: dove gli input esterni vengono acquisiti dai neuroni di input.}
+\item{La \emph{work phase}: dove i neuroni di input vengono spenti e un nuovo output viene computato da ogni neurone. La \emph{work phase} continua finchè gli output sono stabili o si raggiunge un timeout.}
+\end{enumerate}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.3]{rnn1.png}
+\caption{computazione di una recurrent neural network che non giunge ad uno stato stabile}
+\label{fig:8}
+\end{figure}
+
+
+Nel caso delle recurrent neural network, potrebbe accadere che non si giunga mai ad uno stato stabile a seconda di quale ordine di update dei neuroni si scelga di seguire. In Figura \ref{fig:8} abbiamo un esempio di una computazione con risultato oscillante in un recurrent neural network. L'ordine seguito per l'update è: $u_3,u_1,u_2,u_3,u_1,u_2\dots$. Se si fosse seguito un diverso ordine la computazione avrebbe raggiunto uno stato stabile.
+
+\subsection{Training delle ANN}
+
+Abbiamo visto in precedenza che è possibile allenare in modo automatico una singola TLU grazie alla delta rule. Come abbiamo già avuto modo di osservare questo procedimento non può essere generalizzato alle ANN. Tuttavia, i principi a cui ci ispiriamo sono i medesimi: calcolare correzioni ai pesi ed ai threshold dei singoli neuroni e aggiornarli di conseguenza. A seconda del tipo dei dati che utilizziamo per allenare le nostre ANN e dei criteri di ottimizzazione distiguiamo due tipi di apprendimento:
+
+\begin{enumerate}
+\item{\emph{fixed learning task} o apprendimento con supervisione}
+\item{\emph{free learning task} o apprendimento senza supervisione}
+\end{enumerate}
+
+Nel caso di una fixed learning task avremo un insieme 
+$L=\{(\ii_1,\oo_1), \dots, (\ii_n,\oo_n)\}$ di coppie che assegnano ad ogni input un output desiderato. Una volta completato il processo di apprendimento, la ANN dovrebbe essere in grado di restituire l'output adeguato rispetto all'input che le viene presentato. In pratica, questo accade raramente e bisogna accontentarsi di un risultato approssimativo.
+Per giudicare in che misura una ANN si avvicina alla soluzione della fixed learning task si adotta una funzione di errore. Solitamente tale funziona viene calcolata come il quadrato della differenza tra l'output desiderato e quello attuale:
+$$
+e = \sum_{l \in L} \sum_{v \in U_{(out)}} e^l_v
+$$
+dove
+$$
+e^l_v = (o^l_v - out_v)^2
+$$
+è l'errore individuale per una particolare coppia $l$ e un neurone di output $v$. Il quadrato delle differenze viene scelto per vari motivi. Per prima cosa, errori positivi e negativi altrimenti si cancellerebbero a vicenda e non sarebbero presi in considerazione. In secondo luogo, questa funzione è ovunque derivabile, semplificando così il processo di aggiornamento dei pesi e dei threshold.
+Nel free learning task avremo, invece, solo una sequenza di input $L = \{\ii_1, \dots, \ii_n\}$. Questo comporta che, a differenza del fixed learning task, non avremo modo di calcolare una funzione di errore rispetto ad un output atteso. In linea di principio, infatti, l'obiettivo di un free learning task sarà quello di produrre un output "simile" per input "simili". Un caso particolare potrebbe essere quello del \emph{clustering} dei vettori di input. 
+Qualsiasi processo di apprendimento si scelga esistono alcune buone pratiche che è utile seguire. Una è quella di normalizzare il vettore di input. Comunemente lo si scala in modo tale che abbia media uguale a 0 e la varianza ad 1. Per fare questo uno deve calcolare per ogni neurone $u_k \in U_{(in)}$ la media aritmetica $\mu_k$ e la deviazione standard $\sigma_k$ degli input esterni:
+
+$$
+\mu_k = \frac{1}{|L|}\sum_{l \in L} ext^l_{u_k} \quad \quad \sigma_k = \sqrt{\frac{1}{|L|}\sum_{l \in L} (ext^l_{u_k} - \mu_k)^2}
+$$
+
+Quindi gli input esterni vengono ricalcolati secondo questa formula:
+
+$$
+ext^{new}_{u_k} = \frac{ext^{old}_{u_k} - \mu_k}{\sigma_k}
+$$
+
+\subsection{Multi-layer perceptrons}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.3]{MLP.png}
+\caption{multi-layer perceptrons}
+\label{fig:9}
+\end{figure}
+
+
+Una delle prime ANN sviluppate furono i \emph{multi-layer perceptrons} (nel seguito MLP). Le MLP sono particolari feed-forward network  in cui le unità base (i percettroni) sono organizzati in \emph{layer} e ogni layer ha connessioni solo con il layer successivo (vedi Figura \ref{fig:9}). Questo permette di minimizzare il fenomeno delle continue ricomputazioni che avverrebbero durante la propagazione del segnale nei normali feed-forward network.
+
 
 \section{Sistemi fuzzy}
 

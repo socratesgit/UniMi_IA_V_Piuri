@@ -8,6 +8,8 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{graphicx}
+\usepackage{subcaption}
+
 
 \newtheorem{remark}{Osservazione}
 \newtheorem{definition}{Definizione}
@@ -53,7 +55,7 @@ Tali studi ci offrono dei modelli che simulano l'attività celebrale. Proprio qu
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.7]{neurone.jpeg}
+\includegraphics[scale=0.7]{img/neurone.jpeg}
 \caption{Neurone}
 \label{fig:1}
 \end{figure}
@@ -69,7 +71,7 @@ Questa struttura a network offre ottime prestazioni. Per un confronto con una CP
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.3]{cpuvshuman.png}
+\includegraphics[scale=0.3]{img/cpuvshuman.png}
 \end{figure}
 
 \newpage
@@ -120,7 +122,7 @@ Da quanto detto, tuttavia, si può dedurre che una singola TLU potrà computare 
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.5]{geometria.png}
+\includegraphics[scale=0.5]{img/geometria.png}
 \caption{Rappresentazione geometrica della TLU per $x_1 \land x_2$}
 \label{fig:2}
 \end{figure}
@@ -139,7 +141,7 @@ Questo significa che già all'interno delle funzioni booleane ne esistono alcune
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.5]{doppiaimplicazione.png}
+\includegraphics[scale=0.5]{img/doppiaimplicazione.png}
 \caption{La doppia implicazione non è linearmente separabile}
 \label{fig:3}
 \end{figure}
@@ -148,7 +150,7 @@ Il problema può essere ovviato attraverso la costruzione di network di TLU più
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.5]{netTLU.png}
+\includegraphics[scale=0.5]{img/netTLU.png}
 \caption{network di TLU che simula la doppia implicazione}
 \label{fig:4}
 \end{figure}
@@ -178,7 +180,7 @@ Calcoliamo la funzione errore al variare di $w$ e $\theta$. Nel caso che $x = 0$
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.4]{error1.png}
+\includegraphics[scale=0.4]{img/error1.png}
 \caption{funzione di errore per la negazione booleana}
 \label{fig:5}
 \end{figure}
@@ -193,7 +195,7 @@ Ci sono due modi di immaginare il processo di allenamento del neurone:
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.4]{error2.png}
+\includegraphics[scale=0.4]{img/error2.png}
 \caption{funzione di errore differenziabile}
 \label{fig:6}
 \end{figure}
@@ -243,7 +245,7 @@ Un artificial neural network (in quello che segue ANN) può essere rappresentata
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.4]{ANN.png}
+\includegraphics[scale=0.4]{img/ANN.png}
 \caption{rappresentazione di un singolo neurone}
 \label{fig:7}
 \end{figure}
@@ -266,7 +268,7 @@ I processi all'interno di un ANN si dividono in due fasi:
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.3]{rnn1.png}
+\includegraphics[scale=0.3]{img/rnn1.png}
 \caption{computazione di una recurrent neural network che non giunge ad uno stato stabile}
 \label{fig:8}
 \end{figure}
@@ -284,7 +286,7 @@ Abbiamo visto in precedenza che è possibile allenare in modo automatico una sin
 \end{enumerate}
 
 Nel caso di una fixed learning task avremo un insieme 
-$L=\{(\ii_1,\oo_1), \dots, (\ii_n,\oo_n)\}$ di coppie che assegnano ad ogni input un output desiderato. Una volta completato il processo di apprendimento, la ANN dovrebbe essere in grado di restituire l'output adeguato rispetto all'input che le viene presentato. In pratica, questo accade raramente e bisogna accontentarsi di un risultato approssimativo.
+$L=\{(\ii_1,\oo_1),\dots,(\ii_n,\oo_n)\}$ di coppie che assegnano ad ogni input un output desiderato. Una volta completato il processo di apprendimento, la ANN dovrebbe essere in grado di restituire l'output adeguato rispetto all'input che le viene presentato. In pratica, questo accade raramente e bisogna accontentarsi di un risultato approssimativo.
 Per giudicare in che misura una ANN si avvicina alla soluzione della fixed learning task si adotta una funzione di errore. Solitamente tale funziona viene calcolata come il quadrato della differenza tra l'output desiderato e quello attuale:
 $$
 e = \sum_{l \in L} \sum_{v \in U_{(out)}} e^l_v
@@ -311,16 +313,94 @@ $$
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.3]{MLP.png}
+\includegraphics[scale=0.3]{img/MLP.png}
 \caption{multi-layer perceptrons}
 \label{fig:9}
 \end{figure}
 
 
 Una delle prime ANN sviluppate furono i \emph{multi-layer perceptrons} (nel seguito MLP). Le MLP sono particolari feed-forward network  in cui le unità base (i percettroni) sono organizzati in \emph{layer} e ogni layer ha connessioni solo con il layer successivo (vedi Figura \ref{fig:9}). Questo permette di minimizzare il fenomeno delle continue ricomputazioni che avverrebbero durante la propagazione del segnale nei normali feed-forward network.
+La network input function di ogni neurone $u \in U_{(hidden) \cup U_{(out)}}$ viene calcolata come la somma pesata degli input, come:
+$$
+f^u_{net}(\ww_u,\ii_u) = \sum_{v \in pred(u)} w_{uv}out_v
+$$
+L'activation function, invece, è una così detta \emph{funzione sigmoide}, ossia una funzione monotona non descrescente tale che:
+$$
+f: \mathbb{R} \to [0,1] \quad \text{ con } \lim_{x\to-\infty}f(x) = 0 \quad \text{ e } \lim_{x\to\infty}f(x) = 1
+$$
+
+\begin{figure}
+
+\begin{subfigure}{0.5\textwidth}
+\includegraphics[width=0.9\linewidth, height=3cm]{img/step.png} 
+\caption{step function}
+\end{subfigure} %%
+\begin{subfigure}{0.5\textwidth}
+\includegraphics[width=0.9\linewidth, height=3cm]{img/semilinear.png}
+\caption{semi-linear function}
+\end{subfigure} 
+\begin{subfigure}{0.5\textwidth}
+\includegraphics[width=0.9\linewidth, height=3cm]{img/sineup.png} 
+\caption{sine up to saturation}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\includegraphics[width=0.9\linewidth, height=3cm]{img/logistic.png} 
+\caption{logistic function}
+\end{subfigure}
+
+
+\caption{Alcune funzioni sigmoidi}
+\label{fig:10}
+\end{figure}
+
+La funzione di output può essere sia una sigmoide oppure una semplice funzione lineare. \\
+La struttura a layer di un MLP suggerisce che si possa descrivere il network con l'aiuto di una matrice dei pesi. In questo modo la computazione del MLP può essere rappresentata attraverso la moltiplicazione tra matrici e vettori. Tuttavia, noi non abbiamo utilizzato in classe una matrice per l'intero network, ma una per ogni singolo layer. Siano $U_1 = \{ v_1, \dots, v_n \}$ e $U_2 = \{ u_1, \dots, u_m \}$ due layer consecutivi di neuroni. I pesi delle loro connessioni sono codificati in una matrice $W$ di dimensioni $n \times m$:
+
+$$
+W = \begin{pmatrix}
+  w_{u_1v_1} & w_{u_1v_2} & \cdots & w_{u_1v_n} \\
+  w_{u_2v_1} & w_{u_2v_2} & \cdots & w_{u_2v_n} \\
+  \vdots  & \vdots  & \ddots & \vdots  \\
+  w_{u_mv_1} & w_{u_mv_2} & \cdots & w_{u_mv_n} 
+ \end{pmatrix}
+$$
+
+Se due neuroni $u_i$ e $v_j$ non sono connessi, è sufficiente porre $w_{u_iv_j} = 0$. Il vantaggio di questa matrice sta nel fatto che è possibile scrivere il network input di un layer come:
+
+$$
+\mathbf{net}_{U_2} = W \mathbf{in}_{U_2} = W \mathbf{out}_{U_1}
+$$
+
+dove $\mathbf{net}_{U_2} = (net_{u_1}, \dots, net_{u_m})^\top$ e $\mathbf{in}_{U_2} = \mathbf{out}_{U_1} = (out_{v_1}, \dots, out_{v_n})^\top$. \\
+Fino ad adesso abbiamo visto che le ANN possono rappresentare funzioni booleane, ma quando si parla di funzioni a valori continui? 
+
+
+\begin{theorem}
+Ogni funzione Riemann-integrabile è approssimata con precisione arbitraria da un MLP avente quattro layer.
+\end{theorem}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.4]{img/approx.png}
+\caption{Approssimazione di una funzione continua con una step function}
+\label{fig:11}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.3]{img/riemann.png}
+\caption{MLP che calcola la step function in Figura \ref{fig:11}}
+\label{fig:12}
+\end{figure}
+
+Ogni funzione, infatti, può essere approssimata da una step function (come in Figura \ref{fig:11}). Ad ogni pivot $x_i$ associamo nel nostro MLP un neurone nel primo hidden layer (vedi Figura \ref{fig:12}). Nel secondo hidden layer creiamo un neurone per ogni scalino, il quale riceverà input dai due neuroni del primo livello che sono assegnati ai valori $x_i$ e $x_{i+1}$ che definiscono i bordi dello scalino. A questo punto, scegliamo pesi e threshold in modo tale che il neurone venga attivato se e solo se l'input è maggiore di $x_i$ e minore di $x_{i+1}$. Siccome la funzione di attivazione del neurone di output è la funzione di identità, il valore così calcolato viene emesso così come è ricevuto. 
+Dovrebbe essere chiaro che l'approssimazione può crescere a piacere semplicemente aggiungendo neuroni e diminuendo la lunghezza dei gradini. Possiamo, inoltre, risparmiarci un layer se non utilizziamo nel calcolo l'altezza assoluta ma quella relativa come peso della connessione al neurone di output.
+Bisogna notare, comunque, che questo risultato non ha natura costruttiva, ossia non ci dice come deve essere fatto un MLP che approssimi con una data accuratezza una certa funzione. Tutto ciò che afferma il Teorema 3 è che limitare il numero di layer non pregiudica la proprietà del MLP di essere un \emph{approssimatore universale}.
+
 
 
 \section{Sistemi fuzzy}
+
 
 \section{Algoritmi evolutivi}
 

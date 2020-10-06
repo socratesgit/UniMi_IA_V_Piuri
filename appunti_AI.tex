@@ -397,6 +397,79 @@ Ogni funzione, infatti, può essere approssimata da una step function (come in F
 Dovrebbe essere chiaro che l'approssimazione può crescere a piacere semplicemente aggiungendo neuroni e diminuendo la lunghezza dei gradini. Possiamo, inoltre, risparmiarci un layer se non utilizziamo nel calcolo l'altezza assoluta ma quella relativa come peso della connessione al neurone di output.
 Bisogna notare, comunque, che questo risultato non ha natura costruttiva, ossia non ci dice come deve essere fatto un MLP che approssimi con una data accuratezza una certa funzione. Tutto ciò che afferma il Teorema 3 è che limitare il numero di layer non pregiudica la proprietà del MLP di essere un \emph{approssimatore universale}.
 
+\subsection{Regressione}
+
+Abbiamo visto che per allenare un ANN occorre minimizzare la funzione di errore, la quale si calcola solitamente come il quadrato della differenza tra output aspettato e attuale. Questo avvicina il problema dell'apprendimento nelle reti neurali a quello più generale della \emph{regressione}. La regressione è una tecnica molto usata in analisi e in statistica per estrapolare la retta (o, più in generale, il polinomio) che meglio approssima la relazione esistente in un insieme di dati/osservazioni. Detto in modo più formale, se $G = \{(\ww_0,y_0), \dots, (\ww_n,y_n)\}$ è il nostro dataset e immaginiamo esista una relazione funzionale tra il vettore di input $\ww_i$ e l'ascissa $y$, allora la regressione ci aiuterà a trovare i parametri di quella funzione. A seconda del diverso genere di funzione avremo diverse forme di regressione.
+
+\subsubsection{Regressione lineare}
+
+Se ci aspettiamo che le nostre due quantità $x$ e $y$ esibiscano una dipendenza lineare, allora dovremo identificare i parametri $a$ e $b$ che individuano la retta $y = g(x) = a + bx$. In generale, tuttavia, non sarà possibile trovare una singola retta che passi per tutti i punti del nostro dataset. Quello che faremo sarà trovare la retta che devi dai punti il meno possibile e che, quindi, minimizzi l'errore calcolato come segue: 
+
+$$
+F(a,b) = \sum(g(x_i) - y_i)^2 = \sum(a + bx_i - y_i)^2
+$$
+
+Il teorema di Fermat ci dice che una condizione necessaria perchè un minimo della funzione $F(a,b)$ esista è che la derivata parziale in entrambi i parametri si annulli:
+
+$$
+\frac{\partial F}{\partial a} = \sum 2(a + bx_i - y_i) = 0
+$$
+
+$$
+\frac{\partial F}{\partial b} = \sum 2(a + bx_i - y_i)x_i = 0
+$$
+
+Questo sistema può essere risolto con alcune semplici tecniche di algebra lineare (vedi pag. 174 del libro). La soluzione così trovata sarà unica a meno che ogni valore $x_i$ sia identico. 
+
+\subsubsection{Regressione polinomiale e multilineare}
+
+Il metodo precedente può essere esteso in modo ovvio a polinomi di ordine arbitrario. In questo caso, si prende come ipotesi che la funzione indotta dal dataset approssimi un polinomio di ordine $n$:
+
+$$
+y = p(x) = a_o + a_1x + \dots + a_nx^n
+$$
+
+E si cercherà di minimizzare la funzione $F$ tale che:
+
+$$
+F(a_1,\dots,a_n) = \sum(p(x_i) - y_i)^2 = \sum(a_o + a_1x + \dots + a_nx^n -y_i)^2
+$$
+
+Come nel caso della regressione lineare, la funzione potrà essere minimizzata solo se le derivate parziali rispetto ai parametri $a_i$ si annullano:
+
+$$
+\frac{\partial F}{\partial a_1} = 0 \quad \dots \quad \frac{\partial F}{\partial a_n} = 0
+$$
+
+Inoltre, non siamo limitati a calcolare funzioni ad un solo argomento. Con alcune minori modifiche questo metodo è capace di approssimare funzioni in un numero arbitrario di argomenti. In quel caso, la chiameremo \emph{regressione multilineare}.
+
+\subsubsection{Regressione logistica}
+
+Nel situazione in cui il nostro dataset non sia approssimato con sufficiente accuratezza da una funzione polinomiale, potremmo dover utilizzare funzioni di generi diversi. Data, per esempio, una funzione della forma:
+
+$$
+y = ax^b
+$$
+
+possiamo trasformarla in una equazione lineare applicando l'operazione di logaritmo:
+
+$$
+ln(y) = ln(a) + bln(x)
+$$
+
+Nel caso delle ANN ci interessiamo in particolare alla funzione logistica (vedi Figura \ref{fig:10}(d)):
+
+$$
+y = \frac{Y}{1 + e^{a+bx}}
+$$
+
+Siccome molte ANN utilizzano come funzione di attivazione del neurone proprio la funzione logistica, se trovassimo un modo di applicarci il metodo della regressione potremmo determinare i parametri di qualsiasi network a due layer con un unico input. Il valore $a$ nella funzione corrisponderebbe al threshold del neurone di output e la $b$ al peso dell'input. Possiamo "linearizzare" la funzione logistica applicandoci le seguenti trasformazioni (comunemente chiamata \emph{logit transformation}):
+
+$$
+y = \frac{Y}{1 + e^{a+bx}} \leftrightarrow \frac{1}{y} = \frac{1 + e^{a+bx}}{Y} \leftrightarrow \frac{Y - y}{y} = e^{a+bx}
+$$
+
+Se estendiamo il nostro approccio fino a comprendere funzioni con più argomenti, in analogia a quanto accade nella regressione multilineare, possiamo utilizzarlo per computare i pesi di network a due layer con arbitrari neuroni di input. Tuttavia, siccome il metodo della somma degli errori funziona solo quando parliamo di neuroni di output, questo approccio non può essere esteso a network con più di due layer.
 
 
 \section{Sistemi fuzzy}

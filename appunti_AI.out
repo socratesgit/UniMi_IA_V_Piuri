@@ -7,6 +7,9 @@
 \BOOKMARK [2][-]{subsection.2.5}{Artificial neural network}{section.2}% 7
 \BOOKMARK [2][-]{subsection.2.6}{Training delle ANN}{section.2}% 8
 \BOOKMARK [2][-]{subsection.2.7}{Multi-layer perceptrons}{section.2}% 9
-\BOOKMARK [2][-]{subsection.2.8}{}{section.2}% 10
-\BOOKMARK [1][-]{section.3}{Sistemi fuzzy}{}% 11
-\BOOKMARK [1][-]{section.4}{Algoritmi evolutivi}{}% 12
+\BOOKMARK [2][-]{subsection.2.8}{Regressione}{section.2}% 10
+\BOOKMARK [3][-]{subsubsection.2.8.1}{Regressione lineare}{subsection.2.8}% 11
+\BOOKMARK [3][-]{subsubsection.2.8.2}{Regressione polinomiale e multilineare}{subsection.2.8}% 12
+\BOOKMARK [3][-]{subsubsection.2.8.3}{Regressione logistica}{subsection.2.8}% 13
+\BOOKMARK [1][-]{section.3}{Sistemi fuzzy}{}% 14
+\BOOKMARK [1][-]{section.4}{Algoritmi evolutivi}{}% 15

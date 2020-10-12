@@ -454,7 +454,7 @@ $$
 possiamo trasformarla in una equazione lineare applicando l'operazione di logaritmo:
 
 $$
-ln(y) = ln(a) + bln(x)
+ln(y) = ln(a) + b \cdot ln(x)
 $$
 
 Nel caso delle ANN ci interessiamo in particolare alla funzione logistica (vedi Figura \ref{fig:10}(d)):
@@ -466,11 +466,73 @@ $$
 Siccome molte ANN utilizzano come funzione di attivazione del neurone proprio la funzione logistica, se trovassimo un modo di applicarci il metodo della regressione potremmo determinare i parametri di qualsiasi network a due layer con un unico input. Il valore $a$ nella funzione corrisponderebbe al threshold del neurone di output e la $b$ al peso dell'input. Possiamo "linearizzare" la funzione logistica applicandoci le seguenti trasformazioni (comunemente chiamata \emph{logit transformation}):
 
 $$
-y = \frac{Y}{1 + e^{a+bx}} \leftrightarrow \frac{1}{y} = \frac{1 + e^{a+bx}}{Y} \leftrightarrow \frac{Y - y}{y} = e^{a+bx}
+y = \frac{Y}{1 + e^{a+bx}} \leftrightarrow \frac{1}{y} = \frac{1 + e^{a+bx}}{Y} \leftrightarrow \frac{Y - y}{y} = e^{a+bx} \leftrightarrow ln(\frac{Y - y}{y}) = a+bx
 $$
 
 Se estendiamo il nostro approccio fino a comprendere funzioni con più argomenti, in analogia a quanto accade nella regressione multilineare, possiamo utilizzarlo per computare i pesi di network a due layer con arbitrari neuroni di input. Tuttavia, siccome il metodo della somma degli errori funziona solo quando parliamo di neuroni di output, questo approccio non può essere esteso a network con più di due layer.
 
+\subsection{Backpropagation}
+
+Come abbiamo appena visto la regressione logistica funziona solo per MLP con due layer di neuroni. Un approccio più generale è quello del \emph{gradient descent}. Il metodo consiste nell'utilizzare la funzione di errore per calcolare la direzione in cui cambiare i pesi e il threshold per minimizzare l'errore. Condizione necessaria per il suo utilizzo è che la funzione sia differenziabile. Tuttavia, un MLP ha una funzione logistica come funzione di attivazione e, quindi, la funzione di errore sarà differenziabile (posto che la funzione di output sia la funzione identità).
+Intuitivamente, il \emph{gradiente} descrive la pendenza di una funzione. Questo è calcolato assegnando ad ogni punto del dominio della funzione un vettore, i cui componenti sono le derivate parziali rispetto ai agli argomenti(un esempio in Figura \ref{fig:13}). L'operazione di calcolare il gradiente (di un punto o di una funzione) è comunemente denotata con l'operatore differenziale $\nabla$ (pronuncia: nabla).
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.3]{img/gradient.png}
+\caption{Il gradiente di una funzione a due argomenti.}
+\label{fig:13}
+\end{figure}
+
+Nel caso delle MLP, calcolare il gradiente della funzione di errore si traduce nel calcolare la derivata parziale della funzione di errore rispetto ai pesi e i threshold presi come parametri. Sia $\ww_u = (-\theta,w_{u_1},\dots,w_{u_k})$ il vettore dei pesi di un singolo layer esteso così da includere anche il threshold, calcoliamo il gradiente come segue:
+$$
+\nabla_{\ww_u} e = \frac{\partial e}{\partial \ww_u} = (-\frac{\partial e}{\partial \theta}, \frac{\partial e}{\partial w_{u_1}},\dots,\frac{\partial e}{\partial w_{u_k}})
+$$
+Siccome l'errore totale $e$ è dato dalla somma degli errori individuali rispetto a tutti i neuroni e tutti i training pattern $l$, otteniamo che:
+$$
+\nabla_{\ww_u} e = \frac{\partial e}{\partial \ww_u} = \frac{\partial}{\partial \ww_u} \sum_{l \in L} e^l = \sum_{l \in L} \frac{\partial e^l}{\partial \ww_u}
+$$
+\begin{remark}
+\emph{Se abbiamo come $f_{(act)}$ la funzione logistica avremo che i cambiamenti operati sul vettore $\ww_u$ saranno proporzionali alla derviata della funzione $f_{(act)}$. Più vicini allo 0 della funzione sono i valori, più ripido sarà il pendio della funzione e, per tanto, più rapido sarà l'apprendimento.}
+\end{remark}
+
+Come facciamo dopo aver trovato l'errore a calcolare la correzione necessaria per ogni peso e threshold di ogni singolo neurone? Il processo che ci permette di fare questo viene chiamato \emph{error backpropagation} ed è schematizzato in Figura \ref{fig:14}. Si assume che la funzione di attivazione sia la funzione logistica per ogni neurone $u \in U_{(hidden)} \cup U_{(out)}$ tranne che per quelli di input.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.4]{img/backpropagation.png}
+\caption{Propagazione dell'errore in un MLP.}
+\label{fig:14}
+\end{figure}
+
+Inizialmente, (1) applichiamo l'input ai neuroni di input che lo restituiscono senza modifiche in output al primo dei layer hidden. (2) Calcoliamo per ogni neurone dei seguenti layer la somma pesata degli input e al risultato applichiamo la funzione logistica generando così l'output che verrà propagato in tutto il network fino ai neuroni terminali. A questo punto, (3) calcoliamo la differenza tra l'output atteso e quello attuale e, dato che la funzione di attivazione è invertibile, risaliamo dal vettore di errore a quale fosse l'input che ha condizionato quel particolare errore (la variabile $\delta_u$, nell'immagine). Avendo, ora, (4) trasformato l'errore della variabile di output $out_u$ in quello della variabile di input $net_u$ possiamo distribuire l'errore (e la correzione necessaria) in modo proporzionale al ruolo del singolo neurone nel calcolo del seguente output. Propago a ritroso l'errore fino ai neuroni di input. Bisogna osservare comunque che data la forma della funzione logistica l'errore non può sparire completamente, in quanto il gradiente approssimerà il vettore nullo più si avvicinerà allo zero. 
+
+\begin{remark}
+\emph{Se si inizializza il learning rate $\eta$ ad un valore troppo alto, al posto di discendere la curva si corre il rischio di saltare da un "picco" della funzione all'altro senza convergere mai al minimo. Inoltre, non è affatto detto che il minimo raggiunto in questo modo sia il minimo globale della funzione. La causa sarà piuttosto da ascrivere alla scelta dei valori iniziali. Una soluzione al problema può essere quella di ripetere l'apprendimento, inizializzando il sistema con una diversa configurazione di pesi e threshold, e scegliere alla fine quale configurazione risulta in un miglior minimo.}
+\end{remark}
+
+\subsubsection{Variazioni sul gradient descent}
+
+Esistono varie sofisticazioni della tecnica del gradient descent che permettono un più veloce apprendimento e, nello stesso momento, un miglior controllo sulla lunghezza dei singoli step di apprendimento. Alcuni esempi sono:
+
+\begin{itemize}
+\item{\emph{Manhattan training}: utlizza al posto del valore del gradiente solo il suo segno per calcolare la direzione. Questo permette di semplificare notevolmente la computazione.}
+\item{\emph{Flat spot elimination}: cerca di limitare l'abbattimento della lunghezza degli step di apprendimento quando ci si avvicina ad un plateau della funzione "sollevando" artificialmente la derivata della funzione in quel punto.}
+\item{\emph{Momentum term}: ad ogni successivo step aggiungo al gradiente una frazione del precedente cambiamento di pesi così da avere una memoria di quanto velocemente stava cambiando nel passato.}
+\item{\emph{Self-adaptive error backpropagation}: permetto ad ogni parametro di avere un diverso learning rate in modo da avere un più fine controllo rispetto alle caratteristiche del singolo parametro.}
+\item{\emph{Resilient error backpropagation}: combina il Manhattan training con l'approccio self-adaptive.}
+\item{\emph{Quick propagation}: al posto di utilizzare il gradiente approssimo la funzione con una parabola e salto direttamente all'apice della parabola.}
+\item{\emph{Weight decay}: riduce i pesi per evitare di rimanere intrappolato in una regione già saturata.}
+\end{itemize}
+
+\subsubsection{Overfitting e underfitting}
+
+Quanti neuroni ho bisogno per avere un buon network? Come regola di massima si dovrebbe scegliere il numero di neuroni negli hidden layer seconda la seguente formula:
+$$
+\# \text{hidden neurons} = (\# \text{input neurons} + \# \text{output neurons})/2
+$$
+Non esiste una spiegazione teoretica soddisfacente del perchè questo sia un buon numero, ma è stato dimostrato empiricamente. Se, infatti, il numero dei neuroni negli hidden layer è troppo basso rischiamo l'\emph{underfitting}, ossia che il nostro MLP non riesca a catturare la complessità della funzione che vogliamo catturare. Al contrario se ne ho troppi rischio di incorrere nell'\emph{overfitting}, ossia che il nostro MLP si adatti agli esempi che gli abbiamo fornito durante il periodo di apprendimento, ma anche alle loro specificità accidentali (errori e deviazioni).
+Per evitare questi fenomeni è buona pratica dividere il nostro data set in modo da avere due sottoinsiemi di dati: alcuni dati per l'apprendimento ed altri per la validazione del processo di apprendimento. I primi verranno usati per allenare il nostro network e i secondi per giudicare se effettivamente il network approssimi la funzione desiderata. \'E possibile iterare a piacere questo procedimento suddividendo i dati non in due sottoinsiemi, ma in un numero arbitrario così da ottenre una conferma incrociata dei progressi nell'apprendimento del nostro network.
+Un diverso metodo per evitare l'overfitting è quello di terminare l'apprendimento quando il differenziale dell'errore tra un epoca ed un altra si abbassi sotto una certa soglia, oppure se l'apprendimento si protrae per un periodo troppo lungo.
 
 \section{Sistemi fuzzy}
 

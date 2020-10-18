@@ -14,5 +14,7 @@
 \BOOKMARK [2][-]{subsection.2.9}{Backpropagation}{section.2}% 14
 \BOOKMARK [3][-]{subsubsection.2.9.1}{Variazioni sul gradient descent}{subsection.2.9}% 15
 \BOOKMARK [3][-]{subsubsection.2.9.2}{Overfitting e underfitting}{subsection.2.9}% 16
-\BOOKMARK [1][-]{section.3}{Sistemi fuzzy}{}% 17
-\BOOKMARK [1][-]{section.4}{Algoritmi evolutivi}{}% 18
+\BOOKMARK [3][-]{subsubsection.2.9.3}{Sensitivity analysis}{subsection.2.9}% 17
+\BOOKMARK [2][-]{subsection.2.10}{Deep learning}{section.2}% 18
+\BOOKMARK [1][-]{section.3}{Sistemi fuzzy}{}% 19
+\BOOKMARK [1][-]{section.4}{Algoritmi evolutivi}{}% 20

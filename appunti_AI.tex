@@ -581,6 +581,59 @@ Esistono tre principali soluzioni:
 Per ottenere un MLP con molteplici layer si combinano diversi autoencoder. Inizialmente si allena un singolo autoencoder. A quel punto, si rimuove il decoder e viene conservato solo il layer interno. Si utilizzano i dati preprocessati da questo primo autoencoder per allenarne un secondo, e così via fino a che si raggiunga un numero soddisfacente di layer.
 MLP costruiti in questo modo sono risultati molto efficaci nel riconoscere con successo numeri scritti a mano. Se si volessero utilizzare dei network simili per una più ampia classe di applicazioni, dove, per esempio, le feature riconosciute dai layer interni non sono localizzate in una porzione specifica dell'immagine, bisognerebbe rivolgersi ai \emph{convolutional neural network} (più avanti, CNN). Questa architettura è ispirata al funzionamento della retina umana, in cui i neuroni adibiti alla percezione hanno un campo ricettivo, ossia una limitata regione in cui rispondono agli stimoli. Questo viene simulato nelle CNN connettendo i neuroni del primo hidden layer solo ad alcuni neuroni di input. I pesi vengono condivisi così che i vari network parziali possano essere valutati da differenti prospettive dell'immagine. Durante la computazione si procederà poi a muovere il "campo ricettivo" sulla totalità dell'immagine. Come risultato si ottiene una convoluzione della matrice dei pesi con l'immagine in input.
 
+\subsection{Radial basis function network}
+
+I così detti \emph{radial basis function network} (in quello che segue, RBFN) sono feed-forward network aventi tre layer di neuroni. Sono strutture alternative rispetto ai classici MLP. La differenza principale sta nella diversa scelta riguardo la funzione di attivazione. Se nel caso degli MLP avevamo una funzione sigmoide, ora avremo una funzione radiale di base \footnote{Una funzione radiale di base, o funzione di base radiale è una funzione a valori reali $f(x)$ il cui valore dipende unicamente tra la distanza dell'argomento $x$ e un punto prefissato $c$. Se il punto $c$ in questione è l'origine si dicono funzioni radiali.}. La $f_{net}$ dei neuroni di output è la somma pesata dei loro input, come in precedenza. Invece, per i neuroni nel hidden layer avremo che $f_{net}$ sarà uguale alla distanza tra il vettore di input e il vettore dei pesi. La funzione distanza che sceglieremo sarà una metrica in senso geometrico, e, per tanto, deve rispettare i seguenti tre assiomi:
+$$
+d(\ww,\vv) = 0 \leftrightarrow \ww = \vv
+$$
+$$
+d(\ww,\vv) = d(\vv,\ww)
+$$
+$$
+d(\ww,\ee) + d(\ee,\vv) \geq d(\ww,\vv)
+$$
+Una famiglia di funzioni usate spesso nelle applicazioni è quella formulata dal matematico prussiano Hermann Minkowski e battezzata in suo onore famiglia di Minkowski. Tale famiglia è definita come:
+$$
+d(\ww,\vv)_k = (\sum (w_i - v_i)^k)^{\frac{1}{k}}
+$$
+Alcuni esempi famosi di funzioni appartenenti alla famiglia sono:
+$$
+k = 1: \text{Manhattan distance}
+$$
+$$
+k=2:\text{Euclidian distance}
+$$
+$$
+k = \infty: \text{Maximum distance, ovvero } d(\ww,\vv)_\infty = max |w_i - v_i|
+$$
+\begin{figure}
+\centering
+\includegraphics[scale=0.4]{img/circle.png}
+\caption{Cerchi rispetto alle diverse definizioni di distanza.}
+\label{fig:16}
+\end{figure}
+Un modo utile di visualizzare queste funzioni è quello di vedere che forma assume un cerchio a seconda delle varie metriche (vedi Figura \ref{fig:16}). La ragione è che un cerchio è definito come quell'insieme di punti che stanno alla stessa distanza da un dato punto. Variando la definizione di distanza, varia la forma che assume il cerchio nei diversi spazi.
+Passando ora a considerare $f_{act}$ avremo, nel caso dei neuroni di output, una funzione lineare. Invece, per i neuroni del hidden layer avremo una funzione monotona decrescente tale che:
+$$
+f: \mathbb{R}^{+} \to [0,1] \quad \text{con} \quad f(0) = 1 \quad \text{e} \quad \lim_{x \to \infty} f(x) = 0
+$$
+Questa funzione calcola l'area in cui il neurone focalizza la propria attenzione definita dal raggio di riferimento $\sigma$. I vari parametri e la forma della funzione determinano l'ampiezza di questa area. Le funzioni più utilizzate per determinare l'area di attivazione sono quelle riportate in Figura \ref{fig:17}.
+\begin{figure}
+\centering
+\includegraphics[scale=0.4]{img/act_rbf.png}
+\caption{Varie funzioni di attivazione per un RBFN.}
+\label{fig:17}
+\end{figure}
+Come esempio, applichiamo un RBFN per simulare una congiunzione booleana. Un network che risolve il problema è quello costituito da un singolo neurone hidden, il cui vettore dei pesi (il centro della funzione radiale) è esattamente il punto in cui in output vorremo il valore \emph{vero}, ovvero (1,1). Il raggio $\sigma$ sarà posto a $\frac{1}{2}$ e verrà codificato nel threshold del neurone. La funzione di distanza usata è quella euclidea e come $f_{act}$ utilizziamo una funzione rettangolare. Il diagramma in Figura \ref{fig:18} offre una rappresentazione grafica di quanto detto. 
+\begin{figure}
+\centering
+\includegraphics[scale=0.4]{img/and_rbf.png}
+\caption{RBFN che calcola la congiunzione booleana.}
+\label{fig:18}
+\end{figure}
+In generale, un RBFN ha lo stesso potere espressivo di un MLP e può essere visto come un approssimatore universale, ovvero può approssimare (con errore arbitrariamente piccolo) una qualsiasi funzioni Riemann-integrabile. Il procedimento è lo stesso che nel caso degli altri network: la funzione viene approssimata da una funzione a scalini che può essere calcolata facilmente da una funzione radiale se la definiamo come la somma pesata di funzioni rettangolari. L'approssimazione può essere migliorata aumentando il numero dei punti in cui si valuta la funzione. Inoltre, se al posto della funzione rettangolare, viene utilizzata una funzione Gaussiana possiamo ottenere delle transizioni più "morbide" evitando bruschi salti. 
+
 \section{Sistemi fuzzy}
 
 

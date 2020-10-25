@@ -621,7 +621,7 @@ $$
 Questa funzione calcola l'area in cui il neurone focalizza la propria attenzione definita dal raggio di riferimento $\sigma$. I vari parametri e la forma della funzione determinano l'ampiezza di questa area. Le funzioni più utilizzate per determinare l'area di attivazione sono quelle riportate in Figura \ref{fig:17}.
 \begin{figure}
 \centering
-\includegraphics[scale=0.4]{img/act_rbf.png}
+\includegraphics[scale=0.3]{img/act_rbf.png}
 \caption{Varie funzioni di attivazione per un RBFN.}
 \label{fig:17}
 \end{figure}
@@ -634,6 +634,45 @@ Come esempio, applichiamo un RBFN per simulare una congiunzione booleana. Un net
 \end{figure}
 In generale, un RBFN ha lo stesso potere espressivo di un MLP e può essere visto come un approssimatore universale, ovvero può approssimare (con errore arbitrariamente piccolo) una qualsiasi funzioni Riemann-integrabile. Il procedimento è lo stesso che nel caso degli altri network: la funzione viene approssimata da una funzione a scalini che può essere calcolata facilmente da una funzione radiale se la definiamo come la somma pesata di funzioni rettangolari. L'approssimazione può essere migliorata aumentando il numero dei punti in cui si valuta la funzione. Inoltre, se al posto della funzione rettangolare, viene utilizzata una funzione Gaussiana possiamo ottenere delle transizioni più "morbide" evitando bruschi salti. 
 
+\subsection{Training delle RBFN}
+
+Se negli altri ANN la fase di inizializzazione era triviale, in quanto bastava scegliere valori in modo casuale, quando si tratta di RBFN lo stesso approccio conduce a risultati subottimali. Consideriamo, quindi, il caso speciale delle \emph{simple radial basis function network}, dove ogni esempio di apprendimento viene associato ad una propria funzione radiale. Dato un fixed learning task $L = \{l_1,\dots,l_m\}$, avente $m$ pattern $l = (\ii^l,\oo^l)$, definiremo il vettore dei pesi associato al neurone $v_k$ come:
+
+$$
+\forall k \in \{1,\dots,m\}: \ww_{v_k} = \ii_k
+$$
+
+Assumendo una funzione di attivazione gaussiana, il raggio $\sigma_k$ è inizializzato in accordo a questa euristica:
+
+$$
+\forall k \in \{1,\dots,m\}: \sigma_k = \frac{d_{max}}{\sqrt{2m}}
+$$
+
+Dove $d_{max}$ è la massima distanza tra i vettori di input. Questa scelta permette di centrare le varie gaussiane in modo che non si sovrappongano l'una all'altra, ma si distribuiscano in modo ordinato rispetto allo spazio di input. Per quanto riguarda, invece, i pesi dei neuroni di output, vengono calcolati secondo la seguente funzione:
+$$
+\forall u: \sum_{k=1}^m w_{u_k} out_{u_k} - \theta  = o_u
+$$
+Ponendo $\theta = 0$, avremo che la precedente equazione è equivalente a:
+$$ 
+\mathbf{A}\cdot \ww_u = \oo_u
+$$
+Dove $\mathbf{A}$ è la matrice $m \times m$ che ha come componenti i vari output dei neuroni nel hidden layer. Se la matrice $\mathbf{A}$ ha rango completo, possiamo invertirla e calcolare il vettore dei pesi come segue:
+$$
+\ww_u = \mathbf{A}^{-1}\cdot \oo_u
+$$
+Questo metodo garantisce una perfetta approssimazione. Non è necessario, quindi, allenare un simple radial basis function network. In generale, se non vogliamo avere per ogni training pattern un neurone, dovremo selezionare $k$ sottoinsiemi del dataset e trovare, per ogni sottoinsieme, un rappresentante che  assoceremo ad un neurone nel layer hidden. In analogia a quanto accade nel caso "semplice" avremo una matrice $\mathbf{A}$ di dimensione $m\times (k+1)$ con i valori in output dei vari neuroni nel hidden layer. Dato che la matrice non è quadrata, non è possibile calcolarne l'inversa come avevamo fatto in precedenza. Tuttavia, esiste una alternativa chiamata la \emph{matrice pseudo-inversa}\footnote{La matrice pseudo-inversa $\mathbf{A}^+$ della matrice $\mathbf{A}$ è calcolata come $\mathbf{A}^+ = (\mathbf{A}^{\top}\mathbf{A})^{-1}\mathbf{A}^{\top}$} che permette di completare il calcolo con una buona approssimazione. Ovviamente, l'accuratezza del network costruito in questo modo dipenderà dalla precisione con cui si scelgano i rappresentati delle varie sottoclassi del dataset. Esistono vari metodi per fare questo:
+\begin{itemize}
+\item{Scegliamo tutti i punti del dataset come centri. In questo caso ricadiamo nel caso "semplice" e i valori di output possono essere calcolati precisamente. Tuttavia, il calcolo dei pesi può risultare infattibile.}
+\item{Costruiamo un sottoinsieme randomico per rappresentare i centri. Questo metodo ha il pregio di essere facilmente calcolabile. La performance, però, dipenderà dalla fortuna di scegliere dei "buoni" centri.}
+\item{Utilizziamo un algoritmo di clustering (c-means clustering,learning vector quantization..)}
+\end{itemize}
+
+
+\begin{remark}
+\emph{L'algoritmo c-means sceglie randomicamente $c$ centri di altrettanti cluster. Quindi il dataset viene partizionato in $c$ sottoclassi a seconda della vicinanza ai vari centri. In un passo successivo si calcola il "centro di gravità" del cluster così trovato e lo si elegge come nuovo centro. Si ricomputa l'appartenza dei punti del dataset e si procede così fino a che i centri smettono di oscillare.}
+\end{remark}
+
+La fase di training avviene come nel caso dei MLP attraverso il gradient descent e la backpropagation. 
 \section{Sistemi fuzzy}
 
 

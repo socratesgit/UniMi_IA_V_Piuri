@@ -660,7 +660,7 @@ Dove $\mathbf{A}$ è la matrice $m \times m$ che ha come componenti i vari outpu
 $$
 \ww_u = \mathbf{A}^{-1}\cdot \oo_u
 $$
-Questo metodo garantisce una perfetta approssimazione. Non è necessario, quindi, allenare un simple radial basis function network. In generale, se non vogliamo avere per ogni training pattern un neurone, dovremo selezionare $k$ sottoinsiemi del dataset e trovare, per ogni sottoinsieme, un rappresentante che  assoceremo ad un neurone nel layer hidden. In analogia a quanto accade nel caso "semplice" avremo una matrice $\mathbf{A}$ di dimensione $m\times (k+1)$ con i valori in output dei vari neuroni nel hidden layer. Dato che la matrice non è quadrata, non è possibile calcolarne l'inversa come avevamo fatto in precedenza. Tuttavia, esiste una alternativa chiamata la \emph{matrice pseudo-inversa}\footnote{La matrice pseudo-inversa $\mathbf{A}^+$ della matrice $\mathbf{A}$ è calcolata come $\mathbf{A}^+ = (\mathbf{A}^{\top}\mathbf{A})^{-1}\mathbf{A}^{\top}$} che permette di completare il calcolo con una buona approssimazione. Ovviamente, l'accuratezza del network costruito in questo modo dipenderà dalla precisione con cui si scelgano i rappresentati delle varie sottoclassi del dataset. Esistono vari metodi per fare questo:
+Questo metodo garantisce una perfetta approssimazione. Non è necessario, quindi, allenare un simple radial basis function network. In generale, se non vogliamo avere per ogni training pattern un neurone, dovremo selezionare $k$ sottoinsiemi del dataset e trovare, per ogni sottoinsieme, un rappresentante che  assoceremo ad un neurone nel layer hidden. In analogia a quanto accade nel caso "semplice" avremo una matrice $\mathbf{A}$ di dimensione $m\times (k+1)$ con i valori in output dei vari neuroni nel hidden layer. Dato che la matrice non è quadrata, non è possibile calcolarne l'inversa come avevamo fatto in precedenza. Tuttavia, esiste una alternativa chiamata la \emph{matrice pseudo-inversa}\footnote{La matrice pseudo-inversa $\mathbf{A}^+$ della matrice $\mathbf{A}$ è calcolata come $\mathbf{A}^+ = (\mathbf{A}^{\top}\mathbf{A})^{-1}\mathbf{A}^{\top}$.} che permette di completare il calcolo con una buona approssimazione. Ovviamente, l'accuratezza del network costruito in questo modo dipenderà dalla precisione con cui si scelgano i rappresentati delle varie sottoclassi del dataset. Esistono vari metodi per fare questo:
 \begin{itemize}
 \item{Scegliamo tutti i punti del dataset come centri. In questo caso ricadiamo nel caso "semplice" e i valori di output possono essere calcolati precisamente. Tuttavia, il calcolo dei pesi può risultare infattibile.}
 \item{Costruiamo un sottoinsieme randomico per rappresentare i centri. Questo metodo ha il pregio di essere facilmente calcolabile. La performance, però, dipenderà dalla fortuna di scegliere dei "buoni" centri.}
@@ -672,7 +672,77 @@ Questo metodo garantisce una perfetta approssimazione. Non è necessario, quindi
 \emph{L'algoritmo c-means sceglie randomicamente $c$ centri di altrettanti cluster. Quindi il dataset viene partizionato in $c$ sottoclassi a seconda della vicinanza ai vari centri. In un passo successivo si calcola il "centro di gravità" del cluster così trovato e lo si elegge come nuovo centro. Si ricomputa l'appartenza dei punti del dataset e si procede così fino a che i centri smettono di oscillare.}
 \end{remark}
 
-La fase di training avviene come nel caso dei MLP attraverso il gradient descent e la backpropagation. 
+La fase di training avviene come nel caso dei MLP attraverso gradient descent e backpropagation. 
+
+\subsection{Learning vector quantization}
+
+Fino ad ora ci siamo concentrati sui fixed learning task per descrivere l'apprendimento delle ANN: il successo dell'apprendimento si misura dall'adeguatezza con cui il network approssima gli output desiderati. Tuttavia, non sappiamo sempre quale output aspettarci per ogni input nel nostro dataset. L'obbiettivo di una rete neurale in questi casi sarà quello di classificare o clusterizzare\footnote{Solitamente si usa il termine "classe" quando queste sono conosciute \emph{a priori}, dove, invece, i "cluster" sono derivati \emph{a posteriori} dai dati in base alle loro similitudini.} i dati in input, senza avere un'indicazione su cosa si stia cercando. La \emph{learning vector quantization} è una tecnica che ci aiuta ad operare il raggruppamento in modo automatico, trovando una adeguata tassellazione dello spazio di input. Come nel caso dell'algoritmo c-means, i vari cluster verranno rappresentati da punti detti "centri" scelti tra quelli del dataset.
+
+\subsubsection{Learning vector quantization network}
+
+Per calcolare la learning vector quantization utilizzeremo un network feed-forward a due layer che chiameremo \emph{learning vector quantization network} (in quel che segue, LVQN). Questo tipo particolare di network può essere visto come un RBFN che ha il layer di output al posto del hidden layer. Come nel caso dei RBFN avremo, infatti, che la funzione di input del layer di output è una funzione della distanza del vettore di input e quello dei pesi. Allo stesso modo, la funzione di attivazione dei neuroni di output è una funzione radiale. La differenza, nel caso dei LVQN, risiede nella $f_{(out)}$ dei neuroni di output, la quale non è la semplice identità, ma propaga il messaggio solo se l'attivazione del neurone è la massima tra le attivazioni dei neuroni di output. Se più di un'unità ha il valore massimo ne viene scelta una a random, mentre le altre vengono poste a zero (principio del \emph{winner-takes-all}). 
+
+$$
+f^u_{out} (act_u) = \begin{cases}
+					1 \quad \text{if } act_u = \max_{v \in U_{out}} act_v\\
+					0 \quad \text{altrimenti}
+					\end{cases}
+$$
+
+Un'altra differenza rispetto all'algoritmo c-means riguarda il metodo attraverso cui i "centri" vengono aggiornati. In questo caso, infatti, i punti nel dataset vengono processati uno ad uno. La procedura viene chiamata \emph{competitive learning}: ogni input viene "conteso" dai vari neuroni di output, e viene vinto dal neurone con il valore di attivazione più alto. Il neurone vincitore viene adattato, in modo che il vettore di riferimento venga mosso più vicino al punto, dove, invece, il resto dei vettori di riferimento vengono allontanti dal punto (vedi Figura \ref{fig:19}). Questo viene fatto secondo le seguenti regole:
+
+\begin{itemize}
+\item{\emph{Attraction rule}: $
+\mathbf{r}^{new} = \mathbf{r}^{old} + \eta(\mathbf{x} - \mathbf{r}^{old})
+$} 
+\item{\emph{Repulsion rule}: $
+\mathbf{r}^{new} = \mathbf{r}^{old} - \eta(\mathbf{x} - \mathbf{r}^{old})
+$} 
+\end{itemize}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.4]{img/adapt.png}
+\caption{Attraction rule e repulsion rule in azione.}
+\label{fig:19}
+\end{figure}
+
+dove $\mathbf{x}$ è l'input, $\mathbf{r}$ è il vettore di riferimento per il neurone vincitore e $\eta$ è il learning rate. Fino ad ora abbiamo sottointeso che il learning rate rimanesse fisso per la durata dell'apprendimento, tuttavia esistono delle situazioni in cui un learning rate costante può portare ad alcuni problemi. Un caso è quello rappresentato nel riquadro a sinistra della Figura \ref{fig:20}, dove il vettore di riferimento oscilla ciclicamente verso uno dei quattro punti. Un metodo semplice per risolvere il problema è quello di far decrescere il learning rate al crescere delle iterazioni (\emph{time dependent leanring rate}). In questo modo, il movimento circolare collassa col passare del tempo in una spirale, facendo così convergere l'algoritmo.
+Un altro problema con la versione classica di questo algoritmo è che il processo di adattamento porti i vettori di riferimento ad allontanarsi sempre di più tra loro. Per evitare questo effetto indesiderabile che ostacola la convergenza dell'algoritmo si prevede una così detta \emph{window rule} tale per cui un vettore di riferimento viene adattato solo se il punto $\mathbf{p}$ giace vicino al bordo della classificazione, ossia alla (iper-)superficie che separa le regioni contigue delle due classi. La nozione vaga di vicinanza viene formalizzata come segue:
+
+$$
+\min(\frac{d(\mathbf{p},\mathbf{r_j})}{d(\mathbf{p},\mathbf{r_k}},\frac{d(\mathbf{p},\mathbf{r_k})}{d(\mathbf{p},\mathbf{r_j})}) > \theta \quad \text{dove} \quad \theta = \frac{1 - \xi}{1 + \xi}
+$$ 
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.4]{img/oscill.png}
+\caption{Learing rate costante (a sinistra) e decrescente (a destra).}
+\label{fig:20}
+\end{figure}
+
+dove $\xi$ è un parametro specificato dall'utente e, intuitivamente, descrive l'"ampiezza" della finestra attorno al bordo delle classificazioni.
+Se assumiamo che i dati siano stati scelti randomicamente da un insieme di distribuzioni normali potremmo voler usare un assegnamento \emph{soft}, in opposizione ad una divisione \emph{crisp} tipica del clustering a là c-means. Rinunciamo, quindi, alla strategia del \emph{winner-takes-all} e cerchiamo di descrivere i dati attraverso insiemi di gaussiane. In questo modo, tutti i vettori di riferimento che appartengono alla stessa classe vengono "attratti" verso il centro (con varia intensità rispetto alla distanza) e tutti quelli che non vi appartengono vengono "respinti". La densità di probabilità verrà rappresentata dalla seguente formula:
+
+$$
+f_\mathbf{X} (\mathbf{x},C) = \sum^c_{y = 1} p_Y(y,C) \cdot f_{\mathbf{X}|Y}(\mathbf{x}|y,C)
+$$
+
+dove $C$ è l'insieme dei cluster, $\mathbf{X}$ è un vettore randomico che ha come dominio lo spazio dell'input, $Y$ una variabile randomica che ha l'indice dei cluster come suo dominio, $p_Y(y,C)$ è la probabilità che un punto appartenga al $y$-esimo componente dell'insieme e $f_{\mathbf{X}|Y}(\mathbf{x}|y,C)$ è la funzione di probabilità condizionata dato il cluster $y$.
+Per approssimare questa funzione, decidendo la posizione e l'ampiezza delle gaussiane, dovremo risolvere un problema di ottimizzazione comunemente chiamato \emph{maximum likelihood estimation} rispetto ai parametri del cluster. La funzione di likelihood è così calcolata:
+
+$$
+L(\mathbf{X},C) = \prod_{j=1}^n f_\mathbf{X} (\mathbf{x},C) = \prod_{j=1}^n \sum^c_{y = 1} p_Y(y,C) \cdot f_{\mathbf{X}|Y}(\mathbf{x}|y,C)
+$$
+
+Tuttavia, nella presente forma, la funzione è difficilmente ottimizzabile per via della sommatoria. Quindi, prendiamo come parametro aggiuntivo un insieme $Y_j$ di variabili:
+
+$$
+L(\mathbf{X},y,C) = \prod_{j=1}^n f_{\mathbf{X}_j,Y_j} (\mathbf{x},y_j,C)
+$$
+
+Il problema si traduce, ora, nel trovare i valori per $Y$. L'approccio utilizzato è quello di sceglierne di randomici e considerare la distribuzione di probabilità sui possibili valori. $L(\mathbf{X},y,C)$ diviene una variabile randomica di cui possiamo massimizzare il valore aspettato. Per farlo possiamo fissare $C$ in alcuni termini e computare iterativamente migliori approssimazioni.
+
 \section{Sistemi fuzzy}
 
 

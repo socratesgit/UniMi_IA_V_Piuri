@@ -767,6 +767,50 @@ $$
 
 dove $u_*$ è il neurone vincitore e $f_{nb}$ è una funzione radiale. Il learning rate $\eta$ è parametrizzato rispetto al tempo perchè varierà con il numero delle iterazioni. Inoltre, lo stesso raggio della funzione di vicinato in modo che si riduca progressivamente l'influenza del "centro" che è stato scelto e permetterci così una più fine approssimazione della topologia.
 
+\subsection{Hopfield network}
+
+Nei precedenti capitoletti ci siamo interessati esclusivamente di feed-forward network, ovvero network rappresentati da un grafo aciclico. Esistono, tuttavia, in letteratura alcuni esempi di \emph{recurrent network}, ovvero network il cui grafo contiene dei cicli diretti. Una dei più semplici modelli di recurrent network è quello degli \emph{Hopfield network} (in quello che segue HN). Una prima differenza degli HN rispetto agli altri ANN è che tutti i neuroni sono sia neuroni di input che di output. Non esistono, inoltre, neuroni nascosti. Ogni neurone è connesso ad ogni altro neurone (sono esclusi cappi) e i pesi delle connessioni sono simmetrici. La funzione di input di ogni neurone è la somma pesata degli output degli altri neuroni:
+
+$$
+f_{(net)}^u(\ww,\ii) = \sum_{v \in U - \{u\}} w_{uv} out_v 
+$$
+
+La funzione di attivazione, invece, è una threshold function:
+
+$$
+f_{(act)}^u(net_u,\theta_u) = \begin{cases}
+				1 \quad \text{se} \quad net_u >= \theta_u \\
+				-1 \quad \text{se} \quad net_u < \theta_u
+							  \end{cases}
+$$
+
+Mentre la funzione di output è la funzione identità. Possiamo, quindi, rappresentare un HN attraverso la sua matrice dei pesi:
+
+$$
+\mathbf{W} = \begin{bmatrix} 
+			0 & w_{u_1 u_2} & \dots & w_{u_1 u_n} \\
+			w_{u_2 u_1} & 0 & \dots & w_{u_2 u_n} \\
+			\vdots & \vdots & \vdots & \vdots \\
+			w_{u_n u_1} & w{u_n u_2} & \dots & 0
+			\end{bmatrix}
+$$
+
+Il comportamento degli HN può cambiare a seconda che i neuroni vengano aggiornati in modo sequenziale o parallelo. Se decidiamo di aggiornarli in parallelo può capitare che non si raggiunga mai uno stato stabile, ma il valore continui ad oscillare. Il teorema di convergenza ci assicura, invece, che nel caso li si aggiorni in modo sequenziale, si riesce sempre a raggiungere uno stato stabile.
+
+\begin{theorem}
+\emph{Se i neuroni di un HN sono aggiornati in modo asincrono allora uno stato stabile viene raggiunto al massimo in $n\cdot 2^n$ passi, dove $n$ è il numero dei neuroni.}
+\end{theorem}
+
+La prova del teorema si basa sul calcolo dell'energia del sistema:
+
+$$
+E = -\frac{1}{2} \sum_{u,v \in U, u \neq v} w_{uv}act_u act_v + \sum_{u \in U} \theta_u act_u
+$$
+
+Si può osservare, infatti, che il sistema può solo evolversi da uno stato con energia maggiore ad uno con energia minore. Uno stato stabile sarà un minimo locale della funzione energia. Possiamo sfruttare questo teorema per utilizzare gli HN come memorie associative, collegando un dato allo stato stabile raggiunto dopo averlo fatto processare del network. Allo stesso modo, possiamo utilizzare gli HN per calcolare problemi di ottimizzazione. Sarà sufficiente in questo caso trasformare la funzione da minimizzare in una funzione energia di un HN ed osservare gli stati stabili (aka i minimi della funzione energia) raggiunti. Per evitare di rimanere intrappolati in minimi locali è opportuno rinizializzare varie volte il network in modo randomico e ripetere gli aggiornamenti fino alla convergenza.
+
+
+
 \section{Sistemi fuzzy}
 
 

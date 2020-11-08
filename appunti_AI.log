@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.8.1)  7 NOV 2020 20:33
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.8.1)  8 NOV 2020 19:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -635,24 +635,24 @@ Package caption Info: hyperref package is loaded.
 (./appunti_AI.aux)
 \openout1 = `appunti_AI.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Info: Redefining \it@ocap on input line 24.
-LaTeX Info: Redefining \it@ccap on input line 24.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Info: Redefining \it@ocap on input line 25.
+LaTeX Info: Redefining \it@ccap on input line 25.
 \AtBeginShipoutBox=\box29
-Package hyperref Info: Link coloring OFF on input line 24.
+Package hyperref Info: Link coloring OFF on input line 25.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
@@ -662,9 +662,9 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count131
 )
-LaTeX Info: Redefining \ref on input line 24.
-LaTeX Info: Redefining \pageref on input line 24.
-LaTeX Info: Redefining \nameref on input line 24.
+LaTeX Info: Redefining \ref on input line 25.
+LaTeX Info: Redefining \pageref on input line 25.
+LaTeX Info: Redefining \nameref on input line 25.
 
 (./appunti_AI.out) (./appunti_AI.out)
 \@outlinefile=\write3
@@ -703,87 +703,87 @@ e
 ))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Try loading font information for U+msa on input line 33.
+LaTeX Font Info:    Try loading font information for U+msa on input line 34.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 33.
+LaTeX Font Info:    Try loading font information for U+msb on input line 34.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 33.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 34.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <8> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 33.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 34.
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <6> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 33.
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 33.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 34.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 34.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 44.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 45.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-<img/neurone.jpeg, id=126, 263.98625pt x 191.71625pt>
+<img/neurone.jpeg, id=138, 263.98625pt x 191.71625pt>
 File: img/neurone.jpeg Graphic file (type jpg)
 <use img/neurone.jpeg>
-Package pdftex.def Info: img/neurone.jpeg  used on input line 58.
+Package pdftex.def Info: img/neurone.jpeg  used on input line 59.
 (pdftex.def)             Requested size: 184.78911pt x 134.20045pt.
-<img/cpuvshuman.png, id=128, 952.55875pt x 636.3775pt>
+<img/cpuvshuman.png, id=140, 952.55875pt x 636.3775pt>
 File: img/cpuvshuman.png Graphic file (type png)
 <use img/cpuvshuman.png>
-Package pdftex.def Info: img/cpuvshuman.png  used on input line 74.
+Package pdftex.def Info: img/cpuvshuman.png  used on input line 75.
 (pdftex.def)             Requested size: 285.76982pt x 190.91472pt.
  [2 <./img/neurone.jpeg>] [3 <./img/cpuvshuman.png>]
-<img/geometria.png, id=151, 467.7475pt x 166.6225pt>
+<img/geometria.png, id=163, 467.7475pt x 166.6225pt>
 File: img/geometria.png Graphic file (type png)
 <use img/geometria.png>
-Package pdftex.def Info: img/geometria.png  used on input line 125.
+Package pdftex.def Info: img/geometria.png  used on input line 126.
 (pdftex.def)             Requested size: 233.87317pt x 83.31104pt.
-<img/doppiaimplicazione.png, id=152, 319.1925pt x 179.67125pt>
+<img/doppiaimplicazione.png, id=164, 319.1925pt x 179.67125pt>
 File: img/doppiaimplicazione.png Graphic file (type png)
 <use img/doppiaimplicazione.png>
-Package pdftex.def Info: img/doppiaimplicazione.png  used on input line 144.
+Package pdftex.def Info: img/doppiaimplicazione.png  used on input line 145.
 (pdftex.def)             Requested size: 159.59586pt x 89.83539pt.
-<img/netTLU.png, id=154, 515.9275pt x 246.9225pt>
+<img/netTLU.png, id=166, 515.9275pt x 246.9225pt>
 File: img/netTLU.png Graphic file (type png)
 <use img/netTLU.png>
-Package pdftex.def Info: img/netTLU.png  used on input line 153.
+Package pdftex.def Info: img/netTLU.png  used on input line 154.
 (pdftex.def)             Requested size: 257.96312pt x 123.46094pt.
  [4 <./img/geometria.png>]
-<img/error1.png, id=167, 839.135pt x 225.84375pt>
+<img/error1.png, id=179, 839.135pt x 225.84375pt>
 File: img/error1.png Graphic file (type png)
 <use img/error1.png>
-Package pdftex.def Info: img/error1.png  used on input line 183.
+Package pdftex.def Info: img/error1.png  used on input line 184.
 (pdftex.def)             Requested size: 335.64804pt x 90.33589pt.
  [5 <./img/doppiaimplicazione.png> <./img/netTLU.png>]
-<img/error2.png, id=179, 839.135pt x 235.88126pt>
+<img/error2.png, id=192, 839.135pt x 235.88126pt>
 File: img/error2.png Graphic file (type png)
 <use img/error2.png>
-Package pdftex.def Info: img/error2.png  used on input line 198.
+Package pdftex.def Info: img/error2.png  used on input line 199.
 (pdftex.def)             Requested size: 335.64804pt x 94.35083pt.
  [6 <./img/error1.png> <./img/error2.png>]
-<img/ANN.png, id=189, 817.0525pt x 369.38pt>
+<img/ANN.png, id=201, 817.0525pt x 369.38pt>
 File: img/ANN.png Graphic file (type png)
 <use img/ANN.png>
-Package pdftex.def Info: img/ANN.png  used on input line 248.
+Package pdftex.def Info: img/ANN.png  used on input line 249.
 (pdftex.def)             Requested size: 326.81522pt x 147.74937pt.
  [7]
-<img/rnn1.png, id=200, 1005.7575pt x 287.0725pt>
+<img/rnn1.png, id=212, 1005.7575pt x 287.0725pt>
 File: img/rnn1.png Graphic file (type png)
 <use img/rnn1.png>
-Package pdftex.def Info: img/rnn1.png  used on input line 271.
+Package pdftex.def Info: img/rnn1.png  used on input line 272.
 (pdftex.def)             Requested size: 301.72958pt x 86.1224pt.
  [8 <./img/ANN.png> <./img/rnn1.png>]
-Overfull \hbox (13.33049pt too wide) in paragraph at lines 288--291
+Overfull \hbox (13.33049pt too wide) in paragraph at lines 289--292
 []\T1/cmr/m/n/10 Nel ca-so di una fi-xed lear-ning ta-sk avre-mo un in-sie-me $
 \OML/cmm/m/it/10 L \OT1/cmr/m/n/10 = \OMS/cmsy/m/n/10 f\OT1/cmr/m/n/10 (\OT1/cm
 r/bx/n/10 i[]\OML/cmm/m/it/10 ; \OT1/cmr/bx/n/10 o[]\OT1/cmr/m/n/10 )\OML/cmm/m
@@ -792,164 +792,165 @@ bx/n/10 o[]\OT1/cmr/m/n/10 )\OMS/cmsy/m/n/10 g$
  []
 
 [9]
-<img/MLP.png, id=224, 1041.8925pt x 534.99875pt>
+<img/MLP.png, id=236, 1041.8925pt x 534.99875pt>
 File: img/MLP.png Graphic file (type png)
 <use img/MLP.png>
-Package pdftex.def Info: img/MLP.png  used on input line 316.
+Package pdftex.def Info: img/MLP.png  used on input line 317.
 (pdftex.def)             Requested size: 312.57016pt x 160.50085pt.
-<img/step.png, id=226, 403.5075pt x 223.83624pt>
+<img/step.png, id=238, 403.5075pt x 223.83624pt>
 File: img/step.png Graphic file (type png)
 <use img/step.png>
-Package pdftex.def Info: img/step.png  used on input line 335.
+Package pdftex.def Info: img/step.png  used on input line 336.
 (pdftex.def)             Requested size: 155.24927pt x 85.3592pt.
-<img/semilinear.png, id=227, 407.5225pt x 217.81375pt>
+<img/semilinear.png, id=239, 407.5225pt x 217.81375pt>
 File: img/semilinear.png Graphic file (type png)
 <use img/semilinear.png>
-Package pdftex.def Info: img/semilinear.png  used on input line 339.
+Package pdftex.def Info: img/semilinear.png  used on input line 340.
 (pdftex.def)             Requested size: 155.24568pt x 85.3558pt.
-<img/sineup.png, id=228, 408.52625pt x 216.81pt>
+<img/sineup.png, id=240, 408.52625pt x 216.81pt>
 File: img/sineup.png Graphic file (type png)
 <use img/sineup.png>
-Package pdftex.def Info: img/sineup.png  used on input line 343.
+Package pdftex.def Info: img/sineup.png  used on input line 344.
 (pdftex.def)             Requested size: 155.24782pt x 85.35945pt.
-<img/logistic.png, id=229, 405.515pt x 232.87pt>
+<img/logistic.png, id=241, 405.515pt x 232.87pt>
 File: img/logistic.png Graphic file (type png)
 <use img/logistic.png>
-Package pdftex.def Info: img/logistic.png  used on input line 347.
+Package pdftex.def Info: img/logistic.png  used on input line 348.
 (pdftex.def)             Requested size: 155.2482pt x 85.3575pt.
 
-Overfull \hbox (2.22168pt too wide) in paragraph at lines 334--350
+Overfull \hbox (2.22168pt too wide) in paragraph at lines 335--351
 []$[]$ $[]$
  []
 
 
-Overfull \hbox (2.22168pt too wide) in paragraph at lines 334--350
+Overfull \hbox (2.22168pt too wide) in paragraph at lines 335--351
 []$ $[]$ 
  []
 
 [10 <./img/MLP.png>]
-<img/approx.png, id=236, 391.4625pt x 246.9225pt>
+<img/approx.png, id=248, 391.4625pt x 246.9225pt>
 File: img/approx.png Graphic file (type png)
 <use img/approx.png>
-Package pdftex.def Info: img/approx.png  used on input line 384.
+Package pdftex.def Info: img/approx.png  used on input line 385.
 (pdftex.def)             Requested size: 156.58221pt x 98.76724pt.
-<img/riemann.png, id=237, 674.52pt x 451.6875pt>
+<img/riemann.png, id=249, 674.52pt x 451.6875pt>
 File: img/riemann.png Graphic file (type png)
 <use img/riemann.png>
-Package pdftex.def Info: img/riemann.png  used on input line 391.
+Package pdftex.def Info: img/riemann.png  used on input line 392.
 (pdftex.def)             Requested size: 202.35756pt x 135.5073pt.
  [11 <./img/step.png> <./img/semilinear.png> <./img/sineup.png> <./img/logistic
 .png>] [12 <./img/approx.png> <./img/riemann.png>] [13]
-<img/gradient.png, id=262, 715.67375pt x 558.085pt>
+<img/gradient.png, id=274, 715.67375pt x 558.085pt>
 File: img/gradient.png Graphic file (type png)
 <use img/gradient.png>
-Package pdftex.def Info: img/gradient.png  used on input line 481.
+Package pdftex.def Info: img/gradient.png  used on input line 482.
 (pdftex.def)             Requested size: 214.70378pt x 167.42679pt.
 
 [14]
-<img/backpropagation.png, id=269, 817.0525pt x 685.56125pt>
+<img/backpropagation.png, id=281, 817.0525pt x 685.56125pt>
 File: img/backpropagation.png Graphic file (type png)
 <use img/backpropagation.png>
-Package pdftex.def Info: img/backpropagation.png  used on input line 502.
+Package pdftex.def Info: img/backpropagation.png  used on input line 503.
 (pdftex.def)             Requested size: 326.81522pt x 274.21964pt.
  [15 <./img/gradient.png>] [16 <./img/backpropagation.png>] [17] [18]
-<img/relu.png, id=290, 808.01875pt x 280.04625pt>
+<img/relu.png, id=302, 808.01875pt x 280.04625pt>
 File: img/relu.png Graphic file (type png)
 <use img/relu.png>
-Package pdftex.def Info: img/relu.png  used on input line 568.
+Package pdftex.def Info: img/relu.png  used on input line 569.
 (pdftex.def)             Requested size: 323.20177pt x 112.0165pt.
 
 [19 <./img/relu.png>]
-<img/circle.png, id=299, 612.2875pt x 204.765pt>
+<img/circle.png, id=311, 612.2875pt x 204.765pt>
 File: img/circle.png Graphic file (type png)
 <use img/circle.png>
-Package pdftex.def Info: img/circle.png  used on input line 612.
+Package pdftex.def Info: img/circle.png  used on input line 613.
 (pdftex.def)             Requested size: 244.91066pt x 81.90454pt.
  [20]
-<img/act_rbf.png, id=309, 819.06pt x 696.6025pt>
+<img/act_rbf.png, id=322, 819.06pt x 696.6025pt>
 File: img/act_rbf.png Graphic file (type png)
 <use img/act_rbf.png>
-Package pdftex.def Info: img/act_rbf.png  used on input line 624.
+Package pdftex.def Info: img/act_rbf.png  used on input line 625.
 (pdftex.def)             Requested size: 245.7199pt x 208.98236pt.
-<img/and_rbf.png, id=311, 792.9625pt x 216.81pt>
+<img/and_rbf.png, id=324, 792.9625pt x 216.81pt>
 File: img/and_rbf.png Graphic file (type png)
 <use img/and_rbf.png>
-Package pdftex.def Info: img/and_rbf.png  used on input line 631.
+Package pdftex.def Info: img/and_rbf.png  used on input line 632.
 (pdftex.def)             Requested size: 317.17938pt x 86.72246pt.
  [21 <./img/circle.png> <./img/act_rbf.png>] [22 <./img/and_rbf.png>] [23]
-Overfull \hbox (4.44244pt too wide) in paragraph at lines 683--684
+Overfull \hbox (4.44244pt too wide) in paragraph at lines 684--685
 \T1/cmr/m/n/10 Per cal-co-la-re la lear-ning vec-tor quan-ti-za-tion uti-liz-ze
 -re-mo un net-work feed-forward
  []
 
-<img/adapt.png, id=337, 777.90625pt x 324.21124pt>
+<img/adapt.png, id=349, 777.90625pt x 324.21124pt>
 File: img/adapt.png Graphic file (type png)
 <use img/adapt.png>
-Package pdftex.def Info: img/adapt.png  used on input line 705.
+Package pdftex.def Info: img/adapt.png  used on input line 706.
 (pdftex.def)             Requested size: 311.15698pt x 129.68219pt.
 [24 <./img/adapt.png>]
-<img/oscill.png, id=344, 785.93625pt x 284.06125pt>
+<img/oscill.png, id=356, 785.93625pt x 284.06125pt>
 File: img/oscill.png Graphic file (type png)
 <use img/oscill.png>
-Package pdftex.def Info: img/oscill.png  used on input line 719.
+Package pdftex.def Info: img/oscill.png  used on input line 720.
 (pdftex.def)             Requested size: 314.36893pt x 113.62247pt.
  [25 <./img/oscill.png>]
-<img/grid.png, id=352, 560.0925pt x 323.2075pt>
+<img/grid.png, id=364, 560.0925pt x 323.2075pt>
 File: img/grid.png Graphic file (type png)
 <use img/grid.png>
-Package pdftex.def Info: img/grid.png  used on input line 756.
+Package pdftex.def Info: img/grid.png  used on input line 757.
 (pdftex.def)             Requested size: 224.03302pt x 129.2807pt.
  [26] [27 <./img/grid.png>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 820.
-
-[28]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 820.
+[28] [29]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 880.
+ [30]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 880.
  (./appunti_AI.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 820.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 820.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 880.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 880.
 Package rerunfilecheck Info: File `appunti_AI.out' has not changed.
-(rerunfilecheck)             Checksum: C0E8F6EF7D5593910887E14B2B7B90D5;1861.
+(rerunfilecheck)             Checksum: 595B1D3A9FB55454DFDF20A9B6848CB2;2091.
  ) 
 Here is how much of TeX's memory you used:
- 8986 strings out of 492982
- 128451 string characters out of 6134897
+ 8999 strings out of 492982
+ 128616 string characters out of 6134897
  226504 words of memory out of 5000000
- 12282 multiletter control sequences out of 15000+600000
+ 12285 multiletter control sequences out of 15000+600000
  24494 words of font info for 63 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  42i,9n,40p,1776b,443s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-mi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
-></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
-/symbols/msbm10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1000.pfb>
-</usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fo
-nts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-
-super/sfrm0600.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0700.pfb><
-/usr/share/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf/fon
-ts/type1/public/cm-super/sfrm0900.pfb></usr/share/texmf/fonts/type1/public/cm-s
-uper/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></
-usr/share/texmf/fonts/type1/public/cm-super/sfrm1728.pfb></usr/share/texmf/font
-s/type1/public/cm-super/sfti0800.pfb></usr/share/texmf/fonts/type1/public/cm-su
-per/sfti1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb></u
-sr/share/texmf/fonts/type1/public/cm-super/sftt0800.pfb>
-Output written on appunti_AI.pdf (28 pages, 1478895 bytes).
+f-dist/fonts/type1/public/amsfonts/cm/cmbx5.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+mi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbol
+s/msbm10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1000.pfb></usr/s
+hare/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/typ
+e1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/s
+frm0600.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0700.pfb></usr/sh
+are/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf/fonts/type
+1/public/cm-super/sfrm0900.pfb></usr/share/texmf/fonts/type1/public/cm-super/sf
+rm1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/sha
+re/texmf/fonts/type1/public/cm-super/sfrm1728.pfb></usr/share/texmf/fonts/type1
+/public/cm-super/sfti0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sft
+i1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb></usr/shar
+e/texmf/fonts/type1/public/cm-super/sftt0800.pfb>
+Output written on appunti_AI.pdf (30 pages, 1497205 bytes).
 PDF statistics:
- 497 PDF objects out of 1000 (max. 8388607)
- 404 compressed objects within 5 object streams
- 114 named destinations out of 1000 (max. 500000)
- 334 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 528 PDF objects out of 1000 (max. 8388607)
+ 432 compressed objects within 5 object streams
+ 124 named destinations out of 1000 (max. 500000)
+ 358 words of extra memory for PDF output out of 10000 (max. 10000000)
 

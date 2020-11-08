@@ -22,5 +22,8 @@
 \BOOKMARK [3][-]{subsubsection.2.13.1}{Learning vector quantization network}{subsection.2.13}% 22
 \BOOKMARK [2][-]{subsection.2.14}{Self-organizing maps}{section.2}% 23
 \BOOKMARK [2][-]{subsection.2.15}{Hopfield network}{section.2}% 24
-\BOOKMARK [1][-]{section.3}{Sistemi fuzzy}{}% 25
-\BOOKMARK [1][-]{section.4}{Algoritmi evolutivi}{}% 26
+\BOOKMARK [2][-]{subsection.2.16}{Boltzmann machines}{section.2}% 25
+\BOOKMARK [3][-]{subsubsection.2.16.1}{Training}{subsection.2.16}% 26
+\BOOKMARK [3][-]{subsubsection.2.16.2}{Restricted Boltzmann machines}{subsection.2.16}% 27
+\BOOKMARK [1][-]{section.3}{Sistemi fuzzy}{}% 28
+\BOOKMARK [1][-]{section.4}{Algoritmi evolutivi}{}% 29

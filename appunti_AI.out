@@ -25,5 +25,6 @@
 \BOOKMARK [2][-]{subsection.2.16}{Boltzmann machines}{section.2}% 25
 \BOOKMARK [3][-]{subsubsection.2.16.1}{Training}{subsection.2.16}% 26
 \BOOKMARK [3][-]{subsubsection.2.16.2}{Restricted Boltzmann machines}{subsection.2.16}% 27
-\BOOKMARK [1][-]{section.3}{Sistemi fuzzy}{}% 28
-\BOOKMARK [1][-]{section.4}{Algoritmi evolutivi}{}% 29
+\BOOKMARK [2][-]{subsection.2.17}{Recurrent network}{section.2}% 28
+\BOOKMARK [1][-]{section.3}{Sistemi fuzzy}{}% 29
+\BOOKMARK [1][-]{section.4}{Algoritmi evolutivi}{}% 30

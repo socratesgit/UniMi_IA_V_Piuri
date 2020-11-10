@@ -870,6 +870,33 @@ Intuitivamente: se lo stesso neurone viene sempre attivato ogniqualvolta viene p
 \end{enumerate}
 In letteratura le RBM sono state utilizzate per costruire con più layer in modo simile a quanto accade con gli autoencoder nei MLP.
  
+\subsection{Recurrent network}
+
+Sia gli HN che le BM sono esempi di \emph{recurrent network}, ovvero network il cui grafo ha al suo interno dei cicli. L'output in questi network viene generato solo se viene raggiunto uno stato stabile nella computazione. L'evoluzione di questi sistemi può essere descritta attraverso l'utilizzo di equazioni differenziali. Dato, infatti, un insieme alcune equazioni differenziali rappresentate in forma ricorsiva:
+
+$$
+x(t_i) = x(t_{i-1}) + \Delta y_1(t_{i-1})
+$$
+$$
+y_1(t_i) = y_1(t_{i-1}) + \Delta y_2(t_{i-1})
+$$
+$$
+\vdots
+$$
+$$
+y_{i-1}(t_i) = y_{i-1}(t_{i-1}) + f(t_{i-1}, x(t_{i-1}), \dots, y_{n-1}(t_{i-1}))
+$$
+
+possiamo sfruttare la derivata della funzione nell'istante di tempo precedente per calcolare il valore successivo. Questo permette di trasformarle in un recurrent network, creando per ogni variabile un nodo nel grafo e associando alle connessioni il valore del differenziale come in Figura \ref{fig:22}.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.3]{img/recurrent.png}
+\caption{Recurrent network.}
+\label{fig:22}
+\end{figure}
+
+Possiamo generalizzare questo approccio a funzioni con più di un argomento grazie ai \emph{vectorial neural network}. Se, tuttavia, non conosciamo in precedenza la struttura della computazione non possiamo sfruttare la backpropagation così come l'abbiamo presentata, in quanto gli errori si propagano senza soluzione di continuità lungo i cicli del network. Un modo per risolvere questo problema è quello di dispiegare nel tempo la computazione ogni qualvolta questa attraversi un ciclo e aggiungere una copia dei neuroni così attraversati come un layer addizionale. A questo punto si potrà applicare la backpropagation come in un qualsiasi feed-forward network. Per calcolare gli aggiornamenti ai pesi e ai threshold sarà, però, necessario combinare gli aggiustamenti calcolati rispetto ai neuroni così aggiunti. 
  
 \section{Sistemi fuzzy}
 

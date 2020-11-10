@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.8.1)  8 NOV 2020 19:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.8.1)  10 NOV 2020 12:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -732,52 +732,52 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-<img/neurone.jpeg, id=138, 263.98625pt x 191.71625pt>
+<img/neurone.jpeg, id=142, 263.98625pt x 191.71625pt>
 File: img/neurone.jpeg Graphic file (type jpg)
 <use img/neurone.jpeg>
 Package pdftex.def Info: img/neurone.jpeg  used on input line 59.
 (pdftex.def)             Requested size: 184.78911pt x 134.20045pt.
-<img/cpuvshuman.png, id=140, 952.55875pt x 636.3775pt>
+<img/cpuvshuman.png, id=144, 952.55875pt x 636.3775pt>
 File: img/cpuvshuman.png Graphic file (type png)
 <use img/cpuvshuman.png>
 Package pdftex.def Info: img/cpuvshuman.png  used on input line 75.
 (pdftex.def)             Requested size: 285.76982pt x 190.91472pt.
  [2 <./img/neurone.jpeg>] [3 <./img/cpuvshuman.png>]
-<img/geometria.png, id=163, 467.7475pt x 166.6225pt>
+<img/geometria.png, id=167, 467.7475pt x 166.6225pt>
 File: img/geometria.png Graphic file (type png)
 <use img/geometria.png>
 Package pdftex.def Info: img/geometria.png  used on input line 126.
 (pdftex.def)             Requested size: 233.87317pt x 83.31104pt.
-<img/doppiaimplicazione.png, id=164, 319.1925pt x 179.67125pt>
+<img/doppiaimplicazione.png, id=168, 319.1925pt x 179.67125pt>
 File: img/doppiaimplicazione.png Graphic file (type png)
 <use img/doppiaimplicazione.png>
 Package pdftex.def Info: img/doppiaimplicazione.png  used on input line 145.
 (pdftex.def)             Requested size: 159.59586pt x 89.83539pt.
-<img/netTLU.png, id=166, 515.9275pt x 246.9225pt>
+<img/netTLU.png, id=170, 515.9275pt x 246.9225pt>
 File: img/netTLU.png Graphic file (type png)
 <use img/netTLU.png>
 Package pdftex.def Info: img/netTLU.png  used on input line 154.
 (pdftex.def)             Requested size: 257.96312pt x 123.46094pt.
  [4 <./img/geometria.png>]
-<img/error1.png, id=179, 839.135pt x 225.84375pt>
+<img/error1.png, id=183, 839.135pt x 225.84375pt>
 File: img/error1.png Graphic file (type png)
 <use img/error1.png>
 Package pdftex.def Info: img/error1.png  used on input line 184.
 (pdftex.def)             Requested size: 335.64804pt x 90.33589pt.
  [5 <./img/doppiaimplicazione.png> <./img/netTLU.png>]
-<img/error2.png, id=192, 839.135pt x 235.88126pt>
+<img/error2.png, id=196, 839.135pt x 235.88126pt>
 File: img/error2.png Graphic file (type png)
 <use img/error2.png>
 Package pdftex.def Info: img/error2.png  used on input line 199.
 (pdftex.def)             Requested size: 335.64804pt x 94.35083pt.
  [6 <./img/error1.png> <./img/error2.png>]
-<img/ANN.png, id=201, 817.0525pt x 369.38pt>
+<img/ANN.png, id=205, 817.0525pt x 369.38pt>
 File: img/ANN.png Graphic file (type png)
 <use img/ANN.png>
 Package pdftex.def Info: img/ANN.png  used on input line 249.
 (pdftex.def)             Requested size: 326.81522pt x 147.74937pt.
  [7]
-<img/rnn1.png, id=212, 1005.7575pt x 287.0725pt>
+<img/rnn1.png, id=216, 1005.7575pt x 287.0725pt>
 File: img/rnn1.png Graphic file (type png)
 <use img/rnn1.png>
 Package pdftex.def Info: img/rnn1.png  used on input line 272.
@@ -792,27 +792,27 @@ bx/n/10 o[]\OT1/cmr/m/n/10 )\OMS/cmsy/m/n/10 g$
  []
 
 [9]
-<img/MLP.png, id=236, 1041.8925pt x 534.99875pt>
+<img/MLP.png, id=240, 1041.8925pt x 534.99875pt>
 File: img/MLP.png Graphic file (type png)
 <use img/MLP.png>
 Package pdftex.def Info: img/MLP.png  used on input line 317.
 (pdftex.def)             Requested size: 312.57016pt x 160.50085pt.
-<img/step.png, id=238, 403.5075pt x 223.83624pt>
+<img/step.png, id=242, 403.5075pt x 223.83624pt>
 File: img/step.png Graphic file (type png)
 <use img/step.png>
 Package pdftex.def Info: img/step.png  used on input line 336.
 (pdftex.def)             Requested size: 155.24927pt x 85.3592pt.
-<img/semilinear.png, id=239, 407.5225pt x 217.81375pt>
+<img/semilinear.png, id=243, 407.5225pt x 217.81375pt>
 File: img/semilinear.png Graphic file (type png)
 <use img/semilinear.png>
 Package pdftex.def Info: img/semilinear.png  used on input line 340.
 (pdftex.def)             Requested size: 155.24568pt x 85.3558pt.
-<img/sineup.png, id=240, 408.52625pt x 216.81pt>
+<img/sineup.png, id=244, 408.52625pt x 216.81pt>
 File: img/sineup.png Graphic file (type png)
 <use img/sineup.png>
 Package pdftex.def Info: img/sineup.png  used on input line 344.
 (pdftex.def)             Requested size: 155.24782pt x 85.35945pt.
-<img/logistic.png, id=241, 405.515pt x 232.87pt>
+<img/logistic.png, id=245, 405.515pt x 232.87pt>
 File: img/logistic.png Graphic file (type png)
 <use img/logistic.png>
 Package pdftex.def Info: img/logistic.png  used on input line 348.
@@ -828,50 +828,50 @@ Overfull \hbox (2.22168pt too wide) in paragraph at lines 335--351
  []
 
 [10 <./img/MLP.png>]
-<img/approx.png, id=248, 391.4625pt x 246.9225pt>
+<img/approx.png, id=252, 391.4625pt x 246.9225pt>
 File: img/approx.png Graphic file (type png)
 <use img/approx.png>
 Package pdftex.def Info: img/approx.png  used on input line 385.
 (pdftex.def)             Requested size: 156.58221pt x 98.76724pt.
-<img/riemann.png, id=249, 674.52pt x 451.6875pt>
+<img/riemann.png, id=253, 674.52pt x 451.6875pt>
 File: img/riemann.png Graphic file (type png)
 <use img/riemann.png>
 Package pdftex.def Info: img/riemann.png  used on input line 392.
 (pdftex.def)             Requested size: 202.35756pt x 135.5073pt.
  [11 <./img/step.png> <./img/semilinear.png> <./img/sineup.png> <./img/logistic
 .png>] [12 <./img/approx.png> <./img/riemann.png>] [13]
-<img/gradient.png, id=274, 715.67375pt x 558.085pt>
+<img/gradient.png, id=278, 715.67375pt x 558.085pt>
 File: img/gradient.png Graphic file (type png)
 <use img/gradient.png>
 Package pdftex.def Info: img/gradient.png  used on input line 482.
 (pdftex.def)             Requested size: 214.70378pt x 167.42679pt.
 
 [14]
-<img/backpropagation.png, id=281, 817.0525pt x 685.56125pt>
+<img/backpropagation.png, id=285, 817.0525pt x 685.56125pt>
 File: img/backpropagation.png Graphic file (type png)
 <use img/backpropagation.png>
 Package pdftex.def Info: img/backpropagation.png  used on input line 503.
 (pdftex.def)             Requested size: 326.81522pt x 274.21964pt.
  [15 <./img/gradient.png>] [16 <./img/backpropagation.png>] [17] [18]
-<img/relu.png, id=302, 808.01875pt x 280.04625pt>
+<img/relu.png, id=306, 808.01875pt x 280.04625pt>
 File: img/relu.png Graphic file (type png)
 <use img/relu.png>
 Package pdftex.def Info: img/relu.png  used on input line 569.
 (pdftex.def)             Requested size: 323.20177pt x 112.0165pt.
 
 [19 <./img/relu.png>]
-<img/circle.png, id=311, 612.2875pt x 204.765pt>
+<img/circle.png, id=315, 612.2875pt x 204.765pt>
 File: img/circle.png Graphic file (type png)
 <use img/circle.png>
 Package pdftex.def Info: img/circle.png  used on input line 613.
 (pdftex.def)             Requested size: 244.91066pt x 81.90454pt.
  [20]
-<img/act_rbf.png, id=322, 819.06pt x 696.6025pt>
+<img/act_rbf.png, id=326, 819.06pt x 696.6025pt>
 File: img/act_rbf.png Graphic file (type png)
 <use img/act_rbf.png>
 Package pdftex.def Info: img/act_rbf.png  used on input line 625.
 (pdftex.def)             Requested size: 245.7199pt x 208.98236pt.
-<img/and_rbf.png, id=324, 792.9625pt x 216.81pt>
+<img/and_rbf.png, id=328, 792.9625pt x 216.81pt>
 File: img/and_rbf.png Graphic file (type png)
 <use img/and_rbf.png>
 Package pdftex.def Info: img/and_rbf.png  used on input line 632.
@@ -882,39 +882,44 @@ Overfull \hbox (4.44244pt too wide) in paragraph at lines 684--685
 -re-mo un net-work feed-forward
  []
 
-<img/adapt.png, id=349, 777.90625pt x 324.21124pt>
+<img/adapt.png, id=353, 777.90625pt x 324.21124pt>
 File: img/adapt.png Graphic file (type png)
 <use img/adapt.png>
 Package pdftex.def Info: img/adapt.png  used on input line 706.
 (pdftex.def)             Requested size: 311.15698pt x 129.68219pt.
 [24 <./img/adapt.png>]
-<img/oscill.png, id=356, 785.93625pt x 284.06125pt>
+<img/oscill.png, id=360, 785.93625pt x 284.06125pt>
 File: img/oscill.png Graphic file (type png)
 <use img/oscill.png>
 Package pdftex.def Info: img/oscill.png  used on input line 720.
 (pdftex.def)             Requested size: 314.36893pt x 113.62247pt.
  [25 <./img/oscill.png>]
-<img/grid.png, id=364, 560.0925pt x 323.2075pt>
+<img/grid.png, id=368, 560.0925pt x 323.2075pt>
 File: img/grid.png Graphic file (type png)
 <use img/grid.png>
 Package pdftex.def Info: img/grid.png  used on input line 757.
 (pdftex.def)             Requested size: 224.03302pt x 129.2807pt.
  [26] [27 <./img/grid.png>]
-[28] [29]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 880.
- [30]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 880.
+[28] [29] [30]
+<img/recurrent.png, id=400, 429.605pt x 644.4075pt>
+File: img/recurrent.png Graphic file (type png)
+<use img/recurrent.png>
+Package pdftex.def Info: img/recurrent.png  used on input line 894.
+(pdftex.def)             Requested size: 128.88249pt x 193.32373pt.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 907.
+ [31 <./img/recurrent.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 907.
  (./appunti_AI.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 880.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 880.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 907.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 907.
 Package rerunfilecheck Info: File `appunti_AI.out' has not changed.
-(rerunfilecheck)             Checksum: 595B1D3A9FB55454DFDF20A9B6848CB2;2091.
+(rerunfilecheck)             Checksum: F5FA921DEDC360AA2E40C80FB20E355B;2159.
  ) 
 Here is how much of TeX's memory you used:
- 8999 strings out of 492982
- 128616 string characters out of 6134897
+ 9009 strings out of 492982
+ 128780 string characters out of 6134897
  226504 words of memory out of 5000000
- 12285 multiletter control sequences out of 15000+600000
+ 12291 multiletter control sequences out of 15000+600000
  24494 words of font info for 63 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  42i,9n,40p,1776b,443s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -947,10 +952,10 @@ re/texmf/fonts/type1/public/cm-super/sfrm1728.pfb></usr/share/texmf/fonts/type1
 /public/cm-super/sfti0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sft
 i1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb></usr/shar
 e/texmf/fonts/type1/public/cm-super/sftt0800.pfb>
-Output written on appunti_AI.pdf (30 pages, 1497205 bytes).
+Output written on appunti_AI.pdf (31 pages, 1536775 bytes).
 PDF statistics:
- 528 PDF objects out of 1000 (max. 8388607)
- 432 compressed objects within 5 object streams
- 124 named destinations out of 1000 (max. 500000)
- 358 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 541 PDF objects out of 1000 (max. 8388607)
+ 443 compressed objects within 5 object streams
+ 127 named destinations out of 1000 (max. 500000)
+ 371 words of extra memory for PDF output out of 10000 (max. 10000000)
 

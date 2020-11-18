@@ -900,6 +900,274 @@ Possiamo generalizzare questo approccio a funzioni con più di un argomento graz
  
 \section{Sistemi fuzzy}
 
+\subsection{Logica fuzzy e insiemi fuzzy}
+
+\subsubsection{Motivazioni}
+
+La logica classica si fonda sul \emph{principio di bivalenza}, ovvero una proposizione può assumere solo due valori di verità: il \emph{vero} o il \emph{falso}. Questa assunzione può essere adeguata nel caso in cui ci interessi modellare concetti chiari e distinti che hanno definizioni precise, come nel caso dei concetti matematici. Quando, invece, vogliamo formalizzare la conoscenza implicita nel linguaggio naturale possiamo imbatterci in alcune proposizioni che sono vere (o false) \emph{in una certa misura}, oppure proprietà che hanno estensioni sfumate. La logica fuzzy e la teoria insiemistica che da questa discende ci permette di ragionare in questi contesti, in modo da sfruttare a nostro vantaggio la vaghezza insita nell'uso che facciamo delle parole nel linguaggio naturale. Bisogna, tuttavia, stare attenti a non confondere l'imprecisione con l'\emph{incertezza}. L'incertezza si riferisce alla possibilità che un evento accada o meno. Il valore numerico associato all'accadimento di un evento incerto si chiama \emph{probabilità} ed è studiato dalla branca della matematica omonima. La differenza tra appartenenza fuzzy e probabilità sta nel fatto che la probabilità rimane comunque un fenomeno booleano: un evento può accadere o non accadere; dove, invece, l'appartenenza fuzzy si riferisce a quanto una proprietà viene soddisfatta da un oggetto. 
+
+\subsubsection{Insiemi fuzzy}
+
+Un insieme classico è una collezione di elementi che possono (o meno) appartenere all'insieme. Per tanto, un insieme può essere definito a partire da una funzione caratteristica che assegna ad ogni elemento nel dominio del discorso il valore 1 se questo elemento appartiene all'insieme oppure 0 altrimenti. Un 	\emph{insieme fuzzy} può essere visto come una generalizzazione di questo concetto.
+\begin{definition}
+ Dato un dominio del discorso $X$, un insieme fuzzy $\mu$ è una funzione $\mu : X \to [0,1]$ che assegna ad ogni elemento un \emph{grado di appartenenza} $\mu(x)$ rispetto all'insieme $\mu$.
+\end{definition}
+ Queste funzioni sono scelte a seconda del contesto di utilizzo e i gradi di appartenenza sono fissati per convenzione. Possiamo vedere i fuzzy set come interfacce tra espressioni lingustiche e loro rappresentazioni numeriche. Ad esempio, vogliamo dare un modello formale alla proprietà "essere alto per un bambino di 4 anni". Per farlo definiremo un insieme fuzzy $\mu_{tall}$ attraverso una funzionesigmoide come in Figura \ref{fig:23}, tale per cui risulteranno \emph{sicuramente} nell'estensione della proprietà i bambini più alti di 1.5 m centimetri e \emph{sicuramente} fuori dall'estensione quelli più bassi di 0.7 m. Tutti gli altri apparterranno all'insieme con un certo grado.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.3]{img/tall.png}
+\caption{L'insieme fuzzy $\mu_{tall}$ che descrive il predicato "essere alto per un bambino di 4 anni".}
+\label{fig:23}
+\end{figure}
+
+\subsubsection{Interpretazioni della funzione di appartenenza}
+
+Ci sono varie semantiche che è possibile associare alla relazione di appartenenza fuzzy a seconda dalla applicazione:
+
+\begin{enumerate}
+\item{somiglianza}
+\item{preferenza}
+\item{possibilità}
+\end{enumerate}
+
+Nel primo caso, $\mu(x)$ può essere visto come il grado di prossimità rispetto ad un elemento prototipale di $\mu$. Questa interpretazione viene utilizzata nei problemi di pattern classification, cluster analysis e regressione. Nel secondo caso, la funzione $\mu$ rappresenta sia l'insieme degli oggetti preferiti, sia il valore associato ad una decisione $X$ e $\mu(u)$ rappresenta sia l'intensità della preferenza associata a $u$, sia la possibilità di scegliere $u$ come valore di $X$. Questa interpretazione viene utilizzata nei problemi di ottimizzazione fuzzy e nella teoria della decisione. L'ultima delle tre è quella che considera $\mu(u)$ come il grado di possibilità che l'elemento $u$ sia il valore del parametro $X$ ed è usata per quantificare lo stato epistemico di un agente. L'obbiettivo è quello di distinguere quello che l'agente considererebbe "sorprendente" da quello che, invece, è "tipico" o "aspettato". Questa interpretazione, come vedremo in seguito, viene utilizzata in data analysis.
+
+\subsubsection{Rappresentazione verticale e orizzontale}
+
+Come abbiamo già mostrato, gli insiemi fuzzy possono essere rappresentati da una funzione che assegna un valore nell'intervallo reale unitario ad ogni elemento dell'universo del discorso. Nella maggior parte delle applicazioni i valori assunti dalla funzione crescono monotonicamente fino a un certo punto e da quello decrescono monotonicamente. Questo tipo di insiemi viene detto \emph{convesso}. Le funzioni che rappresentano insiemi convessi sono dette \emph{funzioni triangolari} ed assumono la forma:
+
+$$
+\Lambda_{a,b,c} : \mathbb{R} \to [0,1],\quad x \mapsto 
+\begin{cases}
+\frac{x-a}{b-a} \text{ if } a \leq x < b \\
+\frac{c-x}{c-b} \text{ if } b \leq x \leq c \\
+0 \quad \text{  altrimenti}
+\end{cases}
+$$
+
+Le funzioni triangolari possono essere considerate un caso particolare delle \emph{funzioni trapezoidali}:
+
+$$
+\Pi_{a,b,c,d} : \mathbb{R} \to [0,1],\quad x \mapsto 
+\begin{cases}
+\frac{x-a}{b-a} \text{ if } a \leq x \leq b \\
+1 \quad \text{ if  }  b \leq x \leq c \\
+\frac{d-x}{d-c} \text{ if } c \leq x \leq d \\
+0 \quad \text{  altrimenti}
+\end{cases}
+$$
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.4]{img/triang.png}
+\caption{Alcuni esempi di funzioni triangolari e trapezoidali.}
+\label{fig:24}
+\end{figure}
+
+Alcuni esempi di queste funzioni possono essere trovati in Figura \ref{fig:24}. Questa rappresentazione dei fuzzy set viene anche detto \emph{rappresentazione verticale}. Una diversa rappresentazione è invece quella \emph{orizzontale}. Per un qualsiasi valore $\alpha \in [0,1]$ consideriamo l'insieme di elementi che hanno un grado di appartenenza all'insieme $\mu$ di almeno $\alpha$.
+
+\begin{definition}
+Sia $\mu$ un fuzzy set definito rispetto al dominio del discorso $X$ e sia $\alpha \in [0,1]$. L'insieme
+$$
+[\mu]_\alpha = \{x \in X | \mu(x) \geq \alpha \}
+$$
+è chiamato \emph{alpha-cut} dell'insieme $\mu$.
+\end{definition}
+
+Nel caso in cui l'insieme $\mu$ sia una funzione trapezoidale, qualsiasi suo alpha-cut sarà un intervallo chiuso. Se, invece, l'insieme non è convesso almeno uno dei suoi alpha-cut consisterà in due intervalli disgiunti. Alcune proprietà degli alpha-cut sono le seguenti:
+
+\begin{enumerate}
+\item{$[\mu]_0 = X$}
+\item{$\alpha \leq \beta \implies [\mu]_\alpha \subseteq [\mu]_\beta $}
+\item{$\cap_\alpha: \alpha < \beta, [\mu]_\alpha = [\mu]_\beta$}
+\end{enumerate} 
+
+Da queste proprietà discende il fatto che ogni insieme fuzzy possa essere descritto specificando una famiglia di alpha-cut, come illustra il teorema seguente.
+
+\begin{theorem}
+Sia $\mu$ un fuzzy set, allora
+$$
+\mu(x) = \sup_{\alpha \in [0,1]} \{x \in [\mu]_\alpha\}
+$$
+\end{theorem}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.3]{img/alpha_cut.png}
+\caption{Insieme fuzzy e sua rappresentazione in termini di alpha-cut.}
+\label{fig:25}
+\end{figure}
+
+Dal punto di vista geometrico, un fuzzy set può essere visto come un inviluppo superiore dei suoi alpha-cut. Questa connessione tra insiemi fuzzy e famiglie di alpha-cut è utilizzata nella rappresentazione degli insiemi fuzzy nei computer. Solitamente ci si limita a prendere un numero di finito di alpha-cut rilevanti ai fini della rappresentazione dell'insieme(Figura \ref{fig:25}). Gli insiemi vengono poi conservati in memoria come catene di liste lineari. Ogni lista è l'unione di intervalli rappresentati dai loro estremi. 
+
+\subsubsection{Alcune utili definizioni}
+
+Avendo introdotto gli alpha-cut come uno strumento per rappresentare i fuzzy set, ora li sfrutteremo definendo alcuni concetti molto utili per quello che segue.
+
+\begin{definition}
+Il \emph{supporto} $S(\mu)$ di un insieme fuzzy $\mu$ è l'insieme booleano che contiene tutti e soli gli elementi del dominio del discorso che hanno un grado di appartenenza non nullo rispetto a $\mu$. In simboli:
+$$
+S(\mu) = [\mu]_{\bar{0}} = \{ x \in X | \mu(x) > 0 \}
+$$
+\end{definition}
+
+\begin{definition}
+Il \emph{centro} $C(\mu)$ di un insieme fuzzy $\mu$ è l'insieme booleano che contiene tutti e soli gli elementi del dominio del discorso che hanno un grado di appartenenza uguale a 1 rispetto a $\mu$. In simboli:
+$$
+C(\mu) = [\mu]_{1} = \{ x \in X | \mu(x) = 1 \}
+$$
+\end{definition}
+
+\begin{definition}
+L'\emph{altezza} $h(\mu)$ di un insieme fuzzy $\mu$ è il più alto grado di appartenenza ottenibile da un elemento di $\mu$. In simboli:
+$$
+h(\mu) = \sup_{x \in X} \{\mu(x)\}
+$$
+\end{definition}
+
+\begin{definition}
+Un insieme fuzzy $\mu$ è definito \emph{normale} sse $h(\mu) = 1$. Altrimenti, è definito \emph{subnormale}.
+\end{definition}
+
+\begin{definition}
+Un insieme fuzzy $\mu$ è definito \emph{convesso} sse i suoi alpha-cut sono convessi per ogni scelta di $\alpha \in [0,1)$.
+\end{definition}
+
+\begin{definition}
+Un insieme fuzzy $\mu$ è un \emph{numero fuzzy} sse $\mu$ è normale e $[\mu]_\alpha$ è chiusa, limitata e convessa per ogni scelta di $\alpha \in [0,1)$.
+\end{definition}
+
+\subsubsection{Logica fuzzy}
+
+Un importante risultato della logica classica dice che esiste un isomorfismo tra la logica proposizione su un insieme finito di variabili e la teoria degli insiemi finiti. Entrambi questi sistemi, inoltre, possono essere dimostrati isomorfi ad un'algebra booleana finita. Questo ci permette di definire gli operatori insiemistici utilizzando i classici operatori logici di congiunzione, disgiunzione e negazione. Un discorso simile vale per la logica fuzzy, ovvero la logica che ha come insieme di valori di verità l'intero intervallo reale $[0,1]$. Una volta ridefiniti gli operatori logici booleani per adattarsi alla nuova semantica potremo usarli per costruirci sopra una teoria degli operatori insiemistici "fuzzy". Siano $\mu$ e $\mu'$, possiamo definire gli operatori della logica fuzzy come segue:
+\begin{enumerate}
+\item{$\neg \mu \doteq 1 - \mu(x)$} 
+\item{$\mu \wedge \mu' \doteq \min\{\mu(x),\mu'(x)\}$}
+\item{$\mu \vee \mu' \doteq \max\{\mu(x),\mu'(x)\}$}
+\end{enumerate}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.3]{img/fuzzyop.png}
+\caption{Le varie operazioni insiemistiche caratterizzate secondo le definizioni riportate nella sezione 3.1.6.}
+\label{fig:26}
+\end{figure}
+
+Gli operatori insiemistici associati sono mostrati in Figura \ref{fig:26}.
+
+\subsubsection{Negazione stretta e forte}
+
+In generale, esistono vari modi di definire la negazione in una logica fuzzy. L'unico requisito è che la definizione rispetti tre proprietà che, intuitivamente, ogni negazione deve possedere:
+
+\begin{enumerate}
+\item{$\neg(0) = 1$} 
+\item{$\neg(1) = 0$}
+\item{$x \leq y \implies \neg x \geq \neg y$}
+\end{enumerate}
+
+In aggiunta a queste proprietà, una negazione può soddisfarne altre. Per esempio, si può chiedere che sia \emph{strettamente decrescente}:
+
+$$
+x < y \implies \neg x > \neg y
+$$
+
+Oppure che $\neg$ sia \emph{continua}, o \emph{involutiva}:
+
+$$
+\neg \neg x = x
+$$
+
+\begin{definition}
+Una negazione si dice \emph{stretta} sse è strettamente decrescente e continua.
+\end{definition}
+
+\begin{definition}
+Una negazione si dice \emph{forte} sse è stretta e involutiva.
+\end{definition}
+
+\subsubsection{T-norme e t-conorme}
+
+Come la negazione, la congiunzione e la disgiunzione fuzzy possono essere definite in diversi modi. Entrambe devono, tuttavia, soddisfare alcune proprietà di base che le definiscono rispettivamente come \emph{t-norme} e \emph{t-conorme}.
+
+\begin{definition}
+Una funzione $\top : [0,1]^2 \to [0,1]$ si dice \emph{t-norma} sse soddisfa le seguenti proprietà:
+\begin{enumerate}
+\item{$\top(x,1) = x$}
+\item{$\top(x,y) = \top(y,x)$}
+\item{$\top(x,\top(y,z)) = \top(\top(x,y),z)$}
+\item{$x \leq z \implies \top(x,y) \leq \top(x,z)$}
+\end{enumerate}
+\end{definition}
+
+\begin{definition}
+Una funzione $\bot: [0,1]^2 \to [0,1]$ si dice \emph{t-conorma} sse soddisfa le seguenti proprietà:
+\begin{enumerate}
+\item{$\bot(x,0) = x$}
+\item{$\bot(x,y) = \bot(y,x)$}
+\item{$\bot(x,\bot(y,z)) = \bot(\bot(x,y),z)$}
+\item{$x \leq z \implies \bot(x,y) \leq \bot(x,z)$}
+\end{enumerate}
+\end{definition}
+
+Le definizioni di disgiunzione e congiunzione che abbiamo dato nella sezione 3.1.6 in termini di $\max$ e $\min$ soddisfano queste proprietà. Si può mostrare che l'operazione di minimo sia la più grande t-norma e il massimo la più piccola t-conorma. In aggiunta a queste, possono essere date altre definizioni di disgiunzione e congiunzione come, per esempio, quella in termini di prodotto e somma probabilistica:
+$$
+\top_{prod}(x,y) = x \cdot y
+$$
+$$
+\bot_{sum} (x,y) = x + y - x \cdot y
+$$
+
+Oppure, seguendo Łukasiewicz:
+$$
+\top_{Luk}(x,y) = \max\{0,x + y - 1\}
+$$
+$$
+\bot_{Luk}(x,y) = \min\{1,x + y\}
+$$
+O ancora, come prodotto e somma drastica:
+$$
+\top_{-1}(x,y) = \begin{cases}
+				\min(x,y) \quad \text{se } \max(x+y) = 1 \\
+				0 \quad \text{ altrimenti}  
+				\end{cases}
+$$
+$$
+\bot_{-1}(x,y) = \begin{cases}
+				\max(x,y) \quad \text{se } \min(x+y) = 0 \\
+				0 \quad \text{ altrimenti}  
+				\end{cases}
+$$
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.3]{img/tnorme.png}
+\caption{Alcune definizioni di t-norme.}
+\label{fig:27}
+\end{figure}
+
+In Figura \ref{fig:27} si possono vedere le relazioni che legano tutte le precedenti definizioni di t-norma. In Figura \ref{fig:28}, invece, si possono vedere le varie t-conorme.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.3]{img/tconorme.png}
+\caption{Alcune definizioni di t-conorme.}
+\label{fig:28}
+\end{figure}
+
+\subsubsection{Implicazione fuzzy}
+
+Come nel caso booleano avremo che un insieme fuzzy è contenuto in un altro se tutti gli elementi del primo sono contenuti nel secondo. Sfruttando l'isomorfismo tra operatori logici e insiemistici, inoltre potremo definire il concetto di sottoinsieme a partire da quello di implicazione come segue:
+$$
+I(a,b) = \neg a \vee b
+$$
+A seconda della semantica che daremo ai nostri operatori logici fuzzy avremo varie classi di implicazioni. 
+
+\begin{enumerate}
+\item{\emph{S-implication}: $I(a,b) = \bot(\neg a, b)$}
+\item{\emph{R-implication}: $I(a,b) = \sup \{x \in [0,1] | \top(a,x) \leq b\}$}
+\item{\emph{QL-implication}: $I(a,b) = \bot(\neg a, \top(a,b))$}
+\end{enumerate}
 
 \section{Algoritmi evolutivi}
 

@@ -900,7 +900,7 @@ Possiamo generalizzare questo approccio a funzioni con più di un argomento graz
  
 \section{Sistemi fuzzy}
 
-\subsection{Logica fuzzy e insiemi fuzzy}
+\subsection{Introduzione alla logica fuzzy}
 
 \subsubsection{Motivazioni}
 
@@ -1168,6 +1168,238 @@ A seconda della semantica che daremo ai nostri operatori logici fuzzy avremo var
 \item{\emph{R-implication}: $I(a,b) = \sup \{x \in [0,1] | \top(a,x) \leq b\}$}
 \item{\emph{QL-implication}: $I(a,b) = \bot(\neg a, \top(a,b))$}
 \end{enumerate}
+
+\subsection{Teoria della logica fuzzy}
+
+\subsubsection{Principio di estensione}
+
+Come estendere una funzione $\phi : X^n \to Y$ in un contesto fuzzy di modo che $\hat{\phi}$ abbia come dominio una tupla di fuzzy set e come codominio un fuzzy set? Un caso particolare è quello della valutazione di proposizioni. Definito un assegnamento fuzzy alle proposizioni atomiche, possiamo estenderlo a combinazioni arbitrarie di formule legate tra loro da operatori logici (and e or):
+$$
+truth: \mathbb{P} \to [0,1]
+$$
+$$
+truth(a\text{ and }b) =  \min\{truth(a),truth(b)\}
+$$
+$$
+truth(a\text{ or }b) =  \max\{truth(a),truth(b)\}
+$$
+Si possono considerare anche congiunzioni e disgiunzioni infinite:
+$$
+truth(\forall i \in I : a_i) = 	\inf \{ truth(a_i) | i \in I \}
+$$
+$$
+truth(\exists i \in I : a_i) = 	\sup \{ truth(a_i) | i \in I \}
+$$
+Questo ci permemette di riguadagnare la logica booleana anche nel caso fuzzy. Un altro esempio di estensione è quella della somma reale tra insiemi definita, per insiemi classici, come:
+$$
++ : 2^{\mathbb{R}} \times 2^{\mathbb{R}} \to 2^{\mathbb{R}}
+$$
+$$
+(A,B) \to A + B = \{y | \exists a,b (y = a + b) \land (a \in A) \land (b \in B) \}
+$$
+La sua estensione ai fuzzy set verrà definita per $\mu$ e $\mu'$ fuzzy set come:
+$$
+(\mu,\mu') \to \mu \oplus \mu' 
+$$
+$$
+truth(y \in \mu \oplus \mu') = \sup_{a,b}\{ truth(y = a + b) \land truth(a \in A) \land truth(b \in B)\}
+$$
+$$
+= \sup_{a,b:y=a+b} \{ \min(\mu(a),\mu'(b)) \}
+$$
+In generale, una funzione $\phi : X^n \to Y$ può essere estesa ad una $\hat{\phi} : [2^X]^n \to 2^Y$ su insiemi classici nel seguente modo:
+$$
+\hat{\phi} (A_1, \dots, A_n) = \{ y \in Y | \exists x_1, \dots, x_n \in A_1 \times \dots \times A_n : \phi(x_1,\dots,x_n) = y \}
+$$
+Basandoci su questa definizione possiamo poi generalizzare al caso dei fuzzy set su un dominio di discorso $X$:
+$$
+\hat{\phi}_{fuzzy} (\mu_1, \dots, \mu_n) = \sup\{ \min \{ \mu_1(x_1), \dots, \mu_n(x_n) \} | (x_1, \dots, x_n) \in X^n \land \phi(x_1, \dots, x_n) = y \}
+$$
+Assumendo che $\sup \emptyset = 0$.
+
+\subsubsection{Alcuni insiemi fuzzy rilevanti}
+
+Vi sono vari tipi di insiemi fuzzy. Per quanto ci riguarda particolare rilevanza assumono quelli definiti sull'insieme $\mathbb{R}$. Un insieme fuzzy sui reali ha un significato quantitativo che può essere utilizzato per rappresentare variabili fuzzy. Queste ultime giocano un ruolo importantissimo in molte applicazioni: fuzzy control, ragionamento approssimato, ottimizzazione, etc. Alcune classi di $F(\mathbb{R})$ (l'insieme degli insiemi fuzzy sui reali) che vengono citate spesso in letteratura sono le seguenti:
+\begin{enumerate}
+\item{Normal fuzzy set: \\ $F_N(\mathbb{R}) = \{\mu \in F(\mathbb{R}) | \exists x \in \mathbb{R} : \mu(x) = 1 \}$}
+\item{Upper Semi-continuous fuzzy set: \\$F_C(\mathbb{R}) = \{\mu \in F_N(\mathbb{R}) | \forall \alpha \in (0,1] : [\mu]_\alpha \text{ è compatto }\}$}
+\item{Fuzzy interval: \\ $F_I(\mathbb{R}) = \{\mu \in F_N(\mathbb{R}) | \forall a,b,c \in \mathbb{R} : c \in [a,b] \implies \mu(c) \geq \min\{ \mu(a),\mu(b) \} \}$}
+\end{enumerate}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.3]{img/lingvar.png}
+\caption{Esempio di variabile linguistica.}
+\label{fig:29}
+\end{figure}
+
+Particolare interesse rivestono i fuzzy interval anche detti \emph{fuzzy numbers} perchè permettono di definire \emph{variabili fuzzy quantitative}. Tali variabili assumono come valore numeri fuzzy. Quando le quantità fuzzy rappresentano concetti linguistici (come piccolo, grande, etc.) si parla di variabili linguistiche (vedi Figura \ref{fig:30}). Ogni variabile linguistica è definita da un quintupla $(v,T,X,g,m)$, dove $v$ è il nome della variabile, $T$ è l'insieme dei termini che coprono $v$, $X$ è il dominio del discorso, $g$ è la grammatica per generare i termini ed $m$ la semantica che assegna ad ogni termine un fuzzy number. Per processare questo genere di variabili occorrerà estendere le operazioni insiemistiche e aritmetiche originalmente utilizzate per i numeri. 
+
+\subsubsection{Rappresentazione per insiemi}
+
+Abbiamo visto in precedenza come, attraverso il principio di estensione, si possa definire le operazioni aritmetiche nel contesto di $F(\mathbb{R})$. Tuttavia, calcolare tali funzioni direttamente sugli insiemi fuzzy risulta oneroso, specialmente se si adotta la rappresentazione verticale rispetto a quela orizzontale. Sarebbe desiderabile ridurre l'artimetica fuzzy all'ordinaria aritmetica sugli insiemi booleani e, quindi, applicare alcune semplici operazioni su intervalli per ottenere il risultato. Questo è possibile farlo attraverso la \emph{rappresentazione per insiemi} di un insieme fuzzy.
+
+\newpage
+
+\begin{definition}
+Una famiglia $(A_\alpha)_{\alpha \in (0,1)}$ è una \emph{rappresentazione per insiemi} di $\mu \in F_N(\mathbb{R})$ se
+\begin{enumerate}
+\item{$0 < \alpha < \beta < 1 \implies A_\alpha \subseteq A_\beta \subseteq \mathbb{R}$}
+\item{$\mu(t) = \sup \{ \alpha \in [0,1] | t \in A_\alpha \} $}
+\end{enumerate} 
+\end{definition}
+
+Il seguente teorema ci assicura che una rappresentazione per insiemi è una fedele immagine dell'insieme fuzzy che raffigura.
+
+\begin{theorem}
+Sia $\mu \in F_N(\mathbb{R})$. La famiglia $(A_\alpha)_{\alpha \in (0,1)}$ è una rappresentazione per insiemi di $\mu$ sse 
+$$
+[\mu]_{\bar{\alpha}} = \{ t \in \mathbb{R} | \mu(t) > \alpha \} \subseteq A_\alpha \subseteq \{ t \in \mathbb{R} | \mu(t) \geq \alpha \} = [\mu]_\alpha
+$$
+è valida per ogni $\alpha \in (0,1)$.
+\end{theorem}
+
+Se $\mu_1, \dots, \mu_n$ sono normal fuzzy set su $\mathbb{R}$ e $\phi: \mathbb{R}^n \to \mathbb{R}$ una funzione e $\hat{\phi}$ la sua estensione fuzzy. Allora valgono le seguenti:
+
+$$
+\forall \alpha \in [0,1) : [\hat{\phi}(\mu_1,\dots,\mu_n)]_{\bar{\alpha}} = \phi([\mu_1]_{\bar{\alpha}}, \dots, [\mu_n]_{\bar{\alpha}})
+$$
+$$
+\forall \alpha \in [0,1) : [\hat{\phi}(\mu_1,\dots,\mu_n)]_\alpha \subseteq \phi([\mu_1]_\alpha, \dots, [\mu_n]_\alpha)
+$$
+
+Sia, quindi, $(A_\alpha)_{\alpha \in (0,1)}$ la rappresentazione per insiemi di $\mu_i$ per $1 \geq i \geq n$, allora $(\phi((A_1)_\alpha, \dots, (A_n)_\alpha))_{\alpha \in (0,1)}$ è una rappresentazione di $\hat{\phi}$. 
+
+\subsubsection{Relazioni fuzzy}
+
+Una relazione booleana $R$ tra gli insiemi $X_1, \dots, X_n$ è un sottoinsieme del loro prodotto cartesiano. Ogni relazione di questo tipo può essere definita, quindi, attraverso la propria funzione caratteristica:
+$$
+R(x_1,\dots,x_n) = \begin{cases}
+						1 \text{ se e solo se } (x_1, \dots, x_n) \in R \\
+						0 \text{ altrimenti }
+					\end{cases}
+$$
+
+Come accade nel caso della funzione caratteristica di insiemi, quella delle relazioni può essere generalizzata per comprendere valori fuzzy. Il grado di appartenenza indica la forza della relazione tra i membri della tupla in considerazione. Siano $n \geq 2$ fuzzy set $A_1, \dots, A_n$ definiti rispettivamente sul dominio del discorso $X_1, \dots, X_n$. Il prodotto cartesiano $A_1 \times \dots \times A_n$ è una relazione fuzzy nello spazio prodotto $X_1 \times \dots \times X_n$ ed è definita dalla seguente funzione di partecipazione:
+$$
+\mu_{A_1 \times \dots \times A_n}(x_1, \dots, x_n) = \top(\mu_{A_1}(x_1), \dots,\mu_{A_n}(x_n))
+$$	 
+Dove $\top$ è una t-norma, solitamente il minimo o il prodotto.
+
+\begin{definition}
+Siano $\ww = (x_1, \dots, x_n)$ e $\vv = (y_1, \dots, y_m)$ due tuple. $\ww$ è chiamato \emph{sottosequenza} di $\vv$ (in simboli, $\ww \prec \vv$) sse $\forall j \in \{1,\dots,n\}, \ww_j = \vv_j$.
+\end{definition}
+
+\begin{definition}
+Data un relazione $R(x_1,\dots,x_n)$ e un sottoinsieme dei domini del discorso $Y \subseteq \{X_1, \dots, X_n\}$, denotiamo con $[R \downarrow Y]$ la \emph{proiezione} di $R$ su $Y$ definita come:
+$$
+[R \downarrow Y](\vv) = \max_{\vv \prec \ww} R(\ww)
+$$
+\end{definition}
+
+\begin{definition}
+Data una proiezione $[R \downarrow Y]$, una \emph{estensione cilindrica} che denotiamo come $[R \uparrow X-Y]$ è la relazione $R$ di partenza salvo che ogni valore diverso da quello della proiezione viene sosituito con quello stesso valore:
+$$
+[R \uparrow X-Y](\vv) = R(\ww)
+$$
+\end{definition}
+
+\subsubsection{Relazioni binarie}
+
+Le relazioni binarie sono esempi particolarmente rilevanti tra tutte le relazioni $n$-dimensionali, in quanto generalizzazioni delle funzioni matematiche. Contrariamente a ciò che accade nel caso delle funzioni da $X$ a $Y$, una relazione $R(X,Y)$ può assegnare ad un elemento di $X$ ad un valore in $Y$. Possiamo estendere le consuete operazioni sulle funzioni (inversa e composizione) anche alle relazioni fuzzy. 
+
+\begin{definition}
+Data una relazione $R(X,Y)$ il suo \emph{dominio}, denotato $dom R$, è definito come:
+$$
+dom R(x) = \max_{y \in Y}\{ R(x,y) \}
+$$
+\end{definition}
+
+\begin{definition}
+Data una relazione $R(X,Y)$ il suo \emph{codominio}, denotato $ran R$, è definito come:
+$$
+ran R(x) = \max_{x \in X}\{ R(x,y) \}
+$$
+\end{definition}
+
+\begin{definition}
+Data una relazione $R(X,Y)$ la sua \emph{altezza}, denotata $h R$, è definito come:
+$$
+h R(x) = \max_{x \in X} \max_{y \in Y} \{ R(x,y) \}
+$$
+\end{definition}
+
+\begin{definition}
+Data una relazione $R(X,Y)$ la sua \emph{inversa}, denotata $R^{-1}$, è definito come quella relazione su $Y \times X$ tale che:
+$$
+R^{-1} (y,x) = R(x,y) \quad \forall x \in X, \forall y \in Y
+$$
+\end{definition}
+
+\begin{definition}
+Data una relazione $R(X,Y)$ e una relazione $Q(Y,Z)$ la loro \emph{composta}, denotata $R \circ Q (X,Z)$, è definito come quella relazione su $X \times Z$ tale che:
+$$
+R \circ Q (x,z) = \sup_{y \in Y} \{ \min \{ P(x,y),Q(y,z)\} \quad \forall x \in X, \forall z \in Z \} 
+$$
+\end{definition}
+
+\begin{definition}
+Data una relazione $R(X,Y)$ e una relazione $Q(Y,Z)$ il loro \emph{join}, denotata $R \star Q (X,Y,Z)$, è definito come quella relazione su $X \times Y \times Z$ tale che:
+$$
+R \star Q (x,y,z) = \min \{ P(x,y),Q(y,z)\} \quad \forall x \in X, \forall y \in Y, \forall z \in Z 
+$$
+\end{definition}
+
+\begin{definition}
+Data una relazione $R(X,X)$ si definisce una \emph{relazione di equivalenza} sse soddisfa le seguenti proprietà:
+\begin{enumerate}
+\item{\emph{riflessività}: $\forall x \in X \quad R(x,x) = 1$ }
+\item{\emph{simmetria}: $\forall x,y \in X \quad R(x,y) = R(y,x)$ }
+\item{\emph{transitività}: $\forall (x,z) \in X^2 \quad R(x,z) \geq \max_{y \in X} \min \{ R(x,y),R(y,z) \}$ }
+\end{enumerate}
+\end{definition}
+
+\subsection{Fuzzy controller}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.3]{img/fuzzycontroller.png}
+\caption{Architettura di un fuzzy controller.}
+\label{fig:30}
+\end{figure}
+
+Una applicazione di particolare successo di queste idee sono i così detti \emph{fuzzy controller}. Il concetto che sta sotto al fuzzy control è quello di definire transizioni non-lineari tra i diversi stati del sistema senza specificare un insieme di equazioni differenziali per ogni variabile. Questo permette di modellare sistemi complessi le cui dinamiche possono sfuggire ad un'analisi matematicamente precisa. Lo schema di base di un fuzzy controller viene mostrato in Figura \ref{fig:30}. La (1) \emph{fuzzyfication interface} riceve i valori in input e si occupa di convertirli in un dominio adeguato (termini linguistici o fuzzy set). La (2) \emph{knowledge base} consiste di (a) dati che contengono informazioni riguardo intervalli, trasformazioni di dominio e a quali insiemi fuzzy corrisponderanno i termini linguistici, e (b) regole che contengono i controlli del tipo \emph{if-then}. La (3) \emph{decision logic} rappresenta l'unità processore, la quale si occupa di computare l'output in base all'input misurato e la knwoledge base. Infine, la (4) \emph{defuzzification interface} si occupa di mappare i valori fuzzy usati nella computazione in valori booleani che sono inviati come segnali al controllo del sistema. 
+
+\subsubsection{Regole fuzzy}
+
+\begin{figure}
+
+\begin{subfigure}{0.5\textwidth}
+\includegraphics[width=0.9\linewidth, height=4cm]{img/rulesfuzzy.png} 
+\caption{Regole a valori crisp.}
+\end{subfigure} %%
+\begin{subfigure}{0.5\textwidth}
+\includegraphics[width=0.9\linewidth, height=4cm]{img/fuzrule.png}
+\caption{regole a valori fuzzy.}
+\end{subfigure} 
+
+\caption{Rappresentazione grafica di alcuni insiemi di regole.}
+\label{fig:31}
+\end{figure}
+
+Le regole sono utilizzate nei controllori fuzzy per simulare la conoscenza che aiuta l'agente nell'operare le proprie scelte. Sono date come una sequenza di \emph{if-then} del tipo "if $X$ is $M_n$, then $Y$ is $N_m$" dove $M_n$ e $N_m$ sono intervalli. Collettivamente le regole possono essere rappresentate come l'unione $S$ dei vari intervalli:
+$$
+S = \cup M_i \times N_i
+$$
+ In congiunzione con un fatto della forma "$X$ is $M_n$" ricevuto come input, la logica interna al fuzzy control dedurrà che "$Y$ is $N_m$". Le regole possono assumere come valori intervalli \emph{crisp} come in Figura \ref{fig:31} (a), oppure valori fuzzy come in Figura \ref{fig:31} (b). In ogni caso, dato un input $x_0$ l'ouput verrà calcolato come la composta del singoletto di $x_0$ e l'unione degli intervalli $S$ (in simboli, $\{x_0\} \circ S$) come in Figura \ref{fig:32}. In alcune applicazioni è utile considerare non solo l'unione di regole, ma anche la loro congiunzione. 
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.3]{img/outputrules.png}
+\caption{Proiezione dell'ouput rispetto all'unione degli intervalli.}
+\label{fig:32}
+\end{figure}
+
 
 \section{Algoritmi evolutivi}
 

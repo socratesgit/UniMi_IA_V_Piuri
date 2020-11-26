@@ -27,7 +27,7 @@
 \BOOKMARK [3][-]{subsubsection.2.16.2}{Restricted Boltzmann machines}{subsection.2.16}% 27
 \BOOKMARK [2][-]{subsection.2.17}{Recurrent network}{section.2}% 28
 \BOOKMARK [1][-]{section.3}{Sistemi fuzzy}{}% 29
-\BOOKMARK [2][-]{subsection.3.1}{Logica fuzzy e insiemi fuzzy}{section.3}% 30
+\BOOKMARK [2][-]{subsection.3.1}{Introduzione alla logica fuzzy}{section.3}% 30
 \BOOKMARK [3][-]{subsubsection.3.1.1}{Motivazioni}{subsection.3.1}% 31
 \BOOKMARK [3][-]{subsubsection.3.1.2}{Insiemi fuzzy}{subsection.3.1}% 32
 \BOOKMARK [3][-]{subsubsection.3.1.3}{Interpretazioni della funzione di appartenenza}{subsection.3.1}% 33
@@ -37,4 +37,12 @@
 \BOOKMARK [3][-]{subsubsection.3.1.7}{Negazione stretta e forte}{subsection.3.1}% 37
 \BOOKMARK [3][-]{subsubsection.3.1.8}{T-norme e t-conorme}{subsection.3.1}% 38
 \BOOKMARK [3][-]{subsubsection.3.1.9}{Implicazione fuzzy}{subsection.3.1}% 39
-\BOOKMARK [1][-]{section.4}{Algoritmi evolutivi}{}% 40
+\BOOKMARK [2][-]{subsection.3.2}{Teoria della logica fuzzy}{section.3}% 40
+\BOOKMARK [3][-]{subsubsection.3.2.1}{Principio di estensione}{subsection.3.2}% 41
+\BOOKMARK [3][-]{subsubsection.3.2.2}{Alcuni insiemi fuzzy rilevanti}{subsection.3.2}% 42
+\BOOKMARK [3][-]{subsubsection.3.2.3}{Rappresentazione per insiemi}{subsection.3.2}% 43
+\BOOKMARK [3][-]{subsubsection.3.2.4}{Relazioni fuzzy}{subsection.3.2}% 44
+\BOOKMARK [3][-]{subsubsection.3.2.5}{Relazioni binarie}{subsection.3.2}% 45
+\BOOKMARK [2][-]{subsection.3.3}{Fuzzy controller}{section.3}% 46
+\BOOKMARK [3][-]{subsubsection.3.3.1}{Regole fuzzy}{subsection.3.3}% 47
+\BOOKMARK [1][-]{section.4}{Algoritmi evolutivi}{}% 48

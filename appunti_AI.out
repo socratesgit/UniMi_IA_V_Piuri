@@ -44,5 +44,24 @@
 \BOOKMARK [3][-]{subsubsection.3.2.4}{Relazioni fuzzy}{subsection.3.2}% 44
 \BOOKMARK [3][-]{subsubsection.3.2.5}{Relazioni binarie}{subsection.3.2}% 45
 \BOOKMARK [2][-]{subsection.3.3}{Fuzzy controller}{section.3}% 46
-\BOOKMARK [3][-]{subsubsection.3.3.1}{Regole fuzzy}{subsection.3.3}% 47
-\BOOKMARK [1][-]{section.4}{Algoritmi evolutivi}{}% 48
+\BOOKMARK [3][-]{subsubsection.3.3.1}{Defuzzification}{subsection.3.3}% 47
+\BOOKMARK [3][-]{subsubsection.3.3.2}{Mamdani controller}{subsection.3.3}% 48
+\BOOKMARK [3][-]{subsubsection.3.3.3}{Takagi\205Sugeno controller}{subsection.3.3}% 49
+\BOOKMARK [3][-]{subsubsection.3.3.4}{Similarity-based reasoning}{subsection.3.3}% 50
+\BOOKMARK [2][-]{subsection.3.4}{Fuzzy data analysis}{section.3}% 51
+\BOOKMARK [3][-]{subsubsection.3.4.1}{Fuzzy clustering}{subsection.3.4}% 52
+\BOOKMARK [3][-]{subsubsection.3.4.2}{Problemi con il fuzzy clustering}{subsection.3.4}% 53
+\BOOKMARK [3][-]{subsubsection.3.4.3}{Varianti}{subsection.3.4}% 54
+\BOOKMARK [3][-]{subsubsection.3.4.4}{Random set}{subsection.3.4}% 55
+\BOOKMARK [2][-]{subsection.3.5}{Fuzzy neural network}{section.3}% 56
+\BOOKMARK [3][-]{subsubsection.3.5.1}{Algoritmo}{subsection.3.5}% 57
+\BOOKMARK [1][-]{section.4}{Algoritmi evolutivi}{}% 58
+\BOOKMARK [2][-]{subsection.4.1}{Introduzione}{section.4}% 59
+\BOOKMARK [2][-]{subsection.4.2}{Definizione formale}{section.4}% 60
+\BOOKMARK [2][-]{subsection.4.3}{Meta-euristiche}{section.4}% 61
+\BOOKMARK [3][-]{subsubsection.4.3.1}{Local search method}{subsection.4.3}% 62
+\BOOKMARK [3][-]{subsubsection.4.3.2}{Tabu search}{subsection.4.3}% 63
+\BOOKMARK [3][-]{subsubsection.4.3.3}{Algoritmi memetici}{subsection.4.3}% 64
+\BOOKMARK [3][-]{subsubsection.4.3.4}{Evoluzione differenziale}{subsection.4.3}% 65
+\BOOKMARK [3][-]{subsubsection.4.3.5}{Scatter search}{subsection.4.3}% 66
+\BOOKMARK [3][-]{subsubsection.4.3.6}{Algoritmi culturali}{subsection.4.3}% 67

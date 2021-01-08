@@ -1370,8 +1370,30 @@ Data una relazione $R(X,X)$ si definisce una \emph{relazione di equivalenza} sse
 
 Una applicazione di particolare successo di queste idee sono i così detti \emph{fuzzy controller}. Il concetto che sta sotto al fuzzy control è quello di definire transizioni non-lineari tra i diversi stati del sistema senza specificare un insieme di equazioni differenziali per ogni variabile. Questo permette di modellare sistemi complessi le cui dinamiche possono sfuggire ad un'analisi matematicamente precisa. Lo schema di base di un fuzzy controller viene mostrato in Figura \ref{fig:30}. La (1) \emph{fuzzyfication interface} riceve i valori in input e si occupa di convertirli in un dominio adeguato (termini linguistici o fuzzy set). La (2) \emph{knowledge base} consiste di (a) dati che contengono informazioni riguardo intervalli, trasformazioni di dominio e a quali insiemi fuzzy corrisponderanno i termini linguistici, e (b) regole che contengono i controlli del tipo \emph{if-then}. La (3) \emph{decision logic} rappresenta l'unità processore, la quale si occupa di computare l'output in base all'input misurato e la knwoledge base. Infine, la (4) \emph{defuzzification interface} si occupa di mappare i valori fuzzy usati nella computazione in valori booleani che sono inviati come segnali al controllo del sistema. 
 
-\subsubsection{Regole fuzzy}
+\subsubsection{Defuzzification}
 
+La mappatura dei segnali fuzzy interni al controller in segnali booleani utili a controllare il sistema può essere operata in svariati modi. In letteratura i più comuni sono:
+
+\begin{enumerate}
+\item{Max Criterion Method (MCM)}
+\item{Mean of Maxima (MOM)}
+\item{Center of Gravity (COG)}
+\end{enumerate}
+
+Il MCM sceglie un valore arbitrario $y \in Y$ per cui si raggiunge il massimo valore di appartenenza. Ha l'indubbio vantaggio di essere applicabile a qualsiasi fuzzy set e a domini $Y$ arbitrari. Può, tuttavia, essere difficile individuare l'elemento per cui la funzione di appartenenza viene massimizzata. Inoltre, la scelta di valori casuali rende il comportamento del controller non deterministico e questo può portare ad azioni discontinue.
+Il MOM  prende $Y$ come intervallo e ne calcola l'insieme $Y_{MAX}$ tale che l'output in quei punti è massimo (l'insieme deve essere non vuoto e misurabile). Il valore di output sarà calcolato come la media su $Y_{MAX}$. Come nel caso precedente questa tecnica può portare ad azioni discontinue. 
+Il COG, come il MOM, preso $Y$ come un intervallo restituisce in output il centro dell'area. Solitamente ha un comportamento regolare, anche se la computazione è onerosa e può condurre a risultati controintuitivi. 
+
+
+\subsubsection{Mamdani controller}
+
+Il primo modello di fuzzy controller è il così detto \emph{Mamdani controller}, sviluppato nel 1975 da Mamdani e Assilian. Questo controller è basato su una serie di regole del tipo "if $X$ is $M_n$, then $Y$ is $N_m$" dove $M_n$ e $N_m$ sono intervalli che rappresentano termini linguistici. Sebbene le regole siano della forma \emph{if-then}, non devono essere interpretate come implicazioni logiche, quanto definizione parziali di una funzione. Collettivamente le regole possono essere rappresentate nello spazio come l'unione $S$ dei vari intervalli:
+$$
+S = \cup M_i \times N_i
+$$
+Le regole possono assumere come valori intervalli \emph{crisp} come in Figura \ref{fig:31} (a), oppure valori fuzzy come in Figura \ref{fig:31} (b). In ogni caso, dato un input $x_0$ l'ouput verrà calcolato come la composta del singoletto di $x_0$ e l'unione degli intervalli $S$ (in simboli, $\{x_0\} \circ S$) come in Figura \ref{fig:32}. Questo output sarà un fuzzy set che rappresenta solo una vaga o imprecisa descrizione dell'output desiderato. Per determinare il vero valore di output, l'output preliminare dovrà essere defuzzificato. Nel caso del Mamdani controller si utilizza il metodo COG, che permette di trovare un compromesso rispetto ai singoli output delle regole.
+ 
+ 
 \begin{figure}
 
 \begin{subfigure}{0.5\textwidth}
@@ -1387,11 +1409,6 @@ Una applicazione di particolare successo di queste idee sono i così detti \emph
 \label{fig:31}
 \end{figure}
 
-Le regole sono utilizzate nei controllori fuzzy per simulare la conoscenza che aiuta l'agente nell'operare le proprie scelte. Sono date come una sequenza di \emph{if-then} del tipo "if $X$ is $M_n$, then $Y$ is $N_m$" dove $M_n$ e $N_m$ sono intervalli. Collettivamente le regole possono essere rappresentate come l'unione $S$ dei vari intervalli:
-$$
-S = \cup M_i \times N_i
-$$
- In congiunzione con un fatto della forma "$X$ is $M_n$" ricevuto come input, la logica interna al fuzzy control dedurrà che "$Y$ is $N_m$". Le regole possono assumere come valori intervalli \emph{crisp} come in Figura \ref{fig:31} (a), oppure valori fuzzy come in Figura \ref{fig:31} (b). In ogni caso, dato un input $x_0$ l'ouput verrà calcolato come la composta del singoletto di $x_0$ e l'unione degli intervalli $S$ (in simboli, $\{x_0\} \circ S$) come in Figura \ref{fig:32}. In alcune applicazioni è utile considerare non solo l'unione di regole, ma anche la loro congiunzione. 
 
 \begin{figure}
 \centering
@@ -1400,8 +1417,282 @@ $$
 \label{fig:32}
 \end{figure}
 
+\subsubsection{Takagi–Sugeno controller}
+
+Questo controller può essere visto come una modifica e uno sviluppo del precedente. Nello stesso modo del Mamdani controller, i valori di input vengono descritti da fuzzy set. Tuttavia, il conseguente di una regola non sarà a sua volta un fuzzy set, ma una funzione che ha come argomenti le variabili di input (generalmente, una funzione lineare).
+
+$$
+R : \text{ if } x_1 \text{ is } \mu_1 \text{ and } \dots \text{ and } x_n \text{ is } \mu_n, \text{ then } y = f(x_1,\dots,x_n)
+$$
+
+ L'idea è che quella funzione è una buona funzione di controllo per la regione descritta dall'antecedente. Per mantenere la leggibilità del modello così prodotto, occorre evitare sovrapposizioni tra le varie regioni descritte nell'antecedente delle regole. Siccome l'ouput viene calcolato è già crisp, non occorre defuzzificarlo.
+ 
+\subsubsection{Similarity-based reasoning}
+
+Vi è un'ultima tipologia di controller che utilizza il concetto di relazione di somiglianza (l'analogo fuzzy delle relazioni di equivalenza).
+
+\begin{definition}
+Una funzione $E: X^2 \to [0,1]$ è definita \emph{relazione di somiglianza} rispetto ad una T-norma se e solo se soddisfa le seguenti condizioni:
+\begin{enumerate}
+\item{$E(x,x) = 1$}
+\item{$E(x,y) = E(y,x)$}
+\item{$\top (E(x,y),E(y,z)) = E(x,z)$}
+\end{enumerate} 
+\end{definition}
+
+Questo genere di relazioni vengono utilizzate per tradurre l'informazione data dagli esperti in modo che le varie tuple coprano tutti i possibili comportamenti del sistema. Dalle classi di somiglianza possiamo poi estrarre regole in tutto uguali a quelle per il Mamdani controller.
+
+\subsection{Fuzzy data analysis}
+
+Ci sono due sensi in cui si parla di \emph{fuzzy data analysis}. Uno riguarda l'applicazione di tecniche di ragionamento fuzzy rispetto a dati crisp (si parlerà in questo caso di \emph{fuzzy clustering}). Un altro, invece, riguarda l'analisi di dati presentati sotto forma di fuzzy set (si parlerà in questo caso di \emph{random set} e \emph{random fuzzy variables}).
+
+\subsubsection{Fuzzy clustering}
+
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.3]{img/symmetricdata.png}
+\caption{Esempio di un dataset simmetrico.}
+\label{fig:33}
+\end{figure}
+
+Il \emph{fuzzy clustering} è una procedura di apprendimento non supervisionato che permette di dividere il dataset in modo che a) oggetti nello stesso cluster siano quanto più possibili simili e b) oggetti in cluster diversi siano quanto più possibile dissimili. La relazione di somiglianza è misurata nei termini di una funzione distanza. Minore è la distanza, maggiore è la probabilità che due elementi appartengano allo stesso cluster. Nel caso dell'algoritmo \emph{hard c-means} si 1) sceglie un numero $c$ di cluster, 2) si distribuiscono in modo randomico i centri e 3) si procede all'assegnamento dei punti più vicini ai centri dei rispettivi cluster, poi 4) si passa ad aggiornare la posizione dei centri tramite il calcolo del centro di gravità. 5) Si ripete il processo fino a che la posizione si stabilizza. La partizione in cluster è ottimale quando la somma delle distanze tra i centri e gli elementi è minima. Un problema di questo approccio è che l'algoritmo può rimanere bloccato in minimi locali. Per ovviare a questo inconveniente solitamente si fanno varie iterazioni e se ne sceglie la migliore. Un diverso problema è quello che discende dal fatto che la partizione è crisp. Qualora, infatti, esista un elemento equidistante da due centri come in Figura \ref{fig:33}, l'assegnamento ad uno dei due cluster è puramente arbitrario e non rispecchia l'informazione fornita dai dati. Il \emph{fuzzy clustering} fornisce una soluzione a questo problema. Introducendo un concetto di appartenenza non binario ma continuo in $[0,1]$, offre la possibilità di esprimere l'appartenenza di un punto a più di un cluster. Il risultato sarà una partizione del dataset in fuzzy set. Possiamo rappresentare questa partizione attraverso una matrice che assegna ad ogni componente $u_{ij}$ il grado di appartenenza del punto $x_j$ al fuzzy set $\Gamma_i$, in simboli $u_{ij} = \mu_{\Gamma_i}(x_j)$. Esistono due tipi di fuzzy clustering: quello \emph{probabilistico} e quello \emph{possibilistico}. La differenza si gioca rispetto alle condizioni imposte alla funzione di appartenenza. Nel caso \emph{probabilistico} si avrà che:
+
+\begin{enumerate}
+\item{$\sum_{j=1}^{n} u_{ij} > 0, \quad \forall i \in \{1,\dots,c \} $}
+\item{$\sum_{i=1}^{c} u_{ij} = 1, \quad \forall j \in \{1,\dots,n \} $}
+\end{enumerate}
+
+La prima condizione sta ad indicare che non possono esistere cluster vuoti, la seconda, invece, che l'appartenenza è esaurita dall'insieme dei fuzzy set che costiuiscono la partizione. Nel caso \emph{possibilistico} si mantiene solo la prima assunzione e si lascia cadere la seconda. L'interpretazione possibilistica è da preferire quando si abbia a che fare con dati pieni di rumore o outlier.
+
+\subsubsection{Problemi con il fuzzy clustering}
+
+Come facciamo a sapere se la partizione in cluster operata dal nostro algoritmo rispecchia l'informazione implicita nei dati? Quale è l'ottimo numero di cluster per un dataset? Nel caso in cui abbiamo un numero limitato di dimensioni, possiamo rappresentare visivamente il dataset e avere un'intuizione di quanti centri avere e in quali posizioni collocarli. In generale, tuttavia, non è questo il caso. Per questo occorre definire una misura della qualità del clustering operato dall'algoritmo. Alcuni criteri da ricercare sono: una chiara separazione tra i cluster, minimo volume dei cluster, massimo numero di punti concentrati vicino al centro del cluster. In letteratura sono state proposte varie misure di questo tipo:
+
+\begin{enumerate}
+\item{\emph{Partition coefficient}: $PC = \frac{1}{n}\sum_{i=1}^{c} \sum_{j=1}^{n} u_{ij}^2$}
+\item{\emph{Average partition density}: $APD = \frac{1}{c} \sum_{i=1}^c \frac{\sum_{j \in Y_i} u_{ij}}{\sqrt{|\sum_i|}}$}
+\item{\emph{Partition entropy}: $PE = \sum_{i=1}^{c} \sum_{j=1}^{n} u_{ij} \log u_{ij}$}
+\end{enumerate}
+
+\subsubsection{Varianti}
+
+La misura di distanza più intuitiva è quella euclidea, ma questa ha l'inconveniente di permettere solo cluster sferici. Alcune varianti sono state proposte per rilassarne i vincoli. Nell'algoritmo di \emph{Gustafson-Kessel} la distanza euclidea è sostituita con quella di \emph{Mahalanobis} definita rispetto ad un cluster $\Gamma_i$ come:
+$$
+d^2(x_j,C_j) = (x_j - c_i)^T \sum_i^{-1} (x_j - c_i)
+$$
+dove $\sum_i$ è la matrice covariante del cluster $i$. Questo algoritmo è preferito nel caso il clustering sia utilizzato per la generazione automatica di fuzzy rule per i controller. La dimensione dei vari cluster può variare a seconda del determinate della matrice (solitamente le dimensioni dei vari cluster sono le stesse e il determinante è uguale a 1). In generale l'algoritmo di Gustafson-Kessel estrae più informazioni dell'algoritmo standard, ma è anche più sensibile ad una corretta inizializzazione. Può essere utile per decidersi su una buona inizializzazione, procedere preliminarmente con alcune iterazioni dell'algoritmo standard. Data la presenza dell'inversione della matrice questo algoritmo è più costoso di quello standard e difficile da applicare a grossi dataset. Restringersi a cluster che risultano distribuiti lungo una retta parallela rispetto agli assi riduce il costo computazionale. Un altro approccio è quello di permettere cluster di forma non convessa.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.3]{img/shellcluster.png}
+\caption{Alcuni esempi di shell clustering.}
+\label{fig:34}
+\end{figure}
+
+Gli algoritmi di \emph{shell clustering} fanno proprio questo e sono particolarmente utili per il riconoscimento di immagini e la loro analisi. Nella Figura \ref{fig:34} si elencano alcuni esempi di questo genere di algoritmo. Un altro approccio presente in letteratura è quello del \emph{kernel-based clustering} che è utile qualora si abbia a che fare con dati non-vettoriali come sequenze, alberi o grafi. Questo metodo si basa su una mappa $\phi: \chi \to \mathbb{H}$, dove $\mathbb{H}$ è uno spazio di Hilbert e $\chi$ è lo spazio degli input. I dati così mappati non vengono utilizzati direttamente, ma solo attraverso il loro prodotto interno (la cui esistenza ci è garantita in quanto siamo in uno spazio di Hilbert). Si definisce per questo una funzione kernel $k$ tale che:
+$$
+k: \chi \times \chi \to \mathbb{R}, \forall x,x' \in \chi: <\phi(x),\phi(x')> = k(x,x')
+$$
+A differenza degli altri algoritmi di clustering non estrae dai dati dei prototipi per i singoli cluster, ma computa una relazione di somiglianza tra i vari input. I centri sono combinazioni lineari dei dati mappati in $\mathbb{H}$:
+
+$$
+c_i^{\phi} = \sum_{r=1}^n a_{ir} \phi(x_r)
+$$
+
+Alcuni svantaggi sono costiuiti dalla difficoltà nella scelta di una adeguata funzione kernel e dei parametri, e la mancanza di una esplicita rappresentazione dei singoli cluster. Un ultimo tipo di algoritmo è quello detto di \emph{noise clustering}. Questi algoritmi aggiungono un cluster $c$ che rappresenta tutti quei dati corrotti dal rumore o in altro modo non associabili a nessun altro cluster (outlier etc.). Il centro del cluster $c$ è scelto in modo da avere distanza costante da tutti i punti del dataset.
+
+\subsubsection{Random set}
+
+Se fin ad adesso abbiamo applicato tecniche fuzzy a dati crisp, ora vogliamo estendere queste tecniche in modo da comprendere descrizioni di dati fuzzy. Per fare questo occorre introdurre il concetto di \emph{random set}. Nel trattamento statistico standard dei dati la loro analisi è basata su variabili random, ovvero una funzione misurabile da uno spazio di probabilità ad un insieme $U$ (solitamente l'insieme $\mathbb{R}$). Un random set è una generalizzazione di questa idea, nel senso che il valore della funzione non sarà più un elemento dell'insieme $U$, bensì un suo sottoinsieme. Data una funzione $\Gamma: \Omega \to 2^U$, alcuni utili concetti da definire sono quello di \emph{limite superiore di probabilità} (in simboli $P^*(A)$) il quale indica la proporzione di elementi la cui immagine "tocca" un certo sottoinsieme di $U$:
+$$
+P^*(A) = P(\{ \omega \in \Omega | \Gamma (\omega) \cap A \neq \emptyset \})
+$$
+e quello di \emph{limite inferiore di probabilità} (in simboli $P_*(A)$) che indica la proporzione di elementi la cui immagine è interamente contenuta in un dato sottoinsieme di $U$:
+$$
+P_*(A) = P(\{ \omega \in \Omega | \Gamma (\omega) \subseteq A \text{ e } \Gamma(\omega) \neq \emptyset \})
+$$
+Attraverso questi strumenti possiamo analizzare dati descritti in modo fuzzy. Possiamo associare, infatti, ad ogni elemento della mappa una probabilità attesa $E(\Gamma)$ di modo che:
+$$
+E(\Gamma) = \{ E(X) | X(\omega) \in \Gamma(\omega) \text{ e la } X \text{ è una variabile randomica tale che } E(X), \forall \omega \in \Omega \}
+$$
+Possiamo generalizzare ancora il nostro approccio permettendo alla funzione $\Gamma$ di mappare gli input in un insieme fuzzy.
+
+\subsection{Fuzzy neural network}
+
+A differenza delle reti neurali, i fuzzy system hanno a che fare con il ragionamento ad alto livello, non si adattano al nuovo ambiente, usano informazioni linguistiche relative al dominio e non si basano sui dati. I \emph{fuzzy neural network} combinano la computazione parallela e le capacità di apprendimento delle reti neurali con la rappresentazione ad alto livello dei sistemi fuzzy. Questo permette di avere una interpretazione più perspicua dello stato interno della rete neurale durante la computazione. Vi sono due modalità in cui i sistemi fuzzy e le reti neurali possono collaborare.
+
+\begin{itemize}
+\item{modello \emph{cooperativo}: i due sistemi lavorano indipendentemente. La rete neurale genera certi parametri (offline) o li ottimizza (online) per il fuzzy controller.}
+\item{modello \emph{ibrido}: i fuzzy set e le regole fuzzy sono mappate all'interno di una rete neurale. Le due strutture sono integrate e non si richiede l'overhead di comunicazione. Sia l'apprendimento offline che online sono disponibili.}
+\end{itemize}
+
+Nella modalità ibrida, i fuzzy set che appaiono negli antecedenti delle regole fuzzy, possono essere modellati sia come pesi delle connessioni tra neuroni, oppure come funzione di attivazione dei neuroni stessi. Nel primo caso, i neuroni del primo strato rappresentano la regola. Nel secondo, i neuroni del primo strato rappresentano l'insieme di input, mentre quelli del secondo la regola.
+
+\subsubsection{Algoritmo}
+
+Un insieme di regole fuzzy può essere tradotto in una rete neurale tramite la seguente procedura:
+
+\begin{enumerate}
+\item{Per ogni variabile di input $x_i$ si crea un neurone nel layer di input.}
+\item{Per ogni variabile di output $y_i$ si crea un neurone nel layer di output.}
+\item{Per ogni fuzzy set $\mu_i^j$ si crea un neurone nel primo layer hidden e lo si connette al neurone di input corrispondente a $x_i$.}
+\item{Per ogni regola fuzzy $R_i$ si crea un neurone nel secondo layer hidden e si specifica una T-norma per calcolare l'antecedente della regola.}
+\item{Si connette ogni neurone ai neuroni che rappresentano i fuzzy set degli antecedenti della loro regola corrispondente.}
+\end{enumerate} 
+
+A questo punto l'algoritmo diverge a seconda di quale tipo di controller si voglia utilizzare:
+
+\begin{itemize}
+\item{nel caso del Mamdani–Assilian controller, si connette ogni neurone "regola" al neurone di output corrispondente al dominio del conseguente nella regola fuzzy. Come peso della connessione si sceglie il fuzzy set del conseguente della regola fuzzy.}
+\item{nel caso del Takagi–Sugeno–Kang controller, per ogni neurone "regola" si crea un gemello che computa la funzione di output della corrispondente regola fuzzy e gli si connettono tutti i neuroni di input.}
+\end{itemize}
+
+Il network così costruito può essere allenato grazie alla backpropagation.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.3]{img/fuzzyneural.png}
+\caption{Adaptive Network-based Fuzzy Inference
+Systems (ANFIS)}
+\label{fig:35}
+\end{figure}
 
 \section{Algoritmi evolutivi}
 
+\subsection{Introduzione}
+
+Un \emph{problema di ottimizzazione} può essere descritto da una tripla $(\Omega,f,\prec)$ dove $\Omega$ è lo spazio di ricerca, $f$ è una funzione di valutazione della forma $f:\Omega \to \mathbb{R}$ e $\prec$ un preordine. L'insieme $H \subseteq \Omega$ tale che:
+
+$$
+H = \{ x \in \Omega | \forall x' \in \Omega: f(x) \succeq f(x') \}
+$$
+
+è definito l'insieme degli \emph{ottimi globali}. Dato un problema di questo genere la sua soluzione sta nel fornire un elemento che appartiene all'insieme $H$. In letteratura sono stati proposti vari metodi di soluzione per i problemi di ottimizzazione:
+\begin{itemize}
+\item{Soluzioni analitiche}
+\item{Brute-forcing}
+\item{Random search}
+\item{Ricerca guidata}
+\end{itemize}
+Tutti questi metodi hanno delle criticità o sono applicabili solo ad alcuni tipi di funzione. Gli \emph{algoritmi evolutivi} rispondono a questo problema adottando una strategia innovativa. Tali algoritmi sono direttamente ispirati alla teoria della evoluzione biologica i cui principi fondamentali sono:
+\begin{enumerate}
+\item{Tratti vantaggiosi che sono risultato di mutazioni casuali tendono ad essere favoriti dalla selezione naturale}
+\item{Gli individui che mostrano questi tratti vantaggiosi hanno migliori opportunità di procreare e moltiplicarsi}
+\end{enumerate}
+
+Gli elementi di un algoritmo evolutivo sono:
+
+\begin{enumerate}
+\item{una \emph{codifica} per i candidati: dipende molto dal problema in e non esistono regole generali.}
+\item{un metodo per creare una \emph{popolazione iniziale}: di solito si crea casualmente.}
+\item{creare una \emph{funzione di fitness} per valutare i candidati: rappresenta l'ambiente e spesso è la stessa funzione da ottimizzare.}
+\item{dei \emph{metodi di selezione} in relazione ai valori di fitness: si scelgono così gli individui che dovranno procreare nella successiva generazione.}
+\item{un insieme di \emph{operatori genetici} che modifichino i cromosomi: i due più usati sono quello di a) \emph{mutazione}, che modifica in modo random i cromosomi e quello di b) \emph{crossover} che ricombina i cromosomi dei genitori per creare la prole.}
+\item{alcuni parametri come \emph{dimensione della popolazione}, \emph{probabilità di mutazione}, etc.}
+\item{una \emph{condizione di terminazione}: numero di generazioni, approssimazione all'ottimo, etc.}
+\end{enumerate}
+
+\subsection{Definizione formale}
+
+Per ogni problema di ottimizzazione occorre separare lo spazio dei \emph{fenotipi} $\Omega$ (ovvero, come l'individuo appare) da quello dei \emph{genotipi} $\Gamma$ (ovvero, come l'individuo è rappresentato dalla codifica scelta). La funzione di fitness sarà definita sui fenotipi, dove, invece, gli operatori genetici agiranno sui genotipi. Per valutare i cambiamenti nel genotipo sarà necessario provvedere una funzione di \emph{decodifica} $dec: \Gamma \to \Omega$.
+
+\begin{definition}
+Ogni \emph{individuo} $A$ è rappresentato da un tupla $(A.G, A.S, A.F)$ contenente il genotipo ($A.G \in \Gamma$), informazioni e parametri addizionali $A.S \in Z$ e la valutazione dello stesso rispetto alla funzione di fintess $A.F = f(dec(A.G))$.
+\end{definition}
+
+\begin{definition}
+L'operatore di \emph{mutazione} è definito come una mappa:
+$$
+Mut^{\xi} : \Gamma \times Z \to \Gamma \times Z
+$$
+dove $\xi$ è un numero randomicamente generato.
+\end{definition}
+
+\begin{definition}
+L'operatore di \emph{ricombinazione} avente $r \geq 2$ genitori e $s \geq 1$ figli è definito come una mappa:
+$$
+Rek^\xi : (\Gamma \times Z)^r \to (\Gamma \times Z)^s
+$$
+dove $\xi$ è un numero randomicamente generato.
+\end{definition}
+
+\begin{definition}
+L'operatore di \emph{selezione} ci permette di scegliere grazie ai valori di fitness tra una popolazione di $r$ individui un numero $s$ di individui che continueranno la specie. Sia $P = \{\ A_1, \dots, A_r \} $ la popolazione di individui allora l'operatore di selezione avrà la forma:
+$$
+Sel^\xi : (\Gamma \times Z \times \mathbb{R})^r \to (\Gamma \times Z \times \mathbb{R})^s
+$$
+$$
+A_{i \quad 1 \leq i \leq r} \mapsto A_{IS^\xi (c_1,\dots,c_r)_k \quad 1 \leq k \leq s } 
+$$
+dove la selezione ha la forma:
+$$
+IS^\xi : \mathbb{R}^r \to \{ 1, \dots, r \}^s
+$$
+\end{definition}
+
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.3]{img/evalg.png}
+\caption{Pseudocodice di un generico algoritmo evolutivo}
+\label{fig:36}
+\end{figure}
+
+Siamo, ora, pronti a dare una definizione formale di algoritmo evolutivo:
+
+\begin{definition}
+Un \emph{algoritmo evolutivo} su un problema di ottimizzazione $P$ è una tupla $(\Gamma, dec, Mut, Rek, IS_{genitori}, IS_{ambiente}, \mu, \lambda)$. Dove $\mu$ descrive il numero degli individui della generazione precedente e $\lambda$ descrive il numero di figli per generazione.
+$$
+Rek : (\Gamma \times Z)^k \to (\Gamma \times Z)^{k'}
+$$
+$$
+IS_{genitori} : \mathbb{R}^\mu \to \{ 1, \dots, \mu \}^{\frac{k}{k'}\cdot \lambda} \quad \frac{k}{k'}\cdot \lambda \in \mathbb{N}
+$$
+$$
+IS_{ambiente} : \mathbb{R}^{\mu + \lambda} \to \{ 1, \dots, \mu + \lambda \}^\mu
+$$
+\end{definition}
+
+Vi è una distinzione che si può tracciare all'interno degli algoritmi evolutivi:
+
+\begin{itemize}
+\item{gli \emph{algoritmi genetici}: dove la codifica è una sequenza binaria}
+\item{e gli \emph{algoritmi evolutivi} propriamente detti: dove la codifica dipende dal problema trattato e così gli operatori genetici.}
+\end{itemize}
+
+\subsection{Meta-euristiche}
+
+Una \emph{meta-euristica} è un metodo algoritmico per trovare soluzioni approssimate di un problema di ottimizzazione combinatoria. Si definiscono sequenze astratte di passi che possono essere applicate a qualsiasi problema del genere. Ogni singolo passo deve poi essere declinato a seconda della specificità del problema. Il bisogno per un approccio meta-euristico nasce dal fatto che alcune classi di problemi non hanno una efficiente soluzione algoritmica. L'approssimazione che si otterrà rispetto alla soluzione ottima dipende dalla definizione del problema e dall'implementazione dei singoli passi del meta-algoritmo.
+
+\subsubsection{Local search method}
+
+Una meta-euristica è quella comunemente chiamata \emph{local search method} e costituisce un caso particolare di algoritmo evolutivo. Dato un problema di ottimizzazione $P$ e la funzione da ottimizzare $f$, questo metodo cerca i massimi globali \emph{localmente}, attorno cioè ai punti scelti durante la fase di inizializzazione. L'assunzione che si fa è che il valore della funzione in $x_1$ e $x_2$ differisce meno quanto più i due argomenti sono simili: $f$ non ha salti. 
+La particolarità di questo approccio evolutivo è che la popolazione si limita ad un solo individuo. Questo ha alcune conseguenze, soprattutto rispetto agli operatori genetici: l'operatore di ricombinazione non è più necessario e ci si limita a quello di mutazione. Ad ogni passo si può decidere se continuare a mutare l'individuo o crearne uno diverso (per evitare minimi/massimi locali). L'idea è quella di utilizzare il \emph{gradient ascent/descent} per identificare un punto di massimo/minimo facendo un passo nella direzione del gradiente. L'ampiezza dei passi non deve essere troppo piccola perchè in quel caso l'algoritmo convergerebbe troppo lentamente, nè troppo grande perchè si rischiano oscillazioni. Per prevenire il fatto che si rimanga bloccati in minimi/massimi locali si eseguono varie iterazioni dell'algoritmo a partire da diversi punti. Se $f$ non risultasse differenziabile si cerca di determinare la direzione in cui $f$ cresce valutando punti casuali nell'intorno della posizione attuale (\emph{hill climbing}). Una generalizzazione dei precedenti approcci è ciò che in letteratura viene chiamato \emph{simulated annealing}. L'intuizione che ci sta dietro è che muoversi dal basso verso l'alto dovrebbe essere più probabile che il contrario. Per tanto, soluzioni migliori saranno sempre accettate, ma nel caso di soluzioni peggiori, queste potranno essere comunque accettate a seconda della loro "qualità". Si può applicare un valore soglia per decidere quanto una soluzione può essere peggiore rispetto alla precedente, oppure decidere un lower bound senza alcun confronto col valore precedente, etc.
+
+\subsubsection{Tabu search}
+
+L'algoritmo \emph{tabu search} può essere visto come una local search che, nel momento di creare un nuovo individuo, considera la storia delle passate generazioni. Si appronta una lista (FIFO) di \emph{tabu} che permette di evitare il ricorrere di candidati già testati. Ogni individuo è una soluzione completa. Le mutazioni non sono permesse. Se il nuovo candidato mostra "proprietà interessanti" può essere fatta una eccezione al tabu.
+
+\subsubsection{Algoritmi memetici}
+
+Un diverso approccio è quello degli \emph{algoritmi memetici}. Questi algoritmi uniscono i pregi dell'approccio \emph{population-based} (lento, ma che offre più informazioni) e quello \emph{local search} (veloce, ma suscettibile ai minimi locali). I "memes" sono elementi del comportamento che possono essere acquisiti individualmente. La procedura prevede per ogni individuo creato che lo si cerchi di ottimizzare e solo dopo che si consideri la popolazione nel suo intero. Questo permette spesso di accellerare il processo di ottimizzazione, ma le dinamiche "evolutive" sono limitate in modo critico: le mutazioni rischiano di bloccarsi frequentemente in minimi locali, la ricombinazione ha un raggio di azione limitato date le precondizioni che si impongono. 
+
+\subsubsection{Evoluzione differenziale}
+
+Un'altra strategia è quella dell'\emph{evoluzione differenziale}. Non abbiamo in questo caso un adattamento dell'ampiezza dei passi, ma si cerca di utilizzare le relazioni tra gli individui nella popolazione come base per calcolarla. Si introduce un particolare operatore genetico: \emph{DE-operator}. Questo operatore può essere visto come una combinazione dell'operatore di ricombinazione e quello di mutazione. Nella selezione, invece, un discendente può rimpiazzare i suoi antenati se e solo se ha un miglior valore di fitness. 
+
+\subsubsection{Scatter search}
+
+L'idea che sta alla base degli algoritmi \emph{scatter search} è quella di avere una popolazione e di operare una ricerca locale attorno agli individui. Dati i valori registrati da questa ricerca, si forza l'evoluzione a seconda della direzione del massimo registrato. Questo è un metodo puramente deterministico a differenza dei precedenti. La sua bontà dipende dalla copertura che riusciamo ad offrire dello spazio di ricerca. 
+
+\subsubsection{Algoritmi culturali}
+
+Oltre alle informazioni genetiche si possono considerare anche quelle "culturali" relative alle skill apprese dalle precedenti generazioni. Gli \emph{algoritmi culturali} cercano di trarre vantaggio da questa memoria generazionale di modo che gli individui vengano influenzati da quest'ultima. Esistono due tipi di sapere culturalmente rilevante:
+
+\begin{itemize}
+\item{\emph{Sapere situazionale}: relativo a generazioni tra loro prossime.}
+\item{\emph{Sapere normativo}: sempre rilevante.}
+\end{itemize}
 
 \end{document}

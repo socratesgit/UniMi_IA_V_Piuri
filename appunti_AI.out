@@ -65,3 +65,9 @@
 \BOOKMARK [3][-]{subsubsection.4.3.4}{Evoluzione differenziale}{subsection.4.3}% 65
 \BOOKMARK [3][-]{subsubsection.4.3.5}{Scatter search}{subsection.4.3}% 66
 \BOOKMARK [3][-]{subsubsection.4.3.6}{Algoritmi culturali}{subsection.4.3}% 67
+\BOOKMARK [2][-]{subsection.4.4}{Elementi di algoritmi evolutivi}{section.4}% 68
+\BOOKMARK [3][-]{subsubsection.4.4.1}{Codifica}{subsection.4.4}% 69
+\BOOKMARK [3][-]{subsubsection.4.4.2}{Fitness}{subsection.4.4}% 70
+\BOOKMARK [3][-]{subsubsection.4.4.3}{Selezione}{subsection.4.4}% 71
+\BOOKMARK [3][-]{subsubsection.4.4.4}{Operatori genetici}{subsection.4.4}% 72
+\BOOKMARK [3][-]{subsubsection.4.4.5}{Strategie di adattamento}{subsection.4.4}% 73

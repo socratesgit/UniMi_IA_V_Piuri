@@ -1695,4 +1695,150 @@ Oltre alle informazioni genetiche si possono considerare anche quelle "culturali
 \item{\emph{Sapere normativo}: sempre rilevante.}
 \end{itemize}
 
+\subsection{Elementi di algoritmi evolutivi}
+
+\subsubsection{Codifica}
+
+Le soluzioni al nostro problema devono essere codificate in modo che si possa esplorare lo spazio delle possibili soluzioni attraverso questa rappresentazione. Non esiste una ricetta generale: il problema della codifica è specifico per ogni problema. Tuttavia, esistono alcuni principi di massima da seguire:
+
+\begin{enumerate}
+\item{Rappresentare fenotipi simili con genotipi simili.}
+\item{La funzione di fitness deve restituire valori simili per candidati simili.}
+\item{Lo spazio $\Omega$ deve essere chiuso rispetto agli operatori genetici.}
+\end{enumerate}
+
+La 1) assicura che mutazioni di certi geni risultino in genotipi simili e che radicali cambiamenti permettano di evadere da minimi locali. La 2) previene che si scelga una codifica troppo o troppo poco epistatica \footnote{In biologia, un allele di un gene \emph{epistatico} sopprime gli effetti di tutti i possibili alleli di un altro gene. Nel contesto degli algoritmi evolutivi, sta indicare il grado di interazione tra geni del cromosoma.}. Se troppo, una singola mutazione potrebbe produrre casuali cambiamenti di fitness. Se troppo poco, l'efficienza dell'algoritmo ne risente. Le motivazioni per 3) sono abbastanze ovvie: se lo spazio di ricerca non è chiuso rispetto agli operatori genetici, un cromosoma modificato potrebbe non essere più decodificato e interpretato.  
+
+\subsubsection{Fitness}
+
+Gli individui migliori (quelli che hanno migliori valori di fitness) dovrebbero avere le migliori opportunità di riprodursi. Per fare questo occorre esercitare quella che in gergo viene chiamata \emph{selective pressure} nel processo di creazione delle nuove generazioni. Se la selective pressure è bassa, si parla di \emph{esplorazione dello spazio}: la deviazioni permessa rispetto agli individui è la più ampia possibile (tutto $\Omega$), vi sono buone possibilità di raggiungere il massimo globale. Se la selective pressure è alta, si parla di \emph{sfruttamento degli individui migliori}: si ricerca l'ottimo nelle vicinanze degli individui migliori, l'algoritmo converge velocemente, anche se col rischio di convergere ad un ottimo locale. Per poter scegliere la corretta selective pressure occorre una metrica per calcolarla. Alcune tra quelle utilizzate in letteratura sono:
+\begin{itemize}
+\item{\emph{selection intensity}: il differenziale tra prima e dopo che la selezione è avvenuta.}
+\item{\emph{time to takeover}: il numero di generazioni prima che la popolazione converga.}
+\end{itemize} 
+
+Gli stessi metodi di selezioni possono variare al variare della pressione evolutiva. Uno dei più usati è quello chiamato \emph{roulette-wheel selection}. Si computa il valore di fitness relativo di ogni individuo grazie alla seguente formula:
+
+$$
+f_{rel}(A_i) = \frac{A_i.F}{\sum_{j=1}^{|P|} A_j.F}
+$$
+
+La probabilità per un individuo di essere selezionato per la riproduzione sarà proporzionale al suo valore di fitness relativo. Alcuni svantaggi sono:
+
+\begin{itemize}
+\item{la computazione del valore di fitness relativo è costosa e difficilmente parallelizzabile.}
+\item{gli individui con un alto valore di fitness potrebbero dominare la selezione (scomparsa delle biodiversità).}
+\item{molto veloce a trovare ottimi locali, ma pessima esplorazione dello spazio.}
+\end{itemize}
+
+La stessa funzione di fitness può essere adattata per impedire una convergenza troppo rapida:
+
+\begin{itemize}
+\item{\emph{linear dynamical scaling}: riduciamo la rilevanza della funzione di fitness sottraendoci il minimo delle passate generazioni.}
+\item{\emph{$\sigma$-scaling}: calcolata attraverso la formula $f_{\sigma}(A) = A.F - (\mu_f(t) - \beta \cdot \sigma_f(t))$, dove $\beta$ è un parametro positivo.}
+\item{\emph{dipendente dal tempo}: il fattore temporale usato come esponente regola la selective pressure.}
+\item{\emph{Boltzmann-selection}: determina la fitness relativa non direttamente, ma attraverso la funzione $g(x) = exp^{\frac{f(x)}{kT}}$. $T$ è una variabile che dipende dal tempo e $k$ è una costante di normalizzazione.}
+\end{itemize}
+
+\subsubsection{Selezione}
+
+Vi sono varie strategie disponibili in letteratura per operare la selezione degli individui che costituiranno il pool genetico per la successiva generazione:
+
+\begin{itemize}
+\item{\emph{Roulette-wheel selection}: vedi sopra.}
+\item{\emph{Rank-based selection}: si ordinano gli individui in ordine di fitness decrescente. A seconda della posizione si assegna ad ogni individuo un \emph{rank} e con esso si definisce la probabilità di essere selezionati. Si procede ad una selezione del tipo roulette-wheel. Questo modello riesce ad ovviare al problema della dominanza e regola la pressione di selezione. Lo svantaggio sta che occorre ordinare gli individui (complessità $O(n \log n)$).}
+\item{\emph{Tournament selection}: si estraggono $k$ individui casualmente dalla popolazione. Tramite scontri individuali si decide il migliore, il quale riceverà la possibilità di riprodursi nella prossima generazione. Si riesce così ad evitare il problema della dominanza e si riesce a regolare la pressione di selezione grazie all grandezza del torneo.}
+\item{\emph{Elitismo}: i migliori individui della generazione precedente costituiscono la generazione successiva. L'elite così scelta non è immune dai cambiamenti apportati dagli operatori genetici. Il vantaggio è che la convergenza viene ottenuta rapidamente. Lo svantaggio è che c'è il rischio di rimanere bloccati in ottimi locali.}
+\item{\emph{Crowding}: gli individui delle generazioni successive dovrebbero rimpiazzare gli individui più simili a loro. La densità locale in $\Omega$ non può crescere in modo indefinito. Questo permette una migliore esplorazione dello spazio.}
+\end{itemize}
+
+Di seguito listiamo alcune proprietà che possono caratterizzare i metodi di selezioni:
+
+\begin{itemize}
+\item{\emph{Static}: la probabilità di selezione rimane costante.}
+\item{\emph{Dynamic}: la probabilità di selezione può variare.}
+\item{\emph{Extinguishing}: può darsi il caso che la probabilità di selezione sia 0.}
+\item{\emph{Preservative}: la probabilità di selezione è sempre maggiore di 0.}
+\item{\emph{Pure-bred}: gli individui possono avere discendenti solo in una generazione.}
+\item{\emph{Under-bred}: gli individui possono avere discendenti in più di una generazione.}
+\item{\emph{Right}: tutti gli individui posono riprodursi.}
+\item{\emph{Left}: i migliori individui possono non riprodursi.}
+\item{\emph{Generational}: i genitori non possono mutare fin quando i loro discendenti non vengono creati.}
+\item{\emph{On-the-fly}: i discendenti sostituiscono i genitori.}
+\end{itemize}
+
+
+\subsubsection{Operatori genetici}
+
+Gli \emph{operatori genetici} sono applicati ad una frazione di individui scelti (popolazione intermedia). Vengono così generate mutazioni e ricombinazioni delle soluzioni già esistenti. Gli operatori genetici vengono classificati secondo la loro arietà in:
+
+\begin{enumerate}
+\item{One-parent operators}
+\item{Two-parent operators}
+\item{Multiple-parent operators}
+\end{enumerate}
+
+Nella prima classe possiamo trovare l'operatore di \emph{mutazione}, il quale introduce piccoli cambiamenti randomici nel genoma della soluzione a cui viene applicato. Risulta utile per introdurre biodiversità nel pool delle soluzioni e favorire l'esplorazione dello spazio di ricerca. Esistono vari metodi per operare una mutazione:
+
+\begin{itemize}
+\item{\emph{Standard mutation}: il valore di uno (o più) gene viene mutato.}
+\item{\emph{Pair swap}: si scambia la posizione di due geni.}
+\item{\emph{Shift}: si shifta a destra o sinistra un gruppo di geni.}
+\item{\emph{Arbitrary permutation}: si permuta arbitrariamente un gruppo di geni.}
+\item{\emph{Inversion}: si inverte l'ordine di apparizione di un gruppo di geni.}
+\end{itemize}
+
+Invece, l'operatore di gran lunga più importante tra quelli two-parent è quello di \emph{ricombinazione} o \emph{crossover}, il quale ha il compito, date due soluzioni, di creare attraverso una combinazione del loro codice genetico le soluzioni che costituiranno la generazione futura. Vi sono vari modi per operare questa ricombinazione:
+
+\begin{itemize}
+\item{\emph{One-point crossover}: si determina una posizione casuale nel cromosoma e si scambiano le due sequenze da un lato del taglio.}
+\item{\emph{Two-point crossover}: si determinano due posizioni casuali nel cromosa e si scambia quell'intervallo di geni.}
+\item{\emph{N-point crossover}: un generalizzazione dei precedenti. Si scambiano le aree incluse nei punti selezionati casualmente.}
+\item{\emph{Uniform crossover}: per ogni gene si determina se scambiarlo o meno a seconda di un certo parametro di probabilità.}
+\item{\emph{Shuffle crossover}: si procede inizialmente ad operare una permutazione randomica sui due cromosomi. Dopo si procede come nel one-point crossover e si conclude facendo l'unmixing.}
+\item{\emph{Uniform order-based crossover}: simile allo uniform crossover, per ogni gene si decide se tenerlo o cambiarlo. Gli spazi sono riempiti nell'ordine di apparizione dei geni nell'altro cromosoma.}
+\item{\emph{Edge-recombination crossover}: il cromosoma è rappresentato come un grafo. Ogni gene è un vertice che ha archi verso i suoi vicini. Gli archi dei due grafi vengono mischiati. Si preserva l'informazione relativa alla vicinanza.}
+\end{itemize}
+
+Un caso di multiple-parent operator è quello del \emph{diagonal crossover}. Simile al n-point crossover, ma vi partecipano più di due genitori. Dati $k$ genitori, si scelgono $k-1$ punti per il crossover e si procede shiftando diagonalmente le sequenze rispetto ai punti scelti. Aumentando il numero di genitori si ottiene un ottimo grado di esplorazione dello spazio. Alcune proprietà che possono caratterizzare gli operatori di crossover sono:
+
+\begin{itemize}
+\item{\emph{Positional bias}: quando la probabilità che due geni vengano ereditati assieme dallo stesso genitore dipende dalla posizione (relativa) dei due geni nel cromosoma. Deve essere evitato perchè può rendere la disposizione dei geni cruciale per la riuscita dell'algoritmo.}
+\item{\emph{Distributional bias}: quando la probabilità che un certo numero di geni siano scambiati tra i genitori non è la stessa per tutti i possibili numeri di geni. Deve essere evitato perchè soluzioni parziali di differenti lunghezze hanno differenti probabilità di progredire alla generazione successiva. In generale, è meno problematico del positional bias.}
+\end{itemize}
+
+Per migliorare le performance delle mie soluzioni ho due strategie:
+
+\begin{itemize}
+\item{\emph{Interpolating recombination}: opero una fusione dei tratti dei due genitori in modo da creare nuovi discendenti. Si creano nuovi alleli e ne beneficiano particolarmente gli individui con migliore fitness. Per una esplorazione sufficientemente ampia di $\Omega$ nelle prime iterazioni occorre utilizzare una probabilità di mutazione molto alta.}
+\item{\emph{Extrapolating recombination}: inferisco informazioni da una moltitudine di individui e creo nuovi alleli in accordo. L'influenza della diversità è difficilmente quantificabile.}
+\end{itemize}
+
+\subsubsection{Strategie di adattamento}
+
+Un ultimo aspetto da considerare è quello delle \emph{strategie di adattamento} che rispondono a domande del tipo: dovremmo permettere che la mutazione introduca pesanti modifiche al fenotipo durante l'ottimizzazione? Per rispondere a questa ed altre domande occorre una metrica per misurare il miglioramento in fitness tra l'individuo e l'individuo mutato. 
+
+\begin{definition}
+Il \emph{miglioramento di fitness} di un individuo $A$ rispetto ad un individuo $B$ è definito come:
+$$
+imp(A,B) = |A.F - B.F|
+$$ 
+se $A.F > B.F$, altrimenti $0$.
+\end{definition}
+
+\begin{definition}
+Il \emph{miglioramento relativo atteso} di un operatore $mult$ rispetto ad un individuo $A$ è definito come:
+$$
+imp_{rel} = E(imp(A,mut(A)))
+$$ 
+\end{definition}
+
+Data questa metrica si può giudicare le performance di un particolare operatore genetico. La qualità di una mutazione non può, però, essere giudicata a prescindere dal livello attuale di fitness. In generale, più ci si avvicina all'ottimo più occorre usare operatori locali. Esistono varie strategie di adattamento possibili:
+
+\begin{itemize}
+\item{\emph{Predefined adaptation}: si definiscono i cambiamenti prima della run.}
+\item{\emph{Adaptive adaptation}: si definisce una metrica per stabilire durante la run quali operatori adottare.}
+\item{\emph{Self-adaptation}: si utilizzano informazioni aggiuntive sugli individui.}
+\end{itemize}
+
 \end{document}

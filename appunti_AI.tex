@@ -1841,4 +1841,114 @@ Data questa metrica si può giudicare le performance di un particolare operatore
 \item{\emph{Self-adaptation}: si utilizzano informazioni aggiuntive sugli individui.}
 \end{itemize}
 
-\end{document}
+\subsection{Swarm and population based optimization}
+
+La \emph{swarm based optimization} e la \emph{population based optimization} sono due meta-euristiche usate in letteratura per sviluppare sistemi intelligenti multi-agente capaci di  comportamento cooperativo. Il concetto di \emph{swarm intelligence}, utilizzato per descrivere in natura il comportamento di alcune specie (api, formiche, etc), sta a significare la capacità della popolazione di cooperare per la soluzione di un problema. L'idea è che i singoli individui (unità con skill limitate) scambino tra loro informazioni e si coordinino senza l'aiuto di un controllo centrale. Esistono varie tipologie di euristiche di questo genere:
+
+\begin{itemize}
+\item{\emph{Particle swarm optimization}: ispirato al pattern biologico della ricerca del cibo in uccelli e pesci. Gli individui aggregano informazioni, creando un insieme di conoscenze comuni, nl fine di presentare una solo soluzione. Ogni individuo è un candidato ad essere la soluzione.}
+\item{\emph{Ant colony optimization}: ispirato al pattern biologico delle formiche che cercano una strada che le conduca al cibo. Gli individui scambiano informazione modificando l'ambiente, in modo che gli altri possano seguire (o meno) le loro tracce. Ogni individuo è un candidato ad essere la soluzione.}
+\end{itemize}
+
+Dal lato della \emph{population based optimization} troviamo, invece, il così detto \emph{population-based incremental learning}. Gli individui vengono generati randomicamente in accordo ad una distribuzione di probabilità. In realtà, non abbiamo bisogno di conservare in memoria gli individui in modo esplicito, ma è sufficiente conservare le statistiche della popolazione. Come operatore di ricombinazione viene utilizzato lo uniform crossover. Per la selezione, si scelgono gli individui che migliorino le statistiche della popolazione. La mutazione, invece, si limita ad un semplice \emph{bit-flip}. La sua feature distintiva è che il \emph{learning rate}, ovvero il parametro che regola la possibilità di movimento degli individui nello spazio, cambia nel tempo e si riduce con il numero di iterazioni. Questo permette, inizialmente, grande mobilità, per stabilizzarsi poi quando un ottimo viene trovato. Alcuni problemi con questa strategia sono che 1) l'algoritmo può apprendere anche alcune dipendenze accidentali tra i cromosomi degli individui e 2) considerare i singoli bit in isolamento gli uni dagli altri. Un diverso genere di problema riguarda la rappresentazione statistica della popolazione: 3) la stessa statistica può rappresentare differenti popolazioni.
+
+\subsection{Fondamenti teorici}
+
+Per dimostrare la correttezza degli algoritmi evolutivi occorre considerare gli \emph{schemata}, ovvero cromosomi binari solo parzialmente specificati che codificano un particolare comportamento. Da qui, si partirà poi a studiare come il numero dei cromosomi che condividono lo schema si evolve rispetto alle generazioni. L'obbiettivo è quello di fornire una stima stocastica che descriva come un algoritmo evolutivo esplora lo spazio di ricerca.
+
+\begin{definition}
+Uno \emph{schema} $h$ è una stringa di simboli di lunghezza $L$ sull'alfabeto $\{0,1,*\}$. Il carattere $*$ è una wildcard.
+\end{definition}
+
+\begin{definition}
+Un cromosoma $c$ si dice che \emph{condivide} lo schema $h$ (in simboli, $c \triangleleft h$) se e solo se, escluse le posizioni in $h$ aventi il simbolo $*$, $h$ coincide con $c$.
+\end{definition}
+
+Per misurare gli effetti della selezione occorre calcolare la fitness dei cromosomi che condividono un certo schema. Di solito si sceglie come misura la \emph{media del fitness} relativa ai soli cromosomi che condividono lo schema. Gli individui che condivideranno lo schema nella generazione successiva saranno proporzionali a questa media. Per calcolare, invece, l'influenza dell'operatore di mutazione occorre misurare la probabilità che, avvenuta la mutazione, lo schema si preservi. Definiamo, quindi, il concetto di \emph{ordine} di uno schema.
+
+\begin{definition}
+L'\emph{ordine} di uno schema $h$ è il numero degli 1 e degli 0 in $h$, ovvero 
+$$
+ord(h) = \#1 + \#0
+$$
+\end{definition}
+
+Possiamo, ora, calcolare la probabilità che un operatore di mutazione preservi lo schema $h$ grazie alla formula:
+
+$$
+(1 - p_m)^{ord(h)}
+$$
+
+Per concludere, la probabilità che il crossover (ci limiteremo al caso \emph{one-point}) preservi lo schema verrà misurato a seconda della \emph{lunghezza definitoria} dello schema stesso.
+
+\begin{definition}
+La \emph{lunghezza definitoria} di uno schema $h$ è la differenza tra l'ultima posizione in cui occorre un 1 o uno 0 in $h$ e la prima (in simboli, $dl(h)$).
+\end{definition}
+
+La probabilità che il punto di "taglio" divida il cromosoma in modo tale che lo schema finisca nel mezzo sarà calcolata come:
+
+$$
+\frac{dl(h)}{L-1}
+$$
+
+dove $L$ è la lunghezza del cromosoma. Definiamo, ora, alcuni concetti fondamentali per quello che segue.
+
+\begin{definition}
+Il \emph{valore atteso dei cromosomi che condividono lo schema} (in simboli, $N(h,t)$) è il numero di cromosomi che condividono lo schema durante la generazione $t$.
+\end{definition}
+
+\begin{definition}
+Il \emph{valore atteso (dei cromosomi che condividono lo schema) dopo gli operatori genetici} sarà calcolato come:
+$$
+N(h,t + \Delta t_s + \Delta t_c + \Delta t_m) = N(h,t+1)
+$$
+dove i vari $\Delta$ dipenderanno dalle probabilità dei singoli operatori definite sopra.
+\end{definition}
+
+Un importante teorema, il così detto \emph{schema theorem}, ci dice che schemi con a) una fitness sopra la media, b) una lunghezza definitoria corta e c) con ordine basso, si riproducono in modo "quasi" esponenziale. Tuttavia, un altro importante teorema, il così detto \emph{no free lunch theorem}, ci dice che non esiste un algoritmo evolutivo che possa essere utilizzato efficientemente per ogni problema. La scelta della "giusta" codifica e dei "corretti" operatori genetici dipenderà dalla nostra conoscenza locale riguardo allo specifico problema.
+
+\subsection{Programmazione genetica}
+
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.3]{img/parsetree.png}
+\caption{Albero sintattico che rappresenta la funzione $3x + \frac{8}{2}$.}
+\label{fig:37}
+\end{figure}
+
+La \emph{programmazion genetica} (in breve, GP) è una famiglia di algoritmi evolutivi che permettono la creazione automatica di programmi che possano risolvere problemi. Per fare questo occorre, innanzitutto, una codifica per rappresentare e manipolare un singolo programma. Solitamente si rappresentano programmi come \emph{alberi sintattici} dove i nodi interni sono le operazioni e le foglie variabili o costanti (vedi Figura \ref{fig:37}). L'insieme delle operazioni e dei simboli terminali varia da problema a problema. Se, per esempio, volessimo approssimare una funzione booleana sceglieremmo l'insieme di operazioni $F = \{and, or, not\}$ e come insieme di terminali $T = \{ x_0, \dots, x_n, 1, 0 \}$. GP può risolvere un problema efficacemente ed efficientemente solo se l'insieme di operazioni e di simboli terminali è \emph{completo} e \emph{sufficiente}. Il problema di trovare il più piccolo insieme completo e sufficiente per un dato problema è spesso NP-hard. Può essere utile rappresentare i cromosomi come espressioni del linguaggio $L = F \cup T$ per semplificare la computazione. 
+
+\subsubsection{Inizializzazione}
+
+Come nel caso degli algoritmi evolutivi visti in precedenza, occorre inizializzare una popolazione di individui (espressioni simboliche o alberi sintattici, in questo caso) creati in modo random. Data la complessità che esibiscono queste strutture, nel processo di creazione, bisogna considerare alcuni parametri quali l'\emph{altezza massima} degli alberi e il \emph{numero massimo di nodi}. Esistono vari sottoalgoritmi che si occupano dell'inizializzazione degli alberi sintattici:
+
+\begin{enumerate}
+\item{\emph{Grow}: la probabilità di scegliere un nodo interno o uno terminale è distribuita in modo uniforme a qualsiasi livello di profondità. Questo permette di creare alberi "sbilanciati".}
+\item{\emph{Full}: i nodi terminali possono occorrere solo al livello dell'altezza massima dell'albero. Questo permette di creare alberi "bilanciati".}
+\item{\emph{Ramp-half-and-half}: questo approccio mischia i primi due per avere più varianza nella forma esibita dagli alberi sintattici.}
+\end{enumerate}
+
+\subsubsection{Operatori genetici}
+
+La popolazione così inizializzata difficilmente avrà un buon punteggio di fitness. Il processo evolutivo si occuperà di apportare cambiamenti alla popolazione attraverso operatori genetici. I tre più importanti sono:
+
+\begin{itemize}
+\item{\emph{Crossover}}
+\item{\emph{Mutation}}
+\item{\emph{Cloning} (duplicazione di un individuo)}
+\end{itemize}
+
+Nel caso del crossover, un approccio che si adotta spesso è quello dello scambio di due sottoespressioni: si scelgono due nodi interni e si scambiano tra i due alberi. Nel caso della mutazione, invece, si effettua sempre uno scambio di sottoalberi, ma con uno generato randomicamente.  
+
+\subsubsection{Introni}
+
+Durante il processo evolutivo gli individui tendono a sviluppare larghe porzioni di codice "inutile" ai fini della computazione. Un concetto simile ci viene dalla biologia: gli \emph{introni} sono porzioni di DNA che non codificano alcuna informazione a livello del fenotipo (per questo vengono talvolta chiamati \emph{junk-DNA}). Per evitare il verificarsi di questo fenomeno esistono alcune strategie:
+
+\begin{itemize}
+\item{\emph{Breeding recombination}: si generano molti figli usando parametri differenti, e si mantengono solo i migliori.}
+\item{\emph{Intelligent recombination}: si scelgono in modo più selettivo i punti dove operare il crossover.}
+\item{\emph{Continuos slight changes}: possiamo cambiare leggeramente la funzione di valutazione in modo che gli introni non siano più tali.}
+\end{itemize}
+
+\end{document} 

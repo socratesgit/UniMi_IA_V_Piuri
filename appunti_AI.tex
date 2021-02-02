@@ -1951,4 +1951,61 @@ Durante il processo evolutivo gli individui tendono a sviluppare larghe porzioni
 \item{\emph{Continuos slight changes}: possiamo cambiare leggeramente la funzione di valutazione in modo che gli introni non siano più tali.}
 \end{itemize}
 
+\subsection{Strategie evolutive}
+
+In una \emph{strategia evolutiva} cerchiamo non solo di ottimizzare i singoli individui, ma prendiamo in analisi l'intero processo evolutivo: riproduzione, mortalità, lunghezza media della vita degli individui, etc. Questi parametri sono suscettibili alle scelte che facciamo in materia di operatori genetici. Quello che facciamo è considerare un problema di ottimizzazione come una funzione $f: \mathbb{R}^n \to \mathbb{R}$ che vogliamo minimizzare. I cromosomi saranno rappresentati da array di reali (a differenza degli algoritmi visti in precedenza che utilizzavano per lo più rappresentazioni ad interi). Utilizziamo, poi, unicamente l'operatore di mutazione per muovere il vettore cromosoma all'interno dello spazio di ricerca aggiungendovi un vettore $r$ randomico ottenuto da una distribuzione normale. Il processo di selezione verrà applicato agli individui così mutati. Solo i migliori accederanno direttamente alla generazione successiva (elitismo). Per operare questa scelta vi sono due diversi approcci:
+
+\begin{itemize}
+\item{\emph{Plus-strategy}: la selezione lavora sull'insieme degli individui non mutati e degli individui mutati. }
+\item{\emph{Comma-strategy}: si generano molti individui mutati e si sceglie tra loro chi costituirà la nuova generazione. I cromosomi non mutati vengono persi.}
+\end{itemize}
+
+Il vantaggio del primo approccio sta nel fatto che la fitness della popolazione non può che migliorare per la politica elitista che si adotta. Il problema è che si può rimanere bloccati in minimi locali. In questi casi può essere utile adottare la comma-strategy per creare diversità nella popolazione. Può anche essere opportuno adattare la varianza della mutazione durante il processo evolutivo. Se si permette una piccola varianza, allora avremo una esplorazione locale (\emph{exploitation}). Se, invece, si permette una ampia varianza, si avrà una ricerca globale (\emph{exploration}). Occorre scegliere un parametro $\sigma$ che ottimizzi la convergenza. Solitamente si utilizza la così detta $\frac{1}{5}$ \emph{success rule}: la varianza è appropriata quando $\frac{1}{5}$ degli individui mutati ha una miglior fitness rispetto a quelli della passata generazione. Si può anche avere un approccio più locale e conservare per ogni vettore cromosoma la sua varianza associata come un'informazione addizionale. I cromosomi con una "cattiva" varianza genereranno "cattivi" discendenti. I cromosomi (e le loro varianze) che hanno i peggiori valori di fitness non potranno accedere alle seguenti generazioni e si estingueranno. 
+
+\subsection{Multi-criteria optimization}
+
+Ci possono essere dei casi di problemi di ottimizzazione dove si hanno diversi obiettivi e vincoli, possibilmente in conflitto, ognuno rappresentato da una propria funzione di fintess $f_i : \Omega \to \mathbb{R}$. L'approccio più diretto è quello di combinare le varie funzioni in un'unica funzione di fintess aggregata:
+$$
+f(s) = \sum w_i \cdot f_i(s)
+$$
+Ognuna delle singole funzioni si vedrà assegnato un peso che rispecchierà la sua importanza relativa rispetto agli altri parametri. Il problema è quello di trovare una distribuzione dei pesi che rispetti i criteri di rilevanza. Se, inoltre, gli obiettivi sono tra loro in conflitto sarà ancora più difficile trovare una funzione che li aggreghi in modo opportuno. In generale, il teorema di impossibilità di Arrow previene la possibilità che esista una funzione di aggregazione che massimizzi tutte le singole funzioni. Una soluzione è quella di scegliere una soluzione solo se è un \emph{ottimo paretiano}.
+
+\begin{definition}
+Un elemento $s \in \Omega$ si dice \emph{ottimo paretiano} rispetto alle funzioni di valutazione $f_i$ con $i \in \{1, \dots, n\}$, se non c'è un elemento $s' \in \Omega$ tale che:
+$$
+\forall i, 1 \leq i \leq n: \quad f_i(s') \geq f_i(s)
+$$ 
+$$
+\exists i, 1 \leq i \leq n: \quad f_i(s') > f_i(s)
+$$
+\end{definition}
+
+Si potrà preferire una soluzione all'altra solo nel caso in cui nessuna funzione di valutazione peggiorerà nel caso si operi questa scelta. L'insieme delle soluzioni pareto-ottimali è detta \emph{frontiera paretiana}. Un vantaggio di questo approccio è che si evita il bisogno di aggregare le singole funzioni di valutazione e la ricerca è da operare solo uno volta. Possiamo utilizzare gli algoritmi evolutivi per trovare quante più soluzioni pareto-ottimali. Un approccio è quella di definire la funzione di fitness come la somma pesata delle singole funzioni di valutazione. Purtroppo questo favorisce soluzione che massimizzino una delle funzioni a discapito delle altre. Si può risolvere il problema individuando queste soluzioni "marginali" e scartandole in fase di selezione. Un secondo problema è quello della convergenza in un punto qualsiasi del fronte, si può rimediare applicando tecniche di \emph{power law sharing}, simili a quelle per evitare \emph{crowding}. Tali tecniche, tenendo conto delle zone già coperte del fronte, cercheranno di coprire punti inesplorati del fronte, in modo da garantire una copertura omogenea.
+
+\subsection{Algoritmi evolutivi paralleli}
+
+Rispetto alle altre metaeuristiche si è osservato che gli algoritmi evolutivi spesso portano a risultati ottimi, ma con il prezzo di un tempo di esecuzione molto lento.
+È possibile parallelizzare alcune fasi del processo in modo da velocizzarlo o migliorarne il risultato. Osservando le varie fasi si nota che sono parallelizzabili:
+
+\begin{itemize}
+\item{la generazione iniziale, stando attendi ad eventuali duplicati, che comunque non costituiscono grossi problemi.}
+\item{il calcolo del fitness degli individi, con l’accortezza di raccogliere i dati in un unico processore per calcolare il fitness relativo.}
+\item{la selezione se costituita da eventi indipendenti, come ad esempio tournament selection, diventa più complesso gestire etilismo.}
+\item{l’applicazione degli operatori genetici.}
+\item{il controllo di raggiungimento del criterio di terminazione.}
+\end{itemize}
+
+Due architetture utilizzate in letteratura sono, rispettivamente:
+
+\begin{itemize}
+\item{\emph{Island model}: È possibile sfruttare la parallelizzazione considerando un modello ad isola. Ogni
+isola avrà una popolazione, ed eseguirà il processo evolutivo. Si può introdurre migrazione degli individui da un isola all’altra in maniera random o definita da connessione tra le isole.}
+\item{\emph{Cellular evolution}: I processori sono organizzati in una griglia. Ogni processore è responsabile di
+un cromosoma.
+Per la selezione ogni processore calcola il massimo dei vicini, gli operatori genetici sono applicabili solo tra vicini e la mutazione è gestita da ogni singolo
+processore.}
+\end{itemize}
+
+
+
 \end{document} 

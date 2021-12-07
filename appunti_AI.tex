@@ -3,12 +3,13 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[affil-it]{authblk}
-\usepackage{lineno,hyperref}
+\usepackage{lineno}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{subcaption}
+\usepackage[hidelinks]{hyperref}
 
 
 \newtheorem{remark}{Osservazione}
@@ -31,6 +32,9 @@
 
 \date{Ultima modifica: \today}
 \maketitle
+
+\tableofcontents
+\pagebreak
 \section{Introduzione}
 
 Dato un qualunque sistema, se disponiamo di un insieme di leggi o regole che lo descrivono completamente (nel caso di un sistema fisico avremmo delle equazioni differenziali) potremmo, in teoria, calcolarne in ogni momento lo stato e, quindi, prevederne l'evoluzione nel tempo. 
@@ -677,7 +681,7 @@ La fase di training avviene come nel caso dei MLP attraverso gradient descent e 
 
 \subsection{Learning vector quantization}
 
-Fino ad ora ci siamo concentrati sui fixed learning task per descrivere l'apprendimento delle ANN: il successo dell'apprendimento si misura dall'adeguatezza con cui il network approssima gli output desiderati. Tuttavia, non sappiamo sempre quale output aspettarci per ogni input nel nostro dataset. L'obbiettivo di una rete neurale in questi casi sarà quello di classificare o clusterizzare\footnote{Solitamente si usa il termine "classe" quando queste sono conosciute \emph{a priori}, dove, invece, i "cluster" sono derivati \emph{a posteriori} dai dati in base alle loro similitudini.} i dati in input, senza avere un'indicazione su cosa si stia cercando. La \emph{learning vector quantization} è una tecnica che ci aiuta ad operare il raggruppamento in modo automatico, trovando una adeguata tassellazione dello spazio di input. Come nel caso dell'algoritmo c-means, i vari cluster verranno rappresentati da punti detti "centri" scelti tra quelli del dataset.
+Fino ad ora ci siamo concentrati sui fixed learning task per descrivere l'apprendimento delle ANN: il successo dell'apprendimento si misura dall'adeguatezza con cui il network approssima gli output desiderati. Tuttavia, non sappiamo sempre quale output aspettarci per ogni input nel nostro dataset. L'obiettivo di una rete neurale in questi casi sarà quello di classificare o clusterizzare\footnote{Solitamente si usa il termine "classe" quando queste sono conosciute \emph{a priori}, dove, invece, i "cluster" sono derivati \emph{a posteriori} dai dati in base alle loro similitudini.} i dati in input, senza avere un'indicazione su cosa si stia cercando. La \emph{learning vector quantization} è una tecnica che ci aiuta ad operare il raggruppamento in modo automatico, trovando una adeguata tassellazione dello spazio di input. Come nel caso dell'algoritmo c-means, i vari cluster verranno rappresentati da punti detti "centri" scelti tra quelli del dataset.
 
 \subsubsection{Learning vector quantization network}
 
@@ -770,7 +774,7 @@ dove $u_*$ è il neurone vincitore e $f_{nb}$ è una funzione radiale. Il learni
 
 \subsection{Hopfield network}
 
-Nei precedenti capitoletti ci siamo interessati esclusivamente di feed-forward network, ovvero network rappresentati da un grafo aciclico. Esistono, tuttavia, in letteratura alcuni esempi di \emph{recurrent network}, ovvero network il cui grafo contiene dei cicli diretti. Una dei più semplici modelli di recurrent network è quello degli \emph{Hopfield network} (in quello che segue HN). Una prima differenza degli HN rispetto agli altri ANN è che tutti i neuroni sono sia neuroni di input che di output. Non esistono, inoltre, neuroni nascosti. Ogni neurone è connesso ad ogni altro neurone (sono esclusi cappi) e i pesi delle connessioni sono simmetrici. La funzione di input di ogni neurone è la somma pesata degli output degli altri neuroni:
+Nei precedenti capitoletti ci siamo interessati esclusivamente di feed-forward network, ovvero network rappresentati da un grafo aciclico. Esistono, tuttavia, in letteratura alcuni esempi di \emph{recurrent network}, ovvero network il cui grafo contiene dei cicli diretti. Uno dei più semplici modelli di recurrent network è quello degli \emph{Hopfield network} (in quello che segue HN). Una prima differenza degli HN rispetto agli altri ANN è che tutti i neuroni sono sia neuroni di input che di output. Non esistono, inoltre, neuroni nascosti. Ogni neurone è connesso ad ogni altro neurone (sono esclusi cappi) e i pesi delle connessioni sono simmetrici. La funzione di input di ogni neurone è la somma pesata degli output degli altri neuroni:
 
 $$
 f_{(net)}^u(\ww,\ii) = \sum_{v \in U - \{u\}} w_{uv} out_v 
@@ -792,7 +796,7 @@ $$
 			0 & w_{u_1 u_2} & \dots & w_{u_1 u_n} \\
 			w_{u_2 u_1} & 0 & \dots & w_{u_2 u_n} \\
 			\vdots & \vdots & \vdots & \vdots \\
-			w_{u_n u_1} & w{u_n u_2} & \dots & 0
+			w_{u_n u_1} & w_{u_n u_2} & \dots & 0
 			\end{bmatrix}
 $$
 
@@ -815,7 +819,7 @@ Si può osservare, infatti, che il sistema può solo evolversi da uno stato con 
 Le macchine di Boltzmann (in quello che segue BM) possono considerarsi in tutto simili a degli HN, salvo che possono contenere neuroni nascosti e differiscono nella procedura di aggiornamento. Come nel caso degli HN, per risolvere problemi di ottimizzazione ci si basa sul fatto che è possibile definire una funzione energia associata ad ogni stato. Grazie a questa funzione energia si definisce una distribuzione di probabilità (di Boltzmann) rispetto agli stati del network:
 
 $$
-P(\mathbf{s}) = \frac{1}{2} e^{-\frac{E(\mathbf{s})}{kT}}
+P(\mathbf{\overrightarrow{s}}) = \frac{1}{c} e^{-\frac{E(\mathbf{\overrightarrow{s}})}{kT}}
 $$
 
 dove $\mathbf{s}$ rappresenta l'insieme degli stati, $c$ è una costante di normalizzazione, $E$ è la funzione energia, $T$ è la temperatura del sistema e $k$ la costante di Boltzmann ($k \simeq 1,38 \cdot 10^{-23}$). Gli stati del sistema corrispondono ai valori che possono assumere le attivazioni dei singoli neuroni. La probabilità di attivazione di un neurone è la funzione logistica del differenziale di energia tra il caso che vede il neurone attivo e quello che lo vede inattivo.
@@ -835,7 +839,7 @@ Bisogna notare che una BM potrà calcolare in modo efficace una distribuzione di
 
 \subsubsection{Training}
 
-L'obbiettivo di apprendimento è quello di adattare i pesi e i threshold in modo che la distribuzione implicita nel dataset sia approssimata dalla distribuzione rappresentata dai neuroni visibili di una BM. Questo possiamo farlo scegliendo una misura che descriva la differenza tra le due distribuzioni ed utilizzeremo la tecnica del gradient descent per minimizzarla. Una delle misure più famose è quella di Kullback-Leibler sulla divergenza dell'informazione:
+L'obiettivo di apprendimento è quello di adattare i pesi e i threshold in modo che la distribuzione implicita nel dataset sia approssimata dalla distribuzione rappresentata dai neuroni visibili di una BM. Questo possiamo farlo scegliendo una misura che descriva la differenza tra le due distribuzioni ed utilizzeremo la tecnica del gradient descent per minimizzarla. Una delle misure più famose è quella di Kullback-Leibler sulla divergenza dell'informazione:
 
 $$
 KL(p1,p2) = \sum_{\omega \in \Omega} p1(\omega) ln\frac{p1(\omega)}{p2(\omega)}
@@ -848,7 +852,7 @@ dove $p1$ si riferisce alla distribuzione del dataset e $p2$ a quella della macc
 \item{\emph{Negative phase}: tutte le unità vengono aggiornate fino al raggiungimento di uno stato stabile.}
 \end{enumerate}
 
-Se distinguiamo la probabilità che un neurone $u$ sia attivato nella positive phase ($p_u^{+}$) e quella che lo stesso neurone sia attivato nella negative phase ($p_u^{+}$) e la probabilità che due neuroni $u$ e $v$ siano attivati simultaneamente nella positive phase ($p_{uv}^{+}$) e quella che gli stessi due neuroni siano attivati nella negative phase ($p_{uv}^{-}$), possiamo definire la regola di update dei pesi e del threshold come segue:
+Se distinguiamo la probabilità che un neurone $u$ sia attivato nella positive phase ($p_u^{+}$) e quella che lo stesso neurone sia attivato nella negative phase ($p_u^{-}$) e la probabilità che due neuroni $u$ e $v$ siano attivati simultaneamente nella positive phase ($p_{uv}^{+}$) e quella che gli stessi due neuroni siano attivati nella negative phase ($p_{uv}^{-}$), possiamo definire la regola di update dei pesi e del threshold come segue:
 
 $$
 \Delta w_{uv} = \frac{1}{\eta} (p_{uv}^{+} - p_{uv}^{-}) 
@@ -912,7 +916,7 @@ Un insieme classico è una collezione di elementi che possono (o meno) appartene
 \begin{definition}
  Dato un dominio del discorso $X$, un insieme fuzzy $\mu$ è una funzione $\mu : X \to [0,1]$ che assegna ad ogni elemento un \emph{grado di appartenenza} $\mu(x)$ rispetto all'insieme $\mu$.
 \end{definition}
- Queste funzioni sono scelte a seconda del contesto di utilizzo e i gradi di appartenenza sono fissati per convenzione. Possiamo vedere i fuzzy set come interfacce tra espressioni lingustiche e loro rappresentazioni numeriche. Ad esempio, vogliamo dare un modello formale alla proprietà "essere alto per un bambino di 4 anni". Per farlo definiremo un insieme fuzzy $\mu_{tall}$ attraverso una funzionesigmoide come in Figura \ref{fig:23}, tale per cui risulteranno \emph{sicuramente} nell'estensione della proprietà i bambini più alti di 1.5 m centimetri e \emph{sicuramente} fuori dall'estensione quelli più bassi di 0.7 m. Tutti gli altri apparterranno all'insieme con un certo grado.
+ Queste funzioni sono scelte a seconda del contesto di utilizzo e i gradi di appartenenza sono fissati per convenzione. Possiamo vedere i fuzzy set come interfacce tra espressioni linguistiche e loro rappresentazioni numeriche. Ad esempio, vogliamo dare un modello formale alla proprietà "essere alto per un bambino di 4 anni". Per farlo definiremo un insieme fuzzy $\mu_{tall}$ attraverso una funzione sigmoide come in Figura \ref{fig:23}, tale per cui risulteranno \emph{sicuramente} nell'estensione della proprietà i bambini più alti di 1.5 m centimetri e \emph{sicuramente} fuori dall'estensione quelli più bassi di 0.7 m. Tutti gli altri apparterranno all'insieme con un certo grado.
 
 \begin{figure}
 \centering
@@ -923,7 +927,7 @@ Un insieme classico è una collezione di elementi che possono (o meno) appartene
 
 \subsubsection{Interpretazioni della funzione di appartenenza}
 
-Ci sono varie semantiche che è possibile associare alla relazione di appartenenza fuzzy a seconda dalla applicazione:
+Ci sono varie semantiche che è possibile associare alla relazione di appartenenza fuzzy a seconda dell'applicazione:
 
 \begin{enumerate}
 \item{somiglianza}
@@ -931,7 +935,7 @@ Ci sono varie semantiche che è possibile associare alla relazione di appartenen
 \item{possibilità}
 \end{enumerate}
 
-Nel primo caso, $\mu(x)$ può essere visto come il grado di prossimità rispetto ad un elemento prototipale di $\mu$. Questa interpretazione viene utilizzata nei problemi di pattern classification, cluster analysis e regressione. Nel secondo caso, la funzione $\mu$ rappresenta sia l'insieme degli oggetti preferiti, sia il valore associato ad una decisione $X$ e $\mu(u)$ rappresenta sia l'intensità della preferenza associata a $u$, sia la possibilità di scegliere $u$ come valore di $X$. Questa interpretazione viene utilizzata nei problemi di ottimizzazione fuzzy e nella teoria della decisione. L'ultima delle tre è quella che considera $\mu(u)$ come il grado di possibilità che l'elemento $u$ sia il valore del parametro $X$ ed è usata per quantificare lo stato epistemico di un agente. L'obbiettivo è quello di distinguere quello che l'agente considererebbe "sorprendente" da quello che, invece, è "tipico" o "aspettato". Questa interpretazione, come vedremo in seguito, viene utilizzata in data analysis.
+Nel primo caso, $\mu(x)$ può essere visto come il grado di prossimità rispetto ad un elemento prototipale di $\mu$. Questa interpretazione viene utilizzata nei problemi di pattern classification, cluster analysis e regressione. Nel secondo caso, la funzione $\mu$ rappresenta sia l'insieme degli oggetti preferiti, sia il valore associato ad una decisione $X$ e $\mu(u)$ rappresenta sia l'intensità della preferenza associata a $u$, sia la possibilità di scegliere $u$ come valore di $X$. Questa interpretazione viene utilizzata nei problemi di ottimizzazione fuzzy e nella teoria della decisione. L'ultima delle tre è quella che considera $\mu(u)$ come il grado di possibilità che l'elemento $u$ sia il valore del parametro $X$ ed è usata per quantificare lo stato epistemico di un agente. L'obiettivo è quello di distinguere quello che l'agente considererebbe "sorprendente" da quello che, invece, è "tipico" o "aspettato". Questa interpretazione, come vedremo in seguito, viene utilizzata in data analysis.
 
 \subsubsection{Rappresentazione verticale e orizzontale}
 
@@ -1237,7 +1241,7 @@ Particolare interesse rivestono i fuzzy interval anche detti \emph{fuzzy numbers
 
 \subsubsection{Rappresentazione per insiemi}
 
-Abbiamo visto in precedenza come, attraverso il principio di estensione, si possa definire le operazioni aritmetiche nel contesto di $F(\mathbb{R})$. Tuttavia, calcolare tali funzioni direttamente sugli insiemi fuzzy risulta oneroso, specialmente se si adotta la rappresentazione verticale rispetto a quela orizzontale. Sarebbe desiderabile ridurre l'artimetica fuzzy all'ordinaria aritmetica sugli insiemi booleani e, quindi, applicare alcune semplici operazioni su intervalli per ottenere il risultato. Questo è possibile farlo attraverso la \emph{rappresentazione per insiemi} di un insieme fuzzy.
+Abbiamo visto in precedenza come, attraverso il principio di estensione, si possano definire le operazioni aritmetiche nel contesto di $F(\mathbb{R})$. Tuttavia, calcolare tali funzioni direttamente sugli insiemi fuzzy risulta oneroso, specialmente se si adotta la rappresentazione verticale rispetto a quella orizzontale. Sarebbe desiderabile ridurre l'aritmetica fuzzy all'ordinaria aritmetica sugli insiemi booleani e, quindi, applicare alcune semplici operazioni su intervalli per ottenere il risultato. Questo è possibile farlo attraverso la \emph{rappresentazione per insiemi} di un insieme fuzzy.
 
 \newpage
 
@@ -1368,7 +1372,7 @@ Data una relazione $R(X,X)$ si definisce una \emph{relazione di equivalenza} sse
 \label{fig:30}
 \end{figure}
 
-Una applicazione di particolare successo di queste idee sono i così detti \emph{fuzzy controller}. Il concetto che sta sotto al fuzzy control è quello di definire transizioni non-lineari tra i diversi stati del sistema senza specificare un insieme di equazioni differenziali per ogni variabile. Questo permette di modellare sistemi complessi le cui dinamiche possono sfuggire ad un'analisi matematicamente precisa. Lo schema di base di un fuzzy controller viene mostrato in Figura \ref{fig:30}. La (1) \emph{fuzzyfication interface} riceve i valori in input e si occupa di convertirli in un dominio adeguato (termini linguistici o fuzzy set). La (2) \emph{knowledge base} consiste di (a) dati che contengono informazioni riguardo intervalli, trasformazioni di dominio e a quali insiemi fuzzy corrisponderanno i termini linguistici, e (b) regole che contengono i controlli del tipo \emph{if-then}. La (3) \emph{decision logic} rappresenta l'unità processore, la quale si occupa di computare l'output in base all'input misurato e la knwoledge base. Infine, la (4) \emph{defuzzification interface} si occupa di mappare i valori fuzzy usati nella computazione in valori booleani che sono inviati come segnali al controllo del sistema. 
+Un'applicazione di particolare successo di queste idee sono i così detti \emph{fuzzy controller}. Il concetto che sta sotto al fuzzy control è quello di definire transizioni non-lineari tra i diversi stati del sistema senza specificare un insieme di equazioni differenziali per ogni variabile. Questo permette di modellare sistemi complessi le cui dinamiche possono sfuggire ad un'analisi matematicamente precisa. Lo schema di base di un fuzzy controller viene mostrato in Figura \ref{fig:30}. La (1) \emph{fuzzyfication interface} riceve i valori in input e si occupa di convertirli in un dominio adeguato (termini linguistici o fuzzy set). La (2) \emph{knowledge base} consiste di (a) dati che contengono informazioni riguardo intervalli, trasformazioni di dominio e a quali insiemi fuzzy corrisponderanno i termini linguistici, e (b) regole che contengono i controlli del tipo \emph{if-then}. La (3) \emph{decision logic} rappresenta l'unità processore, la quale si occupa di computare l'output in base all'input misurato e la knowledge base. Infine, la (4) \emph{defuzzification interface} si occupa di mappare i valori fuzzy usati nella computazione in valori booleani che sono inviati come segnali al controllo del sistema. 
 
 \subsubsection{Defuzzification}
 
@@ -1425,7 +1429,7 @@ $$
 R : \text{ if } x_1 \text{ is } \mu_1 \text{ and } \dots \text{ and } x_n \text{ is } \mu_n, \text{ then } y = f(x_1,\dots,x_n)
 $$
 
- L'idea è che quella funzione è una buona funzione di controllo per la regione descritta dall'antecedente. Per mantenere la leggibilità del modello così prodotto, occorre evitare sovrapposizioni tra le varie regioni descritte nell'antecedente delle regole. Siccome l'ouput viene calcolato è già crisp, non occorre defuzzificarlo.
+ L'idea è che quella funzione è una buona funzione di controllo per la regione descritta dall'antecedente. Per mantenere la leggibilità del modello così prodotto, occorre evitare sovrapposizioni tra le varie regioni descritte nell'antecedente delle regole. Siccome l'ouput calcolato è già crisp, non occorre defuzzificarlo.
  
 \subsubsection{Similarity-based reasoning}
 
@@ -1463,7 +1467,7 @@ Il \emph{fuzzy clustering} è una procedura di apprendimento non supervisionato 
 \item{$\sum_{i=1}^{c} u_{ij} = 1, \quad \forall j \in \{1,\dots,n \} $}
 \end{enumerate}
 
-La prima condizione sta ad indicare che non possono esistere cluster vuoti, la seconda, invece, che l'appartenenza è esaurita dall'insieme dei fuzzy set che costiuiscono la partizione. Nel caso \emph{possibilistico} si mantiene solo la prima assunzione e si lascia cadere la seconda. L'interpretazione possibilistica è da preferire quando si abbia a che fare con dati pieni di rumore o outlier.
+La prima condizione sta ad indicare che non possono esistere cluster vuoti, la seconda, invece, che l'appartenenza è esaurita dall'insieme dei fuzzy set che costituiscono la partizione. Nel caso \emph{possibilistico} si mantiene solo la prima assunzione e si lascia cadere la seconda. L'interpretazione possibilistica è da preferire quando si abbia a che fare con dati pieni di rumore o outlier.
 
 \subsubsection{Problemi con il fuzzy clustering}
 
@@ -1584,7 +1588,7 @@ Tutti questi metodi hanno delle criticità o sono applicabili solo ad alcuni tip
 Gli elementi di un algoritmo evolutivo sono:
 
 \begin{enumerate}
-\item{una \emph{codifica} per i candidati: dipende molto dal problema in e non esistono regole generali.}
+\item{una \emph{codifica} per i candidati: dipende molto dal problema e non esistono regole generali.}
 \item{un metodo per creare una \emph{popolazione iniziale}: di solito si crea casualmente.}
 \item{creare una \emph{funzione di fitness} per valutare i candidati: rappresenta l'ambiente e spesso è la stessa funzione da ottimizzare.}
 \item{dei \emph{metodi di selezione} in relazione ai valori di fitness: si scelgono così gli individui che dovranno procreare nella successiva generazione.}
@@ -1598,7 +1602,7 @@ Gli elementi di un algoritmo evolutivo sono:
 Per ogni problema di ottimizzazione occorre separare lo spazio dei \emph{fenotipi} $\Omega$ (ovvero, come l'individuo appare) da quello dei \emph{genotipi} $\Gamma$ (ovvero, come l'individuo è rappresentato dalla codifica scelta). La funzione di fitness sarà definita sui fenotipi, dove, invece, gli operatori genetici agiranno sui genotipi. Per valutare i cambiamenti nel genotipo sarà necessario provvedere una funzione di \emph{decodifica} $dec: \Gamma \to \Omega$.
 
 \begin{definition}
-Ogni \emph{individuo} $A$ è rappresentato da un tupla $(A.G, A.S, A.F)$ contenente il genotipo ($A.G \in \Gamma$), informazioni e parametri addizionali $A.S \in Z$ e la valutazione dello stesso rispetto alla funzione di fintess $A.F = f(dec(A.G))$.
+Ogni \emph{individuo} $A$ è rappresentato da un tupla $(A.G, A.S, A.F)$ contenente il genotipo ($A.G \in \Gamma$), informazioni e parametri addizionali $A.S \in Z$ e la valutazione dello stesso rispetto alla funzione di fitness $A.F = f(dec(A.G))$.
 \end{definition}
 
 \begin{definition}
@@ -1676,7 +1680,7 @@ L'algoritmo \emph{tabu search} può essere visto come una local search che, nel 
 
 \subsubsection{Algoritmi memetici}
 
-Un diverso approccio è quello degli \emph{algoritmi memetici}. Questi algoritmi uniscono i pregi dell'approccio \emph{population-based} (lento, ma che offre più informazioni) e quello \emph{local search} (veloce, ma suscettibile ai minimi locali). I "memes" sono elementi del comportamento che possono essere acquisiti individualmente. La procedura prevede per ogni individuo creato che lo si cerchi di ottimizzare e solo dopo che si consideri la popolazione nel suo intero. Questo permette spesso di accellerare il processo di ottimizzazione, ma le dinamiche "evolutive" sono limitate in modo critico: le mutazioni rischiano di bloccarsi frequentemente in minimi locali, la ricombinazione ha un raggio di azione limitato date le precondizioni che si impongono. 
+Un diverso approccio è quello degli \emph{algoritmi memetici}. Questi algoritmi uniscono i pregi dell'approccio \emph{population-based} (lento, ma che offre più informazioni) e quello \emph{local search} (veloce, ma suscettibile ai minimi locali). I "memes" sono elementi del comportamento che possono essere acquisiti individualmente. La procedura prevede per ogni individuo creato che lo si cerchi di ottimizzare e solo dopo che si consideri la popolazione nel suo intero. Questo permette spesso di accelerare il processo di ottimizzazione, ma le dinamiche "evolutive" sono limitate in modo critico: le mutazioni rischiano di bloccarsi frequentemente in minimi locali, la ricombinazione ha un raggio di azione limitato date le precondizioni che si impongono. 
 
 \subsubsection{Evoluzione differenziale}
 
@@ -1707,7 +1711,7 @@ Le soluzioni al nostro problema devono essere codificate in modo che si possa es
 \item{Lo spazio $\Omega$ deve essere chiuso rispetto agli operatori genetici.}
 \end{enumerate}
 
-La 1) assicura che mutazioni di certi geni risultino in genotipi simili e che radicali cambiamenti permettano di evadere da minimi locali. La 2) previene che si scelga una codifica troppo o troppo poco epistatica \footnote{In biologia, un allele di un gene \emph{epistatico} sopprime gli effetti di tutti i possibili alleli di un altro gene. Nel contesto degli algoritmi evolutivi, sta indicare il grado di interazione tra geni del cromosoma.}. Se troppo, una singola mutazione potrebbe produrre casuali cambiamenti di fitness. Se troppo poco, l'efficienza dell'algoritmo ne risente. Le motivazioni per 3) sono abbastanze ovvie: se lo spazio di ricerca non è chiuso rispetto agli operatori genetici, un cromosoma modificato potrebbe non essere più decodificato e interpretato.  
+La 1) assicura che mutazioni di certi geni risultino in genotipi simili e che radicali cambiamenti permettano di evadere da minimi locali. La 2) previene che si scelga una codifica troppo o troppo poco epistatica \footnote{In biologia, un allele di un gene \emph{epistatico} sopprime gli effetti di tutti i possibili alleli di un altro gene. Nel contesto degli algoritmi evolutivi, sta indicare il grado di interazione tra geni del cromosoma.}. Se troppo, una singola mutazione potrebbe produrre casuali cambiamenti di fitness. Se troppo poco, l'efficienza dell'algoritmo ne risente. Le motivazioni per 3) sono abbastanza ovvie: se lo spazio di ricerca non è chiuso rispetto agli operatori genetici, un cromosoma modificato potrebbe non essere più decodificato e interpretato.  
 
 \subsubsection{Fitness}
 
@@ -1717,7 +1721,7 @@ Gli individui migliori (quelli che hanno migliori valori di fitness) dovrebbero 
 \item{\emph{time to takeover}: il numero di generazioni prima che la popolazione converga.}
 \end{itemize} 
 
-Gli stessi metodi di selezioni possono variare al variare della pressione evolutiva. Uno dei più usati è quello chiamato \emph{roulette-wheel selection}. Si computa il valore di fitness relativo di ogni individuo grazie alla seguente formula:
+Gli stessi metodi di selezione possono variare al variare della pressione evolutiva. Uno dei più usati è quello chiamato \emph{roulette-wheel selection}. Si computa il valore di fitness relativo di ogni individuo grazie alla seguente formula:
 
 $$
 f_{rel}(A_i) = \frac{A_i.F}{\sum_{j=1}^{|P|} A_j.F}
@@ -1747,7 +1751,7 @@ Vi sono varie strategie disponibili in letteratura per operare la selezione degl
 \begin{itemize}
 \item{\emph{Roulette-wheel selection}: vedi sopra.}
 \item{\emph{Rank-based selection}: si ordinano gli individui in ordine di fitness decrescente. A seconda della posizione si assegna ad ogni individuo un \emph{rank} e con esso si definisce la probabilità di essere selezionati. Si procede ad una selezione del tipo roulette-wheel. Questo modello riesce ad ovviare al problema della dominanza e regola la pressione di selezione. Lo svantaggio sta che occorre ordinare gli individui (complessità $O(n \log n)$).}
-\item{\emph{Tournament selection}: si estraggono $k$ individui casualmente dalla popolazione. Tramite scontri individuali si decide il migliore, il quale riceverà la possibilità di riprodursi nella prossima generazione. Si riesce così ad evitare il problema della dominanza e si riesce a regolare la pressione di selezione grazie all grandezza del torneo.}
+\item{\emph{Tournament selection}: si estraggono $k$ individui casualmente dalla popolazione. Tramite scontri individuali si decide il migliore, il quale riceverà la possibilità di riprodursi nella prossima generazione. Si riesce così ad evitare il problema della dominanza e si riesce a regolare la pressione di selezione grazie alla grandezza del torneo.}
 \item{\emph{Elitismo}: i migliori individui della generazione precedente costituiscono la generazione successiva. L'elite così scelta non è immune dai cambiamenti apportati dagli operatori genetici. Il vantaggio è che la convergenza viene ottenuta rapidamente. Lo svantaggio è che c'è il rischio di rimanere bloccati in ottimi locali.}
 \item{\emph{Crowding}: gli individui delle generazioni successive dovrebbero rimpiazzare gli individui più simili a loro. La densità locale in $\Omega$ non può crescere in modo indefinito. Questo permette una migliore esplorazione dello spazio.}
 \end{itemize}
@@ -1761,7 +1765,7 @@ Di seguito listiamo alcune proprietà che possono caratterizzare i metodi di sel
 \item{\emph{Preservative}: la probabilità di selezione è sempre maggiore di 0.}
 \item{\emph{Pure-bred}: gli individui possono avere discendenti solo in una generazione.}
 \item{\emph{Under-bred}: gli individui possono avere discendenti in più di una generazione.}
-\item{\emph{Right}: tutti gli individui posono riprodursi.}
+\item{\emph{Right}: tutti gli individui possono riprodursi.}
 \item{\emph{Left}: i migliori individui possono non riprodursi.}
 \item{\emph{Generational}: i genitori non possono mutare fin quando i loro discendenti non vengono creati.}
 \item{\emph{On-the-fly}: i discendenti sostituiscono i genitori.}
@@ -1770,7 +1774,7 @@ Di seguito listiamo alcune proprietà che possono caratterizzare i metodi di sel
 
 \subsubsection{Operatori genetici}
 
-Gli \emph{operatori genetici} sono applicati ad una frazione di individui scelti (popolazione intermedia). Vengono così generate mutazioni e ricombinazioni delle soluzioni già esistenti. Gli operatori genetici vengono classificati secondo la loro arietà in:
+Gli \emph{operatori genetici} sono applicati ad una frazione di individui scelti (popolazione intermedia). Vengono così generate mutazioni e ricombinazioni delle soluzioni già esistenti. Gli operatori genetici vengono classificati secondo la loro varietà in:
 
 \begin{enumerate}
 \item{One-parent operators}
@@ -1827,7 +1831,7 @@ se $A.F > B.F$, altrimenti $0$.
 \end{definition}
 
 \begin{definition}
-Il \emph{miglioramento relativo atteso} di un operatore $mult$ rispetto ad un individuo $A$ è definito come:
+Il \emph{miglioramento relativo atteso} di un operatore $mut$ rispetto ad un individuo $A$ è definito come:
 $$
 imp_{rel} = E(imp(A,mut(A)))
 $$ 
@@ -1846,15 +1850,15 @@ Data questa metrica si può giudicare le performance di un particolare operatore
 La \emph{swarm based optimization} e la \emph{population based optimization} sono due meta-euristiche usate in letteratura per sviluppare sistemi intelligenti multi-agente capaci di  comportamento cooperativo. Il concetto di \emph{swarm intelligence}, utilizzato per descrivere in natura il comportamento di alcune specie (api, formiche, etc), sta a significare la capacità della popolazione di cooperare per la soluzione di un problema. L'idea è che i singoli individui (unità con skill limitate) scambino tra loro informazioni e si coordinino senza l'aiuto di un controllo centrale. Esistono varie tipologie di euristiche di questo genere:
 
 \begin{itemize}
-\item{\emph{Particle swarm optimization}: ispirato al pattern biologico della ricerca del cibo in uccelli e pesci. Gli individui aggregano informazioni, creando un insieme di conoscenze comuni, nl fine di presentare una solo soluzione. Ogni individuo è un candidato ad essere la soluzione.}
-\item{\emph{Ant colony optimization}: ispirato al pattern biologico delle formiche che cercano una strada che le conduca al cibo. Gli individui scambiano informazione modificando l'ambiente, in modo che gli altri possano seguire (o meno) le loro tracce. Ogni individuo è un candidato ad essere la soluzione.}
+\item{\emph{Particle swarm optimization}: ispirato al pattern biologico della ricerca del cibo in uccelli e pesci. Gli individui aggregano informazioni, creando un insieme di conoscenze comuni, al fine di presentare una sola soluzione. Ogni individuo è un candidato ad essere la soluzione.}
+\item{\emph{Ant colony optimization}: ispirato al pattern biologico delle formiche che cercano una strada che le conduca al cibo. Gli individui scambiano informazioni modificando l'ambiente, in modo che gli altri possano seguire (o meno) le loro tracce. Ogni individuo è un candidato ad essere la soluzione.}
 \end{itemize}
 
 Dal lato della \emph{population based optimization} troviamo, invece, il così detto \emph{population-based incremental learning}. Gli individui vengono generati randomicamente in accordo ad una distribuzione di probabilità. In realtà, non abbiamo bisogno di conservare in memoria gli individui in modo esplicito, ma è sufficiente conservare le statistiche della popolazione. Come operatore di ricombinazione viene utilizzato lo uniform crossover. Per la selezione, si scelgono gli individui che migliorino le statistiche della popolazione. La mutazione, invece, si limita ad un semplice \emph{bit-flip}. La sua feature distintiva è che il \emph{learning rate}, ovvero il parametro che regola la possibilità di movimento degli individui nello spazio, cambia nel tempo e si riduce con il numero di iterazioni. Questo permette, inizialmente, grande mobilità, per stabilizzarsi poi quando un ottimo viene trovato. Alcuni problemi con questa strategia sono che 1) l'algoritmo può apprendere anche alcune dipendenze accidentali tra i cromosomi degli individui e 2) considerare i singoli bit in isolamento gli uni dagli altri. Un diverso genere di problema riguarda la rappresentazione statistica della popolazione: 3) la stessa statistica può rappresentare differenti popolazioni.
 
 \subsection{Fondamenti teorici}
 
-Per dimostrare la correttezza degli algoritmi evolutivi occorre considerare gli \emph{schemata}, ovvero cromosomi binari solo parzialmente specificati che codificano un particolare comportamento. Da qui, si partirà poi a studiare come il numero dei cromosomi che condividono lo schema si evolve rispetto alle generazioni. L'obbiettivo è quello di fornire una stima stocastica che descriva come un algoritmo evolutivo esplora lo spazio di ricerca.
+Per dimostrare la correttezza degli algoritmi evolutivi occorre considerare gli \emph{schemata}, ovvero cromosomi binari solo parzialmente specificati che codificano un particolare comportamento. Da qui, si partirà poi a studiare come il numero dei cromosomi che condividono lo schema si evolve rispetto alle generazioni. L'obiettivo è quello di fornire una stima stocastica che descriva come un algoritmo evolutivo esplora lo spazio di ricerca.
 
 \begin{definition}
 Uno \emph{schema} $h$ è una stringa di simboli di lunghezza $L$ sull'alfabeto $\{0,1,*\}$. Il carattere $*$ è una wildcard.
@@ -1917,7 +1921,7 @@ Un importante teorema, il così detto \emph{schema theorem}, ci dice che schemi 
 \label{fig:37}
 \end{figure}
 
-La \emph{programmazion genetica} (in breve, GP) è una famiglia di algoritmi evolutivi che permettono la creazione automatica di programmi che possano risolvere problemi. Per fare questo occorre, innanzitutto, una codifica per rappresentare e manipolare un singolo programma. Solitamente si rappresentano programmi come \emph{alberi sintattici} dove i nodi interni sono le operazioni e le foglie variabili o costanti (vedi Figura \ref{fig:37}). L'insieme delle operazioni e dei simboli terminali varia da problema a problema. Se, per esempio, volessimo approssimare una funzione booleana sceglieremmo l'insieme di operazioni $F = \{and, or, not\}$ e come insieme di terminali $T = \{ x_0, \dots, x_n, 1, 0 \}$. GP può risolvere un problema efficacemente ed efficientemente solo se l'insieme di operazioni e di simboli terminali è \emph{completo} e \emph{sufficiente}. Il problema di trovare il più piccolo insieme completo e sufficiente per un dato problema è spesso NP-hard. Può essere utile rappresentare i cromosomi come espressioni del linguaggio $L = F \cup T$ per semplificare la computazione. 
+La \emph{programmazione genetica} (in breve, GP) è una famiglia di algoritmi evolutivi che permettono la creazione automatica di programmi che possano risolvere problemi. Per fare questo occorre, innanzitutto, una codifica per rappresentare e manipolare un singolo programma. Solitamente si rappresentano programmi come \emph{alberi sintattici} dove i nodi interni sono le operazioni e le foglie variabili o costanti (vedi Figura \ref{fig:37}). L'insieme delle operazioni e dei simboli terminali varia da problema a problema. Se, per esempio, volessimo approssimare una funzione booleana sceglieremmo l'insieme di operazioni $F = \{and, or, not\}$ e come insieme di terminali $T = \{ x_0, \dots, x_n, 1, 0 \}$. GP può risolvere un problema efficacemente ed efficientemente solo se l'insieme di operazioni e di simboli terminali è \emph{completo} e \emph{sufficiente}. Il problema di trovare il più piccolo insieme completo e sufficiente per un dato problema è spesso NP-hard. Può essere utile rappresentare i cromosomi come espressioni del linguaggio $L = F \cup T$ per semplificare la computazione. 
 
 \subsubsection{Inizializzazione}
 
@@ -1964,7 +1968,7 @@ Il vantaggio del primo approccio sta nel fatto che la fitness della popolazione 
 
 \subsection{Multi-criteria optimization}
 
-Ci possono essere dei casi di problemi di ottimizzazione dove si hanno diversi obiettivi e vincoli, possibilmente in conflitto, ognuno rappresentato da una propria funzione di fintess $f_i : \Omega \to \mathbb{R}$. L'approccio più diretto è quello di combinare le varie funzioni in un'unica funzione di fintess aggregata:
+Ci possono essere dei casi di problemi di ottimizzazione dove si hanno diversi obiettivi e vincoli, possibilmente in conflitto, ognuno rappresentato da una propria funzione di fitness $f_i : \Omega \to \mathbb{R}$. L'approccio più diretto è quello di combinare le varie funzioni in un'unica funzione di fitness aggregata:
 $$
 f(s) = \sum w_i \cdot f_i(s)
 $$
@@ -1989,7 +1993,7 @@ Rispetto alle altre metaeuristiche si è osservato che gli algoritmi evolutivi s
 
 \begin{itemize}
 \item{la generazione iniziale, stando attendi ad eventuali duplicati, che comunque non costituiscono grossi problemi.}
-\item{il calcolo del fitness degli individi, con l’accortezza di raccogliere i dati in un unico processore per calcolare il fitness relativo.}
+\item{il calcolo del fitness degli individui, con l’accortezza di raccogliere i dati in un unico processore per calcolare il fitness relativo.}
 \item{la selezione se costituita da eventi indipendenti, come ad esempio tournament selection, diventa più complesso gestire etilismo.}
 \item{l’applicazione degli operatori genetici.}
 \item{il controllo di raggiungimento del criterio di terminazione.}

@@ -479,7 +479,7 @@ Se estendiamo il nostro approccio fino a comprendere funzioni con più argomenti
 \subsection{Backpropagation}
 
 Come abbiamo appena visto la regressione logistica funziona solo per MLP con due layer di neuroni. Un approccio più generale è quello del \emph{gradient descent}. Il metodo consiste nell'utilizzare la funzione di errore per calcolare la direzione in cui cambiare i pesi e il threshold per minimizzare l'errore. Condizione necessaria per il suo utilizzo è che la funzione sia differenziabile. Tuttavia, un MLP ha una funzione logistica come funzione di attivazione e, quindi, la funzione di errore sarà differenziabile (posto che la funzione di output sia la funzione identità).
-Intuitivamente, il \emph{gradiente} descrive la pendenza di una funzione. Questo è calcolato assegnando ad ogni punto del dominio della funzione un vettore, i cui componenti sono le derivate parziali rispetto ai agli argomenti(un esempio in Figura \ref{fig:13}). L'operazione di calcolare il gradiente (di un punto o di una funzione) è comunemente denotata con l'operatore differenziale $\nabla$ (pronuncia: nabla).
+Intuitivamente, il \emph{gradiente} descrive la pendenza di una funzione. Questo è calcolato assegnando ad ogni punto del dominio della funzione un vettore, i cui componenti sono le derivate parziali rispetto agli argomenti(un esempio in Figura \ref{fig:13}). L'operazione di calcolare il gradiente (di un punto o di una funzione) è comunemente denotata con l'operatore differenziale $\nabla$ (pronuncia: nabla).
 
 \begin{figure}
 \centering

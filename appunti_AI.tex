@@ -557,7 +557,7 @@ Se permettiamo, invece, di avere più di un layer, il numero di neuroni crescer�
 
 \begin{itemize}
 \item{\emph{Overfitting}: l'incremento nel numero di neuroni dovuto alla presenza dei molti layer può avere l'effetto di moltiplicare i parametri in modo sproporzionato.}
-\item{\emph{Vanishing gradient}: durante la propagazione dell'errore il grandiente si riduce dopo ogni layer fino a scomparire.}
+\item{\emph{Vanishing gradient}: durante la propagazione dell'errore il gradiente si riduce dopo ogni layer fino a scomparire.}
 \end{itemize}
 
 Alcune soluzioni al problema dell'overfitting sono:
@@ -712,7 +712,7 @@ $}
 \label{fig:19}
 \end{figure}
 
-dove $\mathbf{x}$ è l'input, $\mathbf{r}$ è il vettore di riferimento per il neurone vincitore e $\eta$ è il learning rate. Fino ad ora abbiamo sottointeso che il learning rate rimanesse fisso per la durata dell'apprendimento, tuttavia esistono delle situazioni in cui un learning rate costante può portare ad alcuni problemi. Un caso è quello rappresentato nel riquadro a sinistra della Figura \ref{fig:20}, dove il vettore di riferimento oscilla ciclicamente verso uno dei quattro punti. Un metodo semplice per risolvere il problema è quello di far decrescere il learning rate al crescere delle iterazioni (\emph{time dependent leanring rate}). In questo modo, il movimento circolare collassa col passare del tempo in una spirale, facendo così convergere l'algoritmo.
+dove $\mathbf{x}$ è l'input, $\mathbf{r}$ è il vettore di riferimento per il neurone vincitore e $\eta$ è il learning rate. Fino ad ora abbiamo sottointeso che il learning rate rimanesse fisso per la durata dell'apprendimento, tuttavia esistono delle situazioni in cui un learning rate costante può portare ad alcuni problemi. Un caso è quello rappresentato nel riquadro a sinistra della Figura \ref{fig:20}, dove il vettore di riferimento oscilla ciclicamente verso uno dei quattro punti. Un metodo semplice per risolvere il problema è quello di far decrescere il learning rate al crescere delle iterazioni (\emph{time dependent learning rate}). In questo modo, il movimento circolare collassa col passare del tempo in una spirale, facendo così convergere l'algoritmo.
 Un altro problema con la versione classica di questo algoritmo è che il processo di adattamento porti i vettori di riferimento ad allontanarsi sempre di più tra loro. Per evitare questo effetto indesiderabile che ostacola la convergenza dell'algoritmo si prevede una così detta \emph{window rule} tale per cui un vettore di riferimento viene adattato solo se il punto $\mathbf{p}$ giace vicino al bordo della classificazione, ossia alla (iper-)superficie che separa le regioni contigue delle due classi. La nozione vaga di vicinanza viene formalizzata come segue:
 
 $$
@@ -834,7 +834,7 @@ $$
 \Delta E_u = E_{act_u = 1} - E_{act_u = 0} = \sum_{v \in U - \{u\}} w_{uv} act_v - \theta_u
 $$
  
-La procedura di aggiornamento chiamata \emph{Markov-chain Monte Carlo} prevede di scegliere randomicamente un neurone e calcolare il suo differenziale energetico e, con questo, la probabilità di attivazione. Questa stessa procedura  viene ripetuta varie volta fino alla convergenza del sistema. La convergenza verso uno stato stabile è garantita dal fatto che la temperatura del sistema non cresce nel tempo, ma diminuisce. Ad un certo punto si raggiungerà uno stato stabile, anche detto \emph{equilibrio termico} del sistema, che rappresenterà un minimo (possibilmente locale) della funzione.
+La procedura di aggiornamento chiamata \emph{Markov-chain Monte Carlo} prevede di scegliere randomicamente un neurone e calcolare il suo differenziale energetico e, con questo, la probabilità di attivazione. Questa stessa procedura  viene ripetuta varie volte fino alla convergenza del sistema. La convergenza verso uno stato stabile è garantita dal fatto che la temperatura del sistema non cresce nel tempo, ma diminuisce. Ad un certo punto si raggiungerà uno stato stabile, anche detto \emph{equilibrio termico} del sistema, che rappresenterà un minimo (possibilmente locale) della funzione.
 Bisogna notare che una BM potrà calcolare in modo efficace una distribuzione di probabilità se gli esempi forniti sono compatibili con una distribuzione di Boltzmann. Per mitigare questa restrizione si dividono i neuroni di una BM tra neuroni \emph{visibili}, che ricevono i segnali di input, e \emph{nascosti}, la cui attivazione non dipende direttamente dal dataset permettendo un adattamento più flessibile ai pattern di allenamento. 
 
 \subsubsection{Training}
@@ -916,7 +916,7 @@ Un insieme classico è una collezione di elementi che possono (o meno) appartene
 \begin{definition}
  Dato un dominio del discorso $X$, un insieme fuzzy $\mu$ è una funzione $\mu : X \to [0,1]$ che assegna ad ogni elemento un \emph{grado di appartenenza} $\mu(x)$ rispetto all'insieme $\mu$.
 \end{definition}
- Queste funzioni sono scelte a seconda del contesto di utilizzo e i gradi di appartenenza sono fissati per convenzione. Possiamo vedere i fuzzy set come interfacce tra espressioni linguistiche e loro rappresentazioni numeriche. Ad esempio, vogliamo dare un modello formale alla proprietà "essere alto per un bambino di 4 anni". Per farlo definiremo un insieme fuzzy $\mu_{tall}$ attraverso una funzione sigmoide come in Figura \ref{fig:23}, tale per cui risulteranno \emph{sicuramente} nell'estensione della proprietà i bambini più alti di 1.5 m centimetri e \emph{sicuramente} fuori dall'estensione quelli più bassi di 0.7 m. Tutti gli altri apparterranno all'insieme con un certo grado.
+ Queste funzioni sono scelte a seconda del contesto di utilizzo e i gradi di appartenenza sono fissati per convenzione. Possiamo vedere i fuzzy set come interfacce tra espressioni linguistiche e loro rappresentazioni numeriche. Ad esempio, vogliamo dare un modello formale alla proprietà "essere alto per un bambino di 4 anni". Per farlo definiremo un insieme fuzzy $\mu_{tall}$ attraverso una funzione sigmoide come in Figura \ref{fig:23}, tale per cui risulteranno \emph{sicuramente} nell'estensione della proprietà i bambini più alti di 1.5 m e \emph{sicuramente} fuori dall'estensione quelli più bassi di 0.7 m. Tutti gli altri apparterranno all'insieme con un certo grado.
 
 \begin{figure}
 \centering
